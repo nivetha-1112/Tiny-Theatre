@@ -5,76 +5,76 @@ import { Calendar, Clock, MapPin, Tag } from 'lucide-react';
 export const eventsData = [
   {
     id: 1,
-    name: 'Interstellar Odyssey',
-    category: 'Action & Sci-Fi',
-    date: 'Tonight & Tomorrow',
-    time: '8:30 PM',
-    venue: 'Screen 1 (IMAX Showcase)',
-    desc: 'A breathtaking space travel epic exploring human survival, time dilation, and parent-child bonds across galaxies.',
-    image: 'https://images.unsplash.com/photo-1534447677768-be436bb09401?auto=format&fit=crop&w=800&q=80',
-    price: '$15',
+    name: 'Romantic Proposal Surprise',
+    category: 'Romance',
+    date: 'Select Any Date',
+    time: '3-Hour Private Slot',
+    venue: 'Rose Screen (Deluxe Couple Suite)',
+    desc: 'Celebrate your special milestone with customized flower decorations, fairy lights, LED letters, a photography setup, and a private projection of your personal memory reel.',
+    image: 'https://images.unsplash.com/photo-1527529482837-4698179dc6ce?auto=format&fit=crop&w=800&q=80',
+    price: '$120',
   },
   {
     id: 2,
-    name: 'The Classic Noir',
-    category: 'Classics',
-    date: 'July 15, 2026',
-    time: '7:00 PM',
-    venue: 'Screen 2 (Vintage Hall)',
-    desc: 'A remastered 4K screening of the legendary black-and-white detective mystery that defined the noir genre.',
-    image: 'https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?auto=format&fit=crop&w=800&q=80',
-    price: '$12',
+    name: 'Grand Birthday Celebration',
+    category: 'Celebrations',
+    date: 'Select Any Date',
+    time: '3-Hour Private Slot',
+    venue: 'Crown Screen (Party Hall - up to 15 Guests)',
+    desc: 'Book a private cinema party complete with customizable balloon arches, high-quality audio for cake cutting, photo backdrops, and your choice of movie or music video screenings.',
+    image: 'https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?auto=format&fit=crop&w=800&q=80',
+    price: '$150',
   },
   {
     id: 3,
-    name: 'Chasing Horizons',
-    category: 'Drama & Romance',
-    date: 'July 20 - July 24, 2026',
-    time: '6:00 PM',
-    venue: 'Screen 1 (IMAX Showcase)',
-    desc: 'A sweeping, emotional romantic journey of two aspiring musicians navigating ambition, success, and love in modern Paris.',
+    name: 'Private Movie Night',
+    category: 'Gaming & Fun',
+    date: 'Select Any Date',
+    time: '3-Hour Private Slot',
+    venue: 'Screen 2 (Cosy Lounge - up to 6 Guests)',
+    desc: 'Rent a private movie lounge for a family movie night, high-definition streaming, or watching movie marathons with complete privacy and premium popcorn tubs.',
     image: 'https://images.unsplash.com/photo-1517604931442-7e0c8ed2963c?auto=format&fit=crop&w=800&q=80',
-    price: '$14',
+    price: '$90',
   },
   {
     id: 4,
-    name: 'The Puppet’s Magic Forest',
-    category: 'Kids Movies',
-    date: 'July 28, 2026',
-    time: '1:30 PM',
-    venue: 'Screen 3 (Family Room)',
-    desc: 'A delightful, colorful animated film following a group of friendly forest animals on an interactive musical quest.',
-    image: 'https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?auto=format&fit=crop&w=800&q=80',
-    price: '$10',
+    name: 'Console Gaming Showdown',
+    category: 'Gaming & Fun',
+    date: 'Select Any Date',
+    time: '3-Hour Private Slot',
+    venue: 'Arena Screen (Gaming Zone)',
+    desc: 'Plug in your PlayStation 5, Xbox, or Nintendo Switch and play multiplayer games with your friends on a massive 150-inch 4K screen with zero input lag.',
+    image: 'https://images.unsplash.com/photo-1606144042614-b2417e99c4e3?auto=format&fit=crop&w=800&q=80',
+    price: '$100',
   },
   {
     id: 5,
-    name: 'A Midnight Comedy Special',
-    category: 'Comedy',
-    date: 'August 02, 2026',
-    time: '10:00 PM',
-    venue: 'Screen 2 (Vintage Hall)',
-    desc: 'A laugh-out-loud indie mockumentary charting the hilarious mishaps of a local film crew trying to make a horror movie.',
-    image: 'https://images.unsplash.com/photo-1585647347483-22b66260dfff?auto=format&fit=crop&w=800&q=80',
-    price: '$13',
+    name: 'Anniversary Candlelight Movie',
+    category: 'Romance',
+    date: 'Select Any Date',
+    time: '3-Hour Private Slot',
+    venue: 'Rose Screen (Deluxe Couple Suite)',
+    desc: 'A romantic private screening setup featuring candle decorations, luxury recliners, mocktails, a customized anniversary cake, and a personal video display.',
+    image: 'https://images.unsplash.com/photo-1519671482749-fd09be7ccebf?auto=format&fit=crop&w=800&q=80',
+    price: '$130',
   },
   {
     id: 6,
-    name: 'Cyber Horizon 2099',
-    category: 'Action & Sci-Fi',
-    date: 'August 10 - August 16, 2026',
-    time: '9:00 PM',
-    venue: 'Screen 1 (IMAX Showcase)',
-    desc: 'A neon-soaked cyberpunk thriller detailing the final case of a detective hunting rogue synthetic androids in Neo-Chicago.',
-    image: 'https://images.unsplash.com/photo-1519608487953-e999c86e7455?auto=format&fit=crop&w=800&q=80',
-    price: '$16',
+    name: 'Corporate Presenting & Meetups',
+    category: 'Corporate',
+    date: 'Select Any Date',
+    time: '3-Hour Private Slot',
+    venue: 'Crown Screen (Party Hall - up to 20 Guests)',
+    desc: 'Host your company seminar, client pitches, product launches, or private team screenings on our premium projector displays with high-fidelity lapel microphones.',
+    image: 'https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?auto=format&fit=crop&w=800&q=80',
+    price: '$180',
   },
 ];
 
 export default function Events({ onBookEvent }) {
   const [activeFilter, setActiveFilter] = useState('All');
 
-  const filters = ['All', 'Action & Sci-Fi', 'Drama & Romance', 'Comedy', 'Classics', 'Kids Movies'];
+  const filters = ['All', 'Celebrations', 'Romance', 'Gaming & Fun', 'Corporate'];
 
   const filteredEvents = activeFilter === 'All'
     ? eventsData
@@ -102,15 +102,15 @@ export default function Events({ onBookEvent }) {
         {/* Header */}
         <div className="text-center max-w-3xl mx-auto mb-16 space-y-4">
           <span className="text-theatre-gold font-semibold tracking-widest uppercase text-xs">
-            Upcoming Movies
+            Private Screenings & Rentals
           </span>
           <h2 className="font-serif text-4xl sm:text-5xl font-bold text-white">
-            Cinematic <br className="hidden sm:inline" />
-            <span className="text-theatre-green">Experiences Await</span>
+            Exclusive Packages <br className="hidden sm:inline" />
+            <span className="text-theatre-green">Crafted Just for You</span>
           </h2>
           <div className="w-20 h-1 bg-gradient-to-r from-theatre-gold to-theatre-green rounded-full mx-auto" />
           <p className="text-gray-400 text-base sm:text-lg font-sans font-light">
-            Select your preferred genre and explore what's playing next on our premium screens.
+            Select your preferred rental type and book your private movie theatre hall slot today.
           </p>
         </div>
 
@@ -202,7 +202,7 @@ export default function Events({ onBookEvent }) {
                       onClick={() => handleBookClick(event.name)}
                       className="w-full bg-theatre-green hover:bg-theatre-green-dark text-white hover:text-theatre-gold px-5 py-3 rounded-2xl font-semibold text-sm shadow-md hover:shadow-lg hover:shadow-theatre-green/20 border border-theatre-green/20 hover:border-theatre-gold/20 flex items-center justify-center space-x-2 transition-all duration-300 group-hover:scale-[1.02]"
                     >
-                      <span>Book Ticket</span>
+                      <span>Book Private Slot</span>
                     </button>
                   </div>
                 </div>

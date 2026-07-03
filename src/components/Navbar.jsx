@@ -11,7 +11,7 @@ export default function Navbar() {
     { name: 'About Us', href: '#about' },
     { name: 'Why Choose Us', href: '#why-choose-us' },
     { name: 'Booking Process', href: '#booking-process' },
-    { name: 'Events', href: '#events' },
+    { name: 'Packages', href: '#events' },
     { name: 'Gallery', href: '#gallery' },
   ];
 

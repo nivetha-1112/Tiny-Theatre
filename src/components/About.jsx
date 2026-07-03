@@ -5,10 +5,10 @@ import aboutImg from '../assets/about.jpg';
 
 export default function About() {
   const stats = [
-    { label: 'Performances Hosted', value: '450+', icon: Award },
-    { label: 'Happy Visitors', value: '85k+', icon: Users },
-    { label: 'Events Conducted', value: '120+', icon: Compass },
-    { label: 'Years of Experience', value: '12+', icon: Star },
+    { label: 'Private Screenings', value: '5,000+', icon: Award },
+    { label: 'Happy Guests', value: '25k+', icon: Users },
+    { label: 'Surprise Proposals', value: '350+', icon: Compass },
+    { label: 'Luxury Screens', value: '3 Halls', icon: Star },
   ];
 
   return (
@@ -31,9 +31,9 @@ export default function About() {
                 About Tiny Theatre
               </span>
               <h2 className="font-serif text-4xl sm:text-5xl lg:text-6xl font-bold text-white leading-tight">
-                Intimate Space, <br />
+                Exclusive Spaces, <br />
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-theatre-green-light to-theatre-green text-shadow-green">
-                  Infinite Stories
+                  Unforgettable Celebrations
                 </span>
               </h2>
               <div className="w-24 h-1.5 bg-gradient-to-r from-theatre-gold via-theatre-green to-transparent rounded-full" />
@@ -42,12 +42,9 @@ export default function About() {
             {/* Description Paragraphs */}
             <div className="text-gray-300 space-y-6 text-base sm:text-lg leading-relaxed font-sans font-light">
               <p>
-                Founded on the belief that great art thrives in close quarters, 
-                <strong className="text-white font-medium"> Tiny Theatre</strong> has been a cornerstone of theatrical innovation 
-                and family-friendly entertainment for over a decade. We specialize in bringing 
-                immersive, professional-grade performances to a cozy and inviting stage.
+                Founded on the concept of luxurious privacy and cinematic excellence, 
+                <strong className="text-white font-medium"> Tiny Theatre</strong> provides fully-equipped private mini movie screening halls for custom hire. We specialize in turning your special milestones into magical memories with premium Dolby Atmos acoustics, 4K projection, and completely private, pre-decorated spaces.
               </p>
-             
             </div>
 
             {/* Mission & Vision cards - Redesigned with premium glassmorphism and icons */}
@@ -66,7 +63,7 @@ export default function About() {
                   </h4>
                 </div>
                 <p className="text-sm text-gray-400 leading-relaxed font-sans font-light">
-                  To craft professional-grade, accessible performance art that ignites curiosity, builds community, and inspires children and families.
+                  To create intimate, premium-grade private movie screening experiences that host safe, joyful, and bespoke celebrations for birthdays, romantic proposals, and anniversaries.
                 </p>
               </motion.div>
 
@@ -84,7 +81,7 @@ export default function About() {
                   </h4>
                 </div>
                 <p className="text-sm text-gray-400 leading-relaxed font-sans font-light">
-                  To be the region's premiere intimate stage, fostering local creative talents while offering high-quality, unforgettable experiences.
+                  To be the country's leading private cinema brand, blending next-generation projection systems and personalized decorations with supreme privacy.
                 </p>
               </motion.div>
             </div>

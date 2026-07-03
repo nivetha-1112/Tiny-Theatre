@@ -74,7 +74,7 @@ export default function Footer() {
               </span>
             </a>
             <p className="text-sm text-gray-400 leading-relaxed font-light">
-              Crafting premium, professional theatrical art on an intimate stage. Fostering connections and stories that live on forever.
+              Providing premium, luxurious private movie theatre screening halls and bespoke milestone celebration services.
             </p>
             {/* Social Icons */}
             <div className="flex space-x-3">
@@ -102,7 +102,7 @@ export default function Footer() {
                 { name: 'About Us', href: '#about' },
                 { name: 'Why Choose Us', href: '#why-choose-us' },
                 { name: 'Booking Process', href: '#booking-process' },
-                { name: 'Upcoming Events', href: '#events' },
+                { name: 'Booking Packages', href: '#events' },
                 { name: 'Photo Gallery', href: '#gallery' },
               ].map((link) => (
                 <li key={link.name}>
@@ -132,8 +132,8 @@ export default function Footer() {
               </li>
               <li className="flex items-center space-x-3">
                 <Mail className="w-4.5 h-4.5 text-theatre-gold flex-shrink-0" />
-                <a href="mailto:tickets@tinytheatre.com" className="hover:text-theatre-gold transition-colors duration-300">
-                  tickets@tinytheatre.com
+                <a href="mailto:bookings@tinytheatre.com" className="hover:text-theatre-gold transition-colors duration-300">
+                  bookings@tinytheatre.com
                 </a>
               </li>
             </ul>
@@ -143,7 +143,7 @@ export default function Footer() {
           <div className="lg:col-span-2 space-y-6">
             <h4 className="text-white font-serif text-base font-bold tracking-wide">Newsletter</h4>
             <p className="text-xs text-gray-400 leading-relaxed font-light">
-              Subscribe to receive opening night updates and member ticket discount codes.
+              Subscribe to receive exclusive booking specials and member discount codes.
             </p>
             <form onSubmit={(e) => e.preventDefault()} className="relative">
               <input

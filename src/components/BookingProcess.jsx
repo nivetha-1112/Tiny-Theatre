@@ -6,20 +6,20 @@ export default function BookingProcess() {
   const steps = [
     {
       step: '01',
-      title: 'Choose Event',
-      desc: 'Browse our diverse lineup of plays, musicals, comedy clubs, and seasonal children shows.',
+      title: 'Choose Package',
+      desc: 'Select a customized celebration rental package (e.g., Birthday Party, Romantic Proposal, Console Gaming).',
       icon: Search,
     },
     {
       step: '02',
-      title: 'Select Date & Time',
-      desc: 'Pick a performance slot that matches your schedule, including weekend matinees or evening slots.',
+      title: 'Select Slot',
+      desc: 'Pick your preferred date and 3-hour private screening slot that matches your schedule.',
       icon: Calendar,
     },
     {
       step: '03',
-      title: 'Pick Seats',
-      desc: 'Examine our live seating layout preview to choose standard, VIP, or front-row seats.',
+      title: 'Pick Recliners',
+      desc: 'Choose the best luxury sofa recliners inside the hall for you and your invited guests.',
       icon: Armchair,
     },
     {
@@ -30,8 +30,8 @@ export default function BookingProcess() {
     },
     {
       step: '05',
-      title: 'Get Tickets',
-      desc: 'Instantly download your digital ticket. Scan at the gate and enjoy the performance!',
+      title: 'Get Booking Pass',
+      desc: 'Instantly download your digital entry pass with a barcode to scan at the private theatre gate.',
       icon: Ticket,
     },
   ];
@@ -55,7 +55,7 @@ export default function BookingProcess() {
           </h2>
           <div className="w-20 h-1 bg-gradient-to-r from-theatre-gold to-theatre-green rounded-full mx-auto" />
           <p className="text-gray-400 text-base sm:text-lg font-sans font-light">
-            Follow five simple steps to secure your seats for our upcoming performances.
+            Follow five simple steps to secure your private screening hall rental.
           </p>
         </div>
 

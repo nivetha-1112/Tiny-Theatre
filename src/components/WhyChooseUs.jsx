@@ -4,34 +4,34 @@ import { motion } from 'framer-motion';
 export default function WhyChooseUs() {
   const features = [
     {
-      title: 'Professional Performances',
-      desc: 'Our plays feature award-winning local and national talents, ensuring captivating storytelling and impeccable acting.',
-      image: 'https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?auto=format&fit=crop&w=500&q=80',
-    },
-    {
-      title: 'Comfortable Seating',
-      desc: 'Plush velvet, ergonomically-designed seats in our boutique hall guarantee total physical comfort during every show.',
+      title: '100% Complete Privacy',
+      desc: 'Rent the entire luxury mini-screening room. No strangers, no interruptions—just you and your invited guests.',
       image: 'https://images.unsplash.com/photo-1517604931442-7e0c8ed2963c?auto=format&fit=crop&w=500&q=80',
     },
     {
-      title: 'Family-Friendly Environment',
-      desc: 'A welcoming, wholesome community space offering educational and emotionally constructive themes for all ages.',
-      image: 'https://images.unsplash.com/photo-1609220136736-443140cffec6?auto=format&fit=crop&w=500&q=80',
+      title: 'Custom Celebration Decor',
+      desc: 'Celebrate birthdays and anniversaries with our custom balloon arches, flower setups, and romantic LED letters.',
+      image: 'https://images.unsplash.com/photo-1530103862676-de8c9debad1d?auto=format&fit=crop&w=500&q=80',
     },
     {
-      title: 'Creative Productions',
-      desc: 'Bespoke hand-crafted set designs, custom musical scores, and imaginative screenplays that challenge traditional limits.',
-      image: 'https://images.unsplash.com/photo-1598899134739-24c46f58b8c0?auto=format&fit=crop&w=500&q=80',
+      title: 'Dolby Acoustics & 4K UHD',
+      desc: 'Experience your favorite media on massive 150+ inch screens backed by cinematic Dolby Atmos surround sound.',
+      image: 'https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?auto=format&fit=crop&w=500&q=80',
     },
     {
-      title: 'Easy Online Booking',
-      desc: 'Secure tickets in under a minute with our responsive seat-picker, digital passes, and instant confirmations.',
-      image: 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?auto=format&fit=crop&w=500&q=80',
-    },
-    {
-      title: 'Affordable Pricing',
-      desc: 'Premium cultural entertainment shouldn’t be exclusive. We offer competitive tier pricing and family package deals.',
+      title: 'Gourmet Food & Cakes',
+      desc: 'Pre-order custom mocktails, snacks, birthday cakes, and popcorn tubs served directly to your recliner seats.',
       image: 'https://images.unsplash.com/photo-1536440136628-849c177e76a1?auto=format&fit=crop&w=500&q=80',
+    },
+    {
+      title: 'Console Gaming (PS5/Xbox)',
+      desc: 'Plug in your favourite gaming consoles for an ultra-responsive, zero-lag multiplayer gaming party on the big screen.',
+      image: 'https://images.unsplash.com/photo-1606144042614-b2417e99c4e3?auto=format&fit=crop&w=500&q=80',
+    },
+    {
+      title: 'Flat-Rate Hourly Pricing',
+      desc: 'We charge flat hourly rates for our private screening halls. Zero per-head ticket charges or hidden fees.',
+      image: 'https://images.unsplash.com/photo-1594909122845-11baa439b7bf?auto=format&fit=crop&w=500&q=80',
     },
   ];
 
@@ -75,7 +75,7 @@ export default function WhyChooseUs() {
           </h2>
           <div className="w-20 h-1 bg-gradient-to-r from-theatre-gold to-theatre-green rounded-full mx-auto" />
           <p className="text-gray-400 text-base sm:text-lg font-sans font-light">
-            We merge standard theatre production quality with intimate convenience to bring you something truly unique.
+            We merge premium private theatre cinema halls with personalized customer services to bring you something truly unique.
           </p>
         </div>
 

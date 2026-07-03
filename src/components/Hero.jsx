@@ -42,7 +42,7 @@ export default function Hero() {
           className="inline-flex items-center space-x-2 bg-theatre-green/20 backdrop-blur-md px-4 py-1.5 rounded-full border border-theatre-green/30 text-theatre-gold text-xs font-semibold tracking-wider uppercase mb-8"
         >
           <Sparkles className="w-4.5 h-4.5 animate-spin" style={{ animationDuration: '4s' }} />
-          <span>Curtain Raiser Season 2026</span>
+          <span>Premium Private Theatre Booking</span>
         </motion.div>
 
         {/* Headline */}
@@ -52,9 +52,9 @@ export default function Hero() {
           transition={{ duration: 0.8, delay: 0.2, ease: 'easeOut' }}
           className="font-serif text-5xl sm:text-6xl md:text-7xl font-bold tracking-tight text-white mb-6 leading-[1.1]"
         >
-          Where Stories <br className="sm:hidden" />
+          Your Own Screen. <br className="sm:hidden" />
           <span className="text-transparent bg-clip-text bg-gradient-to-r from-theatre-gold via-theatre-gold-light to-theatre-gold text-shadow-gold">
-            Come Alive
+            Your Exclusive Space
           </span>
         </motion.h1>
 
@@ -65,7 +65,7 @@ export default function Hero() {
           transition={{ duration: 0.8, delay: 0.4, ease: 'easeOut' }}
           className="text-lg sm:text-xl text-gray-300 max-w-3xl mx-auto mb-10 leading-relaxed font-sans font-light"
         >
-          Experience unforgettable performances, engaging events, and magical moments at Tiny Theatre.
+          Book an exclusive premium private movie theatre for birthdays, romantic proposals, intimate anniversaries, or custom gaming nights with friends.
         </motion.p>
 
         {/* Call to action buttons */}
@@ -81,7 +81,7 @@ export default function Hero() {
             className="group flex items-center justify-center space-x-2 w-full sm:w-auto bg-gradient-to-r from-theatre-gold to-theatre-gold-dark hover:from-theatre-gold-light hover:to-theatre-gold text-theatre-green-deep font-bold px-8 py-4 rounded-full shadow-xl shadow-theatre-gold/15 hover:shadow-theatre-gold/25 hover:scale-105 transition-all duration-300 text-base"
           >
             <Ticket className="w-5 h-5 text-theatre-green-deep group-hover:rotate-12 transition-transform duration-300" />
-            <span>Book Now</span>
+            <span>Book Venue Now</span>
           </a>
           <a
             href="#events"
@@ -89,7 +89,7 @@ export default function Hero() {
             className="group flex items-center justify-center space-x-2 w-full sm:w-auto bg-transparent hover:bg-theatre-green/10 text-white hover:text-theatre-gold font-semibold px-8 py-4 rounded-full border border-white/20 hover:border-theatre-gold/40 hover:scale-105 transition-all duration-300 text-base"
           >
             <Calendar className="w-5 h-5 text-gray-400 group-hover:text-theatre-gold transition-colors duration-300" />
-            <span>Explore Events</span>
+            <span>Explore Packages</span>
           </a>
         </motion.div>
       </div>

@@ -24,11 +24,7 @@ export default function BookNow({ selectedEventName, clearSelectedEvent }) {
   useEffect(() => {
     if (selectedEventName) {
       setFormData((prev) => ({ ...prev, event: selectedEventName }));
-      // Pre-select first date matching the event if possible
-      const matched = eventsData.find(e => e.name === selectedEventName);
-      if (matched) {
-        setFormData((prev) => ({ ...prev, preferredDate: '2026-07-15' })); // Dummy standard date matching
-      }
+      setFormData((prev) => ({ ...prev, preferredDate: '2026-07-15' })); // Dummy standard date matching
     }
   }, [selectedEventName]);
 
@@ -45,7 +41,7 @@ export default function BookNow({ selectedEventName, clearSelectedEvent }) {
     if (selectedSeats.includes(seatCode)) {
       setSelectedSeats(prev => prev.filter(s => s !== seatCode));
     } else {
-      // Limit selection to ticket count
+      // Limit selection to guest count
       if (selectedSeats.length < formData.ticketsCount) {
         setSelectedSeats(prev => [...prev, seatCode]);
       } else {
@@ -71,11 +67,11 @@ export default function BookNow({ selectedEventName, clearSelectedEvent }) {
       tempErrors.phone = 'Please enter a valid phone number (min 10 digits).';
     }
 
-    if (!formData.event) tempErrors.event = 'Please select an event.';
+    if (!formData.event) tempErrors.event = 'Please select a package.';
     if (!formData.preferredDate) tempErrors.preferredDate = 'Please select a date.';
     
     if (selectedSeats.length !== Number(formData.ticketsCount)) {
-      tempErrors.seats = `Please select exactly ${formData.ticketsCount} seat(s). Current selected: ${selectedSeats.length}`;
+      tempErrors.seats = `Please select exactly ${formData.ticketsCount} recliner(s). Current selected: ${selectedSeats.length}`;
     }
 
     setErrors(tempErrors);
@@ -129,11 +125,11 @@ export default function BookNow({ selectedEventName, clearSelectedEvent }) {
         {/* Header */}
         <div className="text-center max-w-3xl mx-auto mb-16 space-y-4">
           <span className="text-theatre-gold font-semibold tracking-widest uppercase text-xs">
-            Box Office
+            Private Booking
           </span>
           <h2 className="font-serif text-4xl sm:text-5xl font-bold text-white">
             Secure Your <br className="hidden sm:inline" />
-            <span className="text-theatre-green">Golden Tickets</span>
+            <span className="text-theatre-green">Private Screening Slot</span>
           </h2>
           <div className="w-20 h-1 bg-gradient-to-r from-theatre-gold to-theatre-green rounded-full mx-auto" />
         </div>
@@ -194,7 +190,7 @@ export default function BookNow({ selectedEventName, clearSelectedEvent }) {
                     </div>
                   </div>
 
-                  {/* Row 2: Phone & Ticket Count */}
+                  {/* Row 2: Phone & Guests Count */}
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                     <div className="space-y-2">
                       <label className="text-sm font-semibold text-gray-300 block">Phone Number</label>
@@ -217,35 +213,35 @@ export default function BookNow({ selectedEventName, clearSelectedEvent }) {
                     </div>
 
                     <div className="space-y-2">
-                      <label className="text-sm font-semibold text-gray-300 block">Number of Tickets</label>
+                      <label className="text-sm font-semibold text-gray-300 block">Number of Guests</label>
                       <div className="relative">
                         <Ticket className="absolute left-4 top-1/2 -translate-y-1/2 w-4.5 h-4.5 text-gray-500" />
                         <select
                           value={formData.ticketsCount}
                           onChange={(e) => {
                             setFormData({...formData, ticketsCount: Number(e.target.value)});
-                            setSelectedSeats([]); // reset seat selections when ticket counts change to avoid mismatch
+                            setSelectedSeats([]); // reset seat selections
                           }}
                           className="w-full bg-theatre-dark/60 text-white pl-11 pr-4 py-3.5 rounded-2xl border border-white/10 focus:border-theatre-green focus:ring-1 focus:ring-theatre-green transition-all duration-300 text-sm outline-none appearance-none"
                         >
-                          {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map(n => (
-                            <option key={n} value={n} className="bg-theatre-dark text-white">{n} Ticket{n > 1 ? 's' : ''}</option>
+                          {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15].map(n => (
+                            <option key={n} value={n} className="bg-theatre-dark text-white">{n} Guest{n > 1 ? 's' : ''}</option>
                           ))}
                         </select>
                       </div>
                     </div>
                   </div>
 
-                  {/* Row 3: Event Selection & Date */}
+                  {/* Row 3: Package Selection & Date */}
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                     <div className="space-y-2">
-                      <label className="text-sm font-semibold text-gray-300 block">Select Performance</label>
+                      <label className="text-sm font-semibold text-gray-300 block">Select Booking Package</label>
                       <select
                         value={formData.event}
                         onChange={(e) => setFormData({...formData, event: e.target.value})}
                         className="w-full bg-theatre-dark/60 text-white px-4 py-3.5 rounded-2xl border border-white/10 focus:border-theatre-green focus:ring-1 focus:ring-theatre-green transition-all duration-300 text-sm outline-none"
                       >
-                        <option value="">-- Choose Show --</option>
+                        <option value="">-- Choose Package --</option>
                         {eventsData.map(ev => (
                           <option key={ev.id} value={ev.name} className="bg-theatre-dark text-white">{ev.name} ({ev.category})</option>
                         ))}
@@ -288,7 +284,7 @@ export default function BookNow({ selectedEventName, clearSelectedEvent }) {
                         rows="3"
                         value={formData.message}
                         onChange={(e) => setFormData({...formData, message: e.target.value})}
-                        placeholder="E.g., Wheelchair accessibility requirements..."
+                        placeholder="E.g., Special cake flavor, custom LED sign wordings, or proposal timing..."
                         className="w-full bg-theatre-dark/60 text-white pl-11 pr-4 py-3.5 rounded-2xl border border-white/10 focus:border-theatre-green focus:ring-1 focus:ring-theatre-green transition-all duration-300 text-sm placeholder:text-gray-600 outline-none resize-none"
                       />
                     </div>
@@ -301,7 +297,7 @@ export default function BookNow({ selectedEventName, clearSelectedEvent }) {
                       className="flex-1 bg-gradient-to-r from-theatre-gold to-theatre-gold-dark hover:from-theatre-gold-light hover:to-theatre-gold text-theatre-green-deep font-bold py-4 rounded-2xl shadow-lg hover:shadow-theatre-gold/20 flex items-center justify-center space-x-2 text-base transition-all duration-300 hover:scale-[1.01]"
                     >
                       <Ticket className="w-5 h-5 text-theatre-green-deep" />
-                      <span>Confirm & Book Seats</span>
+                      <span>Confirm Private Booking</span>
                     </button>
                     
                     <button
@@ -321,9 +317,9 @@ export default function BookNow({ selectedEventName, clearSelectedEvent }) {
               <div className="lg:col-span-5 bg-theatre-green/5 backdrop-blur-md rounded-3xl p-6 sm:p-10 border border-theatre-green/20 shadow-xl flex flex-col justify-between relative overflow-hidden">
                 <div className="space-y-6">
                   <div>
-                    <h3 className="font-serif text-xl font-bold text-white mb-1">Auditorium Seating Layout</h3>
+                    <h3 className="font-serif text-xl font-bold text-white mb-1">Private Theatre Seating Layout</h3>
                     <p className="text-xs text-gray-400 font-sans">
-                      Select {formData.ticketsCount} seats matching your ticket selection.
+                      Select exactly {formData.ticketsCount} recliners for your guests.
                     </p>
                   </div>
 
@@ -331,7 +327,7 @@ export default function BookNow({ selectedEventName, clearSelectedEvent }) {
                   <div className="relative pt-6 pb-2 text-center">
                     <div className="w-full h-2 bg-gradient-to-r from-transparent via-theatre-gold/60 to-transparent rounded-full shadow-lg shadow-theatre-gold/25" />
                     <span className="text-[10px] text-theatre-gold uppercase tracking-widest font-bold mt-1.5 block">
-                      STAGE VIEW
+                      SCREEN VIEW
                     </span>
                   </div>
 
@@ -359,7 +355,7 @@ export default function BookNow({ selectedEventName, clearSelectedEvent }) {
                                       ? 'bg-theatre-gold text-theatre-green-deep border border-theatre-gold shadow-md shadow-theatre-gold/30 hover:scale-105'
                                       : 'bg-theatre-dark/80 text-gray-400 hover:text-white border border-white/10 hover:border-theatre-green hover:bg-theatre-green/20'
                                 }`}
-                                title={isBlocked ? `Seat ${seatCode} (Booked)` : `Seat ${seatCode}`}
+                                title={isBlocked ? `Recliner ${seatCode} (Reserved)` : `Recliner ${seatCode}`}
                               >
                                 {col}
                               </button>
@@ -383,7 +379,7 @@ export default function BookNow({ selectedEventName, clearSelectedEvent }) {
                     </div>
                     <div className="flex items-center space-x-2">
                       <div className="w-3.5 h-3.5 bg-red-950/40 rounded border border-red-900/20" />
-                      <span>Booked</span>
+                      <span>Reserved</span>
                     </div>
                   </div>
 
@@ -399,7 +395,7 @@ export default function BookNow({ selectedEventName, clearSelectedEvent }) {
                 {/* Live Seating summary summary */}
                 <div className="bg-theatre-green/10 border border-theatre-green/20 rounded-2xl p-4.5 mt-8 flex justify-between items-center">
                   <div>
-                    <span className="text-[10px] text-gray-400 uppercase block tracking-wider font-semibold">Selected Seats</span>
+                    <span className="text-[10px] text-gray-400 uppercase block tracking-wider font-semibold">Selected Recliners</span>
                     <span className="text-base font-bold text-theatre-gold font-serif">
                       {selectedSeats.length > 0 ? selectedSeats.sort().join(', ') : 'None'}
                     </span>
@@ -436,7 +432,7 @@ export default function BookNow({ selectedEventName, clearSelectedEvent }) {
                   </div>
                   <h3 className="font-serif text-3xl font-bold text-white">Booking Confirmed!</h3>
                   <p className="text-sm text-gray-300 font-sans max-w-md mx-auto">
-                    Your seats are locked. Please show this digital card or print it when arriving at the venue.
+                    Your private screen slot is reserved. Please show this digital card when arriving at the venue.
                   </p>
                 </div>
 
@@ -448,11 +444,11 @@ export default function BookNow({ selectedEventName, clearSelectedEvent }) {
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 pb-6 border-b border-white/5">
                     <div>
-                      <span className="text-[10px] text-gray-500 uppercase tracking-widest block font-bold mb-1">EVENT</span>
+                      <span className="text-[10px] text-gray-500 uppercase tracking-widest block font-bold mb-1">BOOKING PACKAGE</span>
                       <span className="text-lg font-serif font-bold text-white">{formData.event}</span>
                     </div>
                     <div>
-                      <span className="text-[10px] text-gray-500 uppercase tracking-widest block font-bold mb-1">VISITOR</span>
+                      <span className="text-[10px] text-gray-500 uppercase tracking-widest block font-bold mb-1">GUEST NAME</span>
                       <span className="text-lg font-sans font-semibold text-theatre-gold">{formData.fullName}</span>
                     </div>
                   </div>
@@ -463,25 +459,24 @@ export default function BookNow({ selectedEventName, clearSelectedEvent }) {
                       <span className="text-sm font-sans font-semibold text-white">{formData.preferredDate}</span>
                     </div>
                     <div>
-                      <span className="text-[10px] text-gray-500 uppercase tracking-widest block font-bold mb-1">TIME</span>
+                      <span className="text-[10px] text-gray-500 uppercase tracking-widest block font-bold mb-1">TIME SLOT</span>
                       <span className="text-sm font-sans font-semibold text-white">
-                        {eventsData.find(e => e.name === formData.event)?.time || '7:30 PM'}
+                        {eventsData.find(e => e.name === formData.event)?.time || '3-Hour Slot'}
                       </span>
                     </div>
                     <div>
-                      <span className="text-[10px] text-gray-500 uppercase tracking-widest block font-bold mb-1">SEATS</span>
+                      <span className="text-[10px] text-gray-500 uppercase tracking-widest block font-bold mb-1">RECLINERS</span>
                       <span className="text-sm font-serif font-bold text-theatre-gold">{selectedSeats.sort().join(', ')}</span>
                     </div>
                     <div>
-                      <span className="text-[10px] text-gray-500 uppercase tracking-widest block font-bold mb-1">TICKETS</span>
-                      <span className="text-sm font-sans font-semibold text-white">{formData.ticketsCount} Ticket(s)</span>
+                      <span className="text-[10px] text-gray-500 uppercase tracking-widest block font-bold mb-1">GUESTS</span>
+                      <span className="text-sm font-sans font-semibold text-white">{formData.ticketsCount} Guest(s)</span>
                     </div>
                   </div>
 
                   {/* QR Code Placeholder Representation */}
                   <div className="mt-8 flex flex-col items-center justify-center space-y-3 pt-6 border-t border-white/5">
                     <div className="w-28 h-28 bg-white p-2 rounded-xl border border-gray-200 shadow-lg flex items-center justify-center">
-                      {/* Generates a clean vector styled visual grid representation of QR code */}
                       <div className="grid grid-cols-4 gap-1 w-full h-full opacity-80">
                         {[...Array(16)].map((_, i) => (
                           <div 
@@ -506,13 +501,13 @@ export default function BookNow({ selectedEventName, clearSelectedEvent }) {
                     className="bg-theatre-green hover:bg-theatre-green-dark text-white px-6 py-3.5 rounded-2xl font-semibold text-sm shadow-md hover:shadow-lg flex items-center justify-center space-x-2 transition-all duration-300 border border-theatre-green/20 hover:scale-[1.02]"
                   >
                     <Printer className="w-4.5 h-4.5" />
-                    <span>Print Ticket</span>
+                    <span>Print Booking Pass</span>
                   </button>
                   <button
                     onClick={handleReset}
                     className="bg-transparent hover:bg-white/5 text-gray-300 hover:text-white px-6 py-3.5 rounded-2xl font-semibold text-sm transition-all duration-300 border border-white/10 flex items-center justify-center"
                   >
-                    <span>Book Another Event</span>
+                    <span>Book Another Slot</span>
                   </button>
                 </div>
 
