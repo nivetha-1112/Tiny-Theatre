@@ -65,15 +65,15 @@ export default function WhyChooseUs() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
         {/* Header */}
-        <div className="text-center max-w-3xl mx-auto mb-16 space-y-4">
-          <span className="text-theatre-gold font-semibold tracking-widest uppercase text-xs">
+        <div className="text-center max-w-3xl mx-auto mb-16 flex flex-col items-center">
+          <span className="text-theatre-gold font-semibold tracking-widest uppercase text-xs mb-4 block">
             Why Choose Tiny Theatre
           </span>
-          <h2 className="font-serif text-4xl sm:text-5xl font-bold text-white">
+          <h2 className="font-serif text-4xl sm:text-5xl font-bold text-white mb-6 leading-tight">
             Unparalleled Experiences <br className="hidden sm:inline" />
             <span className="text-theatre-green">Crafted Just for You</span>
           </h2>
-          <div className="w-20 h-1 bg-gradient-to-r from-theatre-gold to-theatre-green rounded-full mx-auto" />
+          <div className="w-20 h-1 bg-gradient-to-r from-theatre-gold to-theatre-green rounded-full mb-8" />
           <p className="text-gray-400 text-base sm:text-lg font-sans font-light">
             We merge premium private theatre cinema halls with personalized customer services to bring you something truly unique.
           </p>

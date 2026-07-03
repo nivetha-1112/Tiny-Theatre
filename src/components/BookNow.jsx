@@ -123,15 +123,15 @@ export default function BookNow({ selectedEventName, clearSelectedEvent }) {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
         {/* Header */}
-        <div className="text-center max-w-3xl mx-auto mb-16 space-y-4">
-          <span className="text-theatre-gold font-semibold tracking-widest uppercase text-xs">
+        <div className="text-center max-w-3xl mx-auto mb-16 flex flex-col items-center">
+          <span className="text-theatre-gold font-semibold tracking-widest uppercase text-xs mb-4 block">
             Private Booking
           </span>
-          <h2 className="font-serif text-4xl sm:text-5xl font-bold text-white">
+          <h2 className="font-serif text-4xl sm:text-5xl font-bold text-white mb-6 leading-tight">
             Secure Your <br className="hidden sm:inline" />
             <span className="text-theatre-green">Private Screening Slot</span>
           </h2>
-          <div className="w-20 h-1 bg-gradient-to-r from-theatre-gold to-theatre-green rounded-full mx-auto" />
+          <div className="w-20 h-1 bg-gradient-to-r from-theatre-gold to-theatre-green rounded-full mb-8" />
         </div>
 
         <AnimatePresence mode="wait">

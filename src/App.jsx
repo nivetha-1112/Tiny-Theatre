@@ -48,28 +48,22 @@ export default function App() {
               initial={{ x: 0 }}
               animate={{ x: '-100%' }}
               transition={{ duration: 1.0, delay: 1.2, ease: [0.77, 0, 0.175, 1] }}
-              className="absolute top-0 bottom-0 left-0 w-1/2 bg-theatre-green-deep border-r border-theatre-gold/30 flex justify-end items-center"
+              className="absolute top-0 bottom-0 left-0 w-1/2 bg-theatre-green-deep flex justify-end items-center"
               style={{
                 backgroundImage: 'radial-gradient(circle at 100% 50%, rgba(15, 139, 109, 0.15) 0%, transparent 60%)',
               }}
-            >
-              {/* Ornate Gold Trim on Left Curtain */}
-              <div className="w-1.5 h-full bg-gradient-to-b from-theatre-gold/40 via-theatre-gold to-theatre-gold/40 mr-1 shadow-lg shadow-theatre-gold/50" />
-            </motion.div>
+            />
 
             {/* Right Curtain */}
             <motion.div
               initial={{ x: 0 }}
               animate={{ x: '100%' }}
               transition={{ duration: 1.0, delay: 1.2, ease: [0.77, 0, 0.175, 1] }}
-              className="absolute top-0 bottom-0 right-0 w-1/2 bg-theatre-green-deep border-l border-theatre-gold/30 flex justify-start items-center"
+              className="absolute top-0 bottom-0 right-0 w-1/2 bg-theatre-green-deep flex justify-start items-center"
               style={{
                 backgroundImage: 'radial-gradient(circle at 0% 50%, rgba(15, 139, 109, 0.15) 0%, transparent 60%)',
               }}
-            >
-              {/* Ornate Gold Trim on Right Curtain */}
-              <div className="w-1.5 h-full bg-gradient-to-b from-theatre-gold/40 via-theatre-gold to-theatre-gold/40 ml-1 shadow-lg shadow-theatre-gold/50" />
-            </motion.div>
+            />
 
             {/* Loading text/logo in center - Fades out completely before curtains start to split open */}
             <motion.div

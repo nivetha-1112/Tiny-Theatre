@@ -26,17 +26,17 @@ export default function About() {
           <div className="lg:col-span-7 space-y-10">
             
             {/* Header */}
-            <div className="space-y-4">
-              <span className="text-theatre-gold font-semibold tracking-widest uppercase text-xs sm:text-sm block">
+            <div className="flex flex-col items-start">
+              <span className="text-theatre-gold font-semibold tracking-widest uppercase text-xs sm:text-sm mb-4 block">
                 About Tiny Theatre
               </span>
-              <h2 className="font-serif text-4xl sm:text-5xl lg:text-6xl font-bold text-white leading-tight">
+              <h2 className="font-serif text-4xl sm:text-5xl lg:text-6xl font-bold text-white leading-tight mb-6">
                 Exclusive Spaces, <br />
                 <span className="text-transparent bg-clip-text bg-gradient-to-r from-theatre-green-light to-theatre-green text-shadow-green">
                   Unforgettable Celebrations
                 </span>
               </h2>
-              <div className="w-24 h-1.5 bg-gradient-to-r from-theatre-gold via-theatre-green to-transparent rounded-full" />
+              <div className="w-24 h-1.5 bg-gradient-to-r from-theatre-gold via-theatre-green to-transparent rounded-full mb-2" />
             </div>
 
             {/* Description Paragraphs */}

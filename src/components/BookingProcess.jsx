@@ -45,15 +45,15 @@ export default function BookingProcess() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
         {/* Header */}
-        <div className="text-center max-w-3xl mx-auto mb-20 space-y-4">
-          <span className="text-theatre-gold font-semibold tracking-widest uppercase text-xs">
+        <div className="text-center max-w-3xl mx-auto mb-20 flex flex-col items-center">
+          <span className="text-theatre-gold font-semibold tracking-widest uppercase text-xs mb-4 block">
             How It Works
           </span>
-          <h2 className="font-serif text-4xl sm:text-5xl font-bold text-white">
+          <h2 className="font-serif text-4xl sm:text-5xl font-bold text-white mb-6 leading-tight">
             Booking Made <br className="hidden sm:inline" />
             <span className="text-theatre-green">Seamless & Simple</span>
           </h2>
-          <div className="w-20 h-1 bg-gradient-to-r from-theatre-gold to-theatre-green rounded-full mx-auto" />
+          <div className="w-20 h-1 bg-gradient-to-r from-theatre-gold to-theatre-green rounded-full mb-8" />
           <p className="text-gray-400 text-base sm:text-lg font-sans font-light">
             Follow five simple steps to secure your private screening hall rental.
           </p>
@@ -61,8 +61,6 @@ export default function BookingProcess() {
 
         {/* Process Timeline */}
         <div className="relative">
-          {/* Connecting Line - Desktop Only */}
-          <div className="hidden lg:block absolute top-[68px] left-[5%] right-[5%] h-0.5 bg-gradient-to-r from-theatre-green/20 via-theatre-gold/35 to-theatre-green/20" />
 
           {/* Steps Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-12 lg:gap-8 relative z-10">

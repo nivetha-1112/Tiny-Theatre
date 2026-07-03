@@ -63,8 +63,8 @@ export default function Footer() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-12 pb-16 border-b border-white/5">
           
-          {/* Col 1: Brand Info (Col 1-4) */}
-          <div className="lg:col-span-4 space-y-6">
+          {/* Col 1: Brand Info (Col 1-3) */}
+          <div className="lg:col-span-3 space-y-6">
             <a href="#home" onClick={(e) => scrollToSection(e, '#home')} className="flex items-center space-x-2 group">
               <div className="p-2 bg-theatre-green/20 rounded-lg group-hover:bg-theatre-green/30 transition-all duration-300 border border-theatre-green/30">
                 <Ticket className="w-5 h-5 text-theatre-gold" />
@@ -139,8 +139,8 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Col 4: Newsletter signup (Col 11-12) */}
-          <div className="lg:col-span-2 space-y-6">
+          {/* Col 4: Newsletter signup (Col 10-12) */}
+          <div className="lg:col-span-3 space-y-6">
             <h4 className="text-white font-serif text-base font-bold tracking-wide">Newsletter</h4>
             <p className="text-xs text-gray-400 leading-relaxed font-light">
               Subscribe to receive exclusive booking specials and member discount codes.
@@ -149,13 +149,13 @@ export default function Footer() {
               <input
                 type="email"
                 placeholder="Your email"
-                className="w-full bg-white/5 border border-white/10 rounded-xl py-3 pl-4 pr-10 text-xs text-white placeholder:text-gray-600 focus:border-theatre-gold outline-none"
+                className="w-full bg-white/5 border border-white/10 rounded-xl py-3.5 pl-5 pr-14 text-sm text-white placeholder:text-gray-600 focus:border-theatre-gold outline-none"
               />
               <button
                 type="submit"
-                className="absolute right-1 top-1 bottom-1 px-3 bg-theatre-gold hover:bg-theatre-gold-light text-theatre-green-deep rounded-lg flex items-center justify-center transition-all duration-300"
+                className="absolute right-1 top-1 bottom-1 px-4 bg-theatre-gold hover:bg-theatre-gold-light text-theatre-green-deep rounded-lg flex items-center justify-center transition-all duration-300"
               >
-                <ArrowRight className="w-4 h-4" />
+                <ArrowRight className="w-4.5 h-4.5" />
               </button>
             </form>
           </div>
