@@ -1,0 +1,106 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap');
+
+@import "tailwindcss";
+
+@theme {
+  --color-theatre-green: #0F8B6D;
+  --color-theatre-green-dark: #0B6650;
+  --color-theatre-green-light: #14C299;
+  --color-theatre-green-deep: #061D18;
+  
+  --color-theatre-gold: #F4C430;
+  --color-theatre-gold-dark: #CA9E1B;
+  --color-theatre-gold-light: #F8D468;
+  --color-theatre-gold-deep: #5C4708;
+
+  --color-theatre-dark: #051410;
+  --color-theatre-charcoal: #111827;
+  --color-theatre-cream: #FAF8F5;
+
+  --font-serif: "Playfair Display", Georgia, serif;
+  --font-sans: Inter, system-ui, sans-serif;
+  
+  --animate-fade-in: fadeIn 0.8s ease-out forwards;
+  --animate-slide-up: slideUp 0.8s ease-out forwards;
+  --animate-curtain-left: curtainLeft 1.5s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+  --animate-curtain-right: curtainRight 1.5s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+
+  @keyframes fadeIn {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+  }
+  @keyframes slideUp {
+    0% { opacity: 0; transform: translateY(30px); }
+    100% { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes curtainLeft {
+    0% { transform: translateX(0) scaleX(1); }
+    100% { transform: translateX(-100%) scaleX(0); }
+  }
+  @keyframes curtainRight {
+    0% { transform: translateX(0) scaleX(1); }
+    100% { transform: translateX(100%) scaleX(0); }
+  }
+}
+
+html {
+  scroll-behavior: smooth;
+  font-family: 'Inter', system-ui, sans-serif;
+  background-color: #051410;
+  color: #FAF8F5;
+}
+
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #051410;
+}
+::-webkit-scrollbar-thumb {
+  background: #0F8B6D;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #F4C430;
+}
+
+/* Custom UI Utilities */
+.glass {
+  background: rgba(15, 139, 109, 0.05);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(15, 139, 109, 0.15);
+}
+
+.glass-dark {
+  background: rgba(5, 20, 16, 0.75);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(15, 139, 109, 0.15);
+}
+
+.glass-gold {
+  background: rgba(244, 196, 48, 0.03);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(244, 196, 48, 0.15);
+}
+
+.text-shadow-gold {
+  text-shadow: 0 0 10px rgba(244, 196, 48, 0.3);
+}
+
+.text-shadow-green {
+  text-shadow: 0 0 10px rgba(15, 139, 109, 0.3);
+}
+
+.bg-radial-gradient-hero {
+  background-image: radial-gradient(circle at center, rgba(15, 139, 109, 0.08) 0%, transparent 70%);
+}
