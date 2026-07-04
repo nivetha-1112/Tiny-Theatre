@@ -54,7 +54,7 @@ export default function Navbar() {
     <nav
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         isScrolled
-          ? 'glass-dark py-3 shadow-lg shadow-theatre-green-deep/20 border-b border-theatre-green/10'
+          ? 'glass-dark py-3 shadow-lg shadow-theatre-green-deep/20'
           : 'bg-transparent py-5'
       }`}
     >
@@ -120,7 +120,7 @@ export default function Navbar() {
 
       {/* Mobile Drawer */}
       <div
-        className={`md:hidden absolute top-full left-0 w-full glass-dark border-b border-theatre-green/10 transition-all duration-300 ease-in-out ${
+        className={`md:hidden absolute top-full left-0 w-full glass-dark transition-all duration-300 ease-in-out ${
           isOpen ? 'opacity-100 translate-y-0 visible' : 'opacity-0 -translate-y-4 invisible'
         }`}
       >

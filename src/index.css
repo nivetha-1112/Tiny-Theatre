@@ -80,10 +80,9 @@ body {
 }
 
 .glass-dark {
-  background: rgba(5, 20, 16, 0.75);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(15, 139, 109, 0.15);
+  background: rgba(5, 20, 16, 0.95);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
 }
 
 .glass-gold {
