@@ -88,7 +88,7 @@ export default function BookNow({ selectedEventName, clearSelectedEvent }) {
         particleCount: 150,
         spread: 80,
         origin: { y: 0.6 },
-        colors: ['#0F8B6D', '#F4C430', '#FFFFFF']
+        colors: ['#708090', '#F4C430', '#FFFFFF']
       });
     } else {
       // Scroll to seat map if seats error exists
@@ -129,9 +129,9 @@ export default function BookNow({ selectedEventName, clearSelectedEvent }) {
           </span>
           <h2 className="font-serif text-4xl sm:text-5xl font-bold text-white mb-6 leading-tight">
             Secure Your <br className="hidden sm:inline" />
-            <span className="text-theatre-green">Private Screening Slot</span>
+            <span className="text-theatre-grey">Private Screening Slot</span>
           </h2>
-          <div className="w-20 h-1 bg-gradient-to-r from-theatre-gold to-theatre-green rounded-full mb-8" />
+          <div className="w-20 h-1 bg-gradient-to-r from-theatre-gold to-theatre-grey rounded-full mb-8" />
         </div>
 
         <AnimatePresence mode="wait">
@@ -144,7 +144,7 @@ export default function BookNow({ selectedEventName, clearSelectedEvent }) {
             >
               
               {/* Left Column: Form Details (Col 1-7) */}
-              <div className="lg:col-span-7 bg-theatre-green/5 backdrop-blur-md rounded-3xl p-6 sm:p-10 border border-theatre-green/20 shadow-xl flex flex-col justify-between">
+              <div className="lg:col-span-7 bg-theatre-grey/5 backdrop-blur-md rounded-3xl p-6 sm:p-10 border border-theatre-grey/20 shadow-xl flex flex-col justify-between">
                 <form onSubmit={handleSubmit} className="space-y-6">
                   
                   {/* Row 1: Name & Email */}
@@ -158,7 +158,7 @@ export default function BookNow({ selectedEventName, clearSelectedEvent }) {
                           value={formData.fullName}
                           onChange={(e) => setFormData({...formData, fullName: e.target.value})}
                           placeholder="John Doe"
-                          className="w-full bg-theatre-dark/60 text-white pl-11 pr-4 py-3.5 rounded-2xl border border-white/10 focus:border-theatre-green focus:ring-1 focus:ring-theatre-green transition-all duration-300 text-sm placeholder:text-gray-600 outline-none"
+                          className="w-full bg-theatre-dark/60 text-white pl-11 pr-4 py-3.5 rounded-2xl border border-white/10 focus:border-theatre-grey focus:ring-1 focus:ring-theatre-grey transition-all duration-300 text-sm placeholder:text-gray-600 outline-none"
                         />
                       </div>
                       {errors.fullName && (
@@ -178,7 +178,7 @@ export default function BookNow({ selectedEventName, clearSelectedEvent }) {
                           value={formData.email}
                           onChange={(e) => setFormData({...formData, email: e.target.value})}
                           placeholder="johndoe@example.com"
-                          className="w-full bg-theatre-dark/60 text-white pl-11 pr-4 py-3.5 rounded-2xl border border-white/10 focus:border-theatre-green focus:ring-1 focus:ring-theatre-green transition-all duration-300 text-sm placeholder:text-gray-600 outline-none"
+                          className="w-full bg-theatre-dark/60 text-white pl-11 pr-4 py-3.5 rounded-2xl border border-white/10 focus:border-theatre-grey focus:ring-1 focus:ring-theatre-grey transition-all duration-300 text-sm placeholder:text-gray-600 outline-none"
                         />
                       </div>
                       {errors.email && (
@@ -201,7 +201,7 @@ export default function BookNow({ selectedEventName, clearSelectedEvent }) {
                           value={formData.phone}
                           onChange={(e) => setFormData({...formData, phone: e.target.value})}
                           placeholder="+1 (555) 000-0000"
-                          className="w-full bg-theatre-dark/60 text-white pl-11 pr-4 py-3.5 rounded-2xl border border-white/10 focus:border-theatre-green focus:ring-1 focus:ring-theatre-green transition-all duration-300 text-sm placeholder:text-gray-600 outline-none"
+                          className="w-full bg-theatre-dark/60 text-white pl-11 pr-4 py-3.5 rounded-2xl border border-white/10 focus:border-theatre-grey focus:ring-1 focus:ring-theatre-grey transition-all duration-300 text-sm placeholder:text-gray-600 outline-none"
                         />
                       </div>
                       {errors.phone && (
@@ -222,7 +222,7 @@ export default function BookNow({ selectedEventName, clearSelectedEvent }) {
                             setFormData({...formData, ticketsCount: Number(e.target.value)});
                             setSelectedSeats([]); // reset seat selections
                           }}
-                          className="w-full bg-theatre-dark/60 text-white pl-11 pr-4 py-3.5 rounded-2xl border border-white/10 focus:border-theatre-green focus:ring-1 focus:ring-theatre-green transition-all duration-300 text-sm outline-none appearance-none"
+                          className="w-full bg-theatre-dark/60 text-white pl-11 pr-4 py-3.5 rounded-2xl border border-white/10 focus:border-theatre-grey focus:ring-1 focus:ring-theatre-grey transition-all duration-300 text-sm outline-none appearance-none"
                         >
                           {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15].map(n => (
                             <option key={n} value={n} className="bg-theatre-dark text-white">{n} Guest{n > 1 ? 's' : ''}</option>
@@ -239,7 +239,7 @@ export default function BookNow({ selectedEventName, clearSelectedEvent }) {
                       <select
                         value={formData.event}
                         onChange={(e) => setFormData({...formData, event: e.target.value})}
-                        className="w-full bg-theatre-dark/60 text-white px-4 py-3.5 rounded-2xl border border-white/10 focus:border-theatre-green focus:ring-1 focus:ring-theatre-green transition-all duration-300 text-sm outline-none"
+                        className="w-full bg-theatre-dark/60 text-white px-4 py-3.5 rounded-2xl border border-white/10 focus:border-theatre-grey focus:ring-1 focus:ring-theatre-grey transition-all duration-300 text-sm outline-none"
                       >
                         <option value="">-- Choose Package --</option>
                         {eventsData.map(ev => (
@@ -263,7 +263,7 @@ export default function BookNow({ selectedEventName, clearSelectedEvent }) {
                           value={formData.preferredDate}
                           onChange={(e) => setFormData({...formData, preferredDate: e.target.value})}
                           min="2026-07-03"
-                          className="w-full bg-theatre-dark/60 text-white pl-11 pr-4 py-3.5 rounded-2xl border border-white/10 focus:border-theatre-green focus:ring-1 focus:ring-theatre-green transition-all duration-300 text-sm outline-none"
+                          className="w-full bg-theatre-dark/60 text-white pl-11 pr-4 py-3.5 rounded-2xl border border-white/10 focus:border-theatre-grey focus:ring-1 focus:ring-theatre-grey transition-all duration-300 text-sm outline-none"
                         />
                       </div>
                       {errors.preferredDate && (
@@ -285,7 +285,7 @@ export default function BookNow({ selectedEventName, clearSelectedEvent }) {
                         value={formData.message}
                         onChange={(e) => setFormData({...formData, message: e.target.value})}
                         placeholder="E.g., Special cake flavor, custom LED sign wordings, or proposal timing..."
-                        className="w-full bg-theatre-dark/60 text-white pl-11 pr-4 py-3.5 rounded-2xl border border-white/10 focus:border-theatre-green focus:ring-1 focus:ring-theatre-green transition-all duration-300 text-sm placeholder:text-gray-600 outline-none resize-none"
+                        className="w-full bg-theatre-dark/60 text-white pl-11 pr-4 py-3.5 rounded-2xl border border-white/10 focus:border-theatre-grey focus:ring-1 focus:ring-theatre-grey transition-all duration-300 text-sm placeholder:text-gray-600 outline-none resize-none"
                       />
                     </div>
                   </div>
@@ -294,16 +294,16 @@ export default function BookNow({ selectedEventName, clearSelectedEvent }) {
                   <div className="pt-4 flex flex-col sm:flex-row gap-4">
                     <button
                       type="submit"
-                      className="flex-1 bg-gradient-to-r from-theatre-gold to-theatre-gold-dark hover:from-theatre-gold-light hover:to-theatre-gold text-theatre-green-deep font-bold py-4 rounded-2xl shadow-lg hover:shadow-theatre-gold/20 flex items-center justify-center space-x-2 text-base transition-all duration-300 hover:scale-[1.01]"
+                      className="flex-1 bg-gradient-to-r from-theatre-gold to-theatre-gold-dark hover:from-theatre-gold-light hover:to-theatre-gold text-theatre-grey-deep font-bold py-4 rounded-2xl shadow-lg hover:shadow-theatre-gold/20 flex items-center justify-center space-x-2 text-base transition-all duration-300 hover:scale-[1.01]"
                     >
-                      <Ticket className="w-5 h-5 text-theatre-green-deep" />
+                      <Ticket className="w-5 h-5 text-theatre-grey-deep" />
                       <span>Confirm Private Booking</span>
                     </button>
                     
                     <button
                       type="button"
                       onClick={() => setIsSelectingSeats(!isSelectingSeats)}
-                      className="bg-theatre-green/10 hover:bg-theatre-green/20 text-theatre-gold font-semibold py-4 px-6 rounded-2xl border border-theatre-green/20 hover:border-theatre-gold/30 flex items-center justify-center space-x-2 transition-all duration-300 text-sm"
+                      className="bg-theatre-grey/10 hover:bg-theatre-grey/20 text-theatre-gold font-semibold py-4 px-6 rounded-2xl border border-theatre-grey/20 hover:border-theatre-gold/30 flex items-center justify-center space-x-2 transition-all duration-300 text-sm"
                     >
                       <Armchair className="w-5 h-5" />
                       <span>{isSelectingSeats ? 'Hide Seats Map' : 'Show Seats Map'}</span>
@@ -314,7 +314,7 @@ export default function BookNow({ selectedEventName, clearSelectedEvent }) {
               </div>
 
               {/* Right Column: Seating Plan Selection (Col 8-12) */}
-              <div className="lg:col-span-5 bg-theatre-green/5 backdrop-blur-md rounded-3xl p-6 sm:p-10 border border-theatre-green/20 shadow-xl flex flex-col justify-between relative overflow-hidden">
+              <div className="lg:col-span-5 bg-theatre-grey/5 backdrop-blur-md rounded-3xl p-6 sm:p-10 border border-theatre-grey/20 shadow-xl flex flex-col justify-between relative overflow-hidden">
                 <div className="space-y-6">
                   <div>
                     <h3 className="font-serif text-xl font-bold text-white mb-1">Private Theatre Seating Layout</h3>
@@ -352,8 +352,8 @@ export default function BookNow({ selectedEventName, clearSelectedEvent }) {
                                   isBlocked
                                     ? 'bg-red-950/40 text-red-700/30 border border-red-900/20 cursor-not-allowed'
                                     : isSelected
-                                      ? 'bg-theatre-gold text-theatre-green-deep border border-theatre-gold shadow-md shadow-theatre-gold/30 hover:scale-105'
-                                      : 'bg-theatre-dark/80 text-gray-400 hover:text-white border border-white/10 hover:border-theatre-green hover:bg-theatre-green/20'
+                                      ? 'bg-theatre-gold text-theatre-grey-deep border border-theatre-gold shadow-md shadow-theatre-gold/30 hover:scale-105'
+                                      : 'bg-theatre-dark/80 text-gray-400 hover:text-white border border-white/10 hover:border-theatre-grey hover:bg-theatre-grey/20'
                                 }`}
                                 title={isBlocked ? `Recliner ${seatCode} (Reserved)` : `Recliner ${seatCode}`}
                               >
@@ -393,7 +393,7 @@ export default function BookNow({ selectedEventName, clearSelectedEvent }) {
                 </div>
 
                 {/* Live Seating summary summary */}
-                <div className="bg-theatre-green/10 border border-theatre-green/20 rounded-2xl p-4.5 mt-8 flex justify-between items-center">
+                <div className="bg-theatre-grey/10 border border-theatre-grey/20 rounded-2xl p-4.5 mt-8 flex justify-between items-center">
                   <div>
                     <span className="text-[10px] text-gray-400 uppercase block tracking-wider font-semibold">Selected Recliners</span>
                     <span className="text-base font-bold text-theatre-gold font-serif">
@@ -419,7 +419,7 @@ export default function BookNow({ selectedEventName, clearSelectedEvent }) {
               exit={{ opacity: 0, scale: 0.95 }}
               className="max-w-2xl mx-auto"
             >
-              <div className="bg-theatre-green/10 rounded-3xl p-6 sm:p-10 border border-theatre-gold/30 shadow-2xl relative overflow-hidden">
+              <div className="bg-theatre-grey/10 rounded-3xl p-6 sm:p-10 border border-theatre-gold/30 shadow-2xl relative overflow-hidden">
                 {/* Visual sparkles overlay */}
                 <div className="absolute top-0 right-0 p-4">
                   <Sparkles className="w-6 h-6 text-theatre-gold animate-bounce" />
@@ -437,10 +437,10 @@ export default function BookNow({ selectedEventName, clearSelectedEvent }) {
                 </div>
 
                 {/* Digital Ticket Representation */}
-                <div className="bg-theatre-dark/90 rounded-2xl p-6 border border-theatre-green/20 relative my-8 shadow-inner">
+                <div className="bg-theatre-dark/90 rounded-2xl p-6 border border-theatre-grey/20 relative my-8 shadow-inner">
                   {/* Decorative cutouts at the left and right sides of ticket split line */}
-                  <div className="absolute top-1/2 -left-3 w-6 h-6 bg-theatre-dark border-r border-theatre-green/20 rounded-full -translate-y-1/2 z-10" />
-                  <div className="absolute top-1/2 -right-3 w-6 h-6 bg-theatre-dark border-l border-theatre-green/20 rounded-full -translate-y-1/2 z-10" />
+                  <div className="absolute top-1/2 -left-3 w-6 h-6 bg-theatre-dark border-r border-theatre-grey/20 rounded-full -translate-y-1/2 z-10" />
+                  <div className="absolute top-1/2 -right-3 w-6 h-6 bg-theatre-dark border-l border-theatre-grey/20 rounded-full -translate-y-1/2 z-10" />
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 pb-6 border-b border-white/5">
                     <div>
@@ -482,7 +482,7 @@ export default function BookNow({ selectedEventName, clearSelectedEvent }) {
                           <div 
                             key={i} 
                             className={`rounded-sm ${
-                              (i % 3 === 0 || i === 7 || i === 11 || i === 14) ? 'bg-theatre-green-deep' : 'bg-transparent'
+                              (i % 3 === 0 || i === 7 || i === 11 || i === 14) ? 'bg-theatre-grey-deep' : 'bg-transparent'
                             }`} 
                           />
                         ))}
@@ -498,7 +498,7 @@ export default function BookNow({ selectedEventName, clearSelectedEvent }) {
                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
                   <button
                     onClick={() => window.print()}
-                    className="bg-theatre-green hover:bg-theatre-green-dark text-white px-6 py-3.5 rounded-2xl font-semibold text-sm shadow-md hover:shadow-lg flex items-center justify-center space-x-2 transition-all duration-300 border border-theatre-green/20 hover:scale-[1.02]"
+                    className="bg-theatre-grey hover:bg-theatre-grey-dark text-white px-6 py-3.5 rounded-2xl font-semibold text-sm shadow-md hover:shadow-lg flex items-center justify-center space-x-2 transition-all duration-300 border border-theatre-grey/20 hover:scale-[1.02]"
                   >
                     <Printer className="w-4.5 h-4.5" />
                     <span>Print Booking Pass</span>

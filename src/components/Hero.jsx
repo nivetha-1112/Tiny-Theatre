@@ -30,7 +30,7 @@ export default function Hero() {
 
       {/* Interactive stage spotlights */}
       <div className="absolute top-0 left-1/4 w-[30vw] h-[80vh] bg-gradient-to-b from-theatre-gold/15 to-transparent transform -rotate-12 blur-3xl pointer-events-none z-10" />
-      <div className="absolute top-0 right-1/4 w-[30vw] h-[80vh] bg-gradient-to-b from-theatre-green/10 to-transparent transform rotate-12 blur-3xl pointer-events-none z-10" />
+      <div className="absolute top-0 right-1/4 w-[30vw] h-[80vh] bg-gradient-to-b from-theatre-grey/10 to-transparent transform rotate-12 blur-3xl pointer-events-none z-10" />
 
       {/* Main Content Area */}
       <div className="relative z-20 max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center pt-24">
@@ -39,7 +39,7 @@ export default function Hero() {
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: 'easeOut' }}
-          className="inline-flex items-center space-x-2 bg-theatre-green/20 backdrop-blur-md px-4 py-1.5 rounded-full border border-theatre-green/30 text-theatre-gold text-xs font-semibold tracking-wider uppercase mb-8"
+          className="inline-flex items-center space-x-2 bg-theatre-grey/20 backdrop-blur-md px-4 py-1.5 rounded-full border border-theatre-grey/30 text-theatre-gold text-xs font-semibold tracking-wider uppercase mb-8"
         >
           <Sparkles className="w-4.5 h-4.5 animate-spin" style={{ animationDuration: '4s' }} />
           <span>Premium Private Theatre Booking</span>
@@ -78,15 +78,15 @@ export default function Hero() {
           <a
             href="#book-now"
             onClick={(e) => scrollToSection(e, '#book-now')}
-            className="group flex items-center justify-center space-x-2 w-full sm:w-auto bg-gradient-to-r from-theatre-gold to-theatre-gold-dark hover:from-theatre-gold-light hover:to-theatre-gold text-theatre-green-deep font-bold px-8 py-4 rounded-full shadow-xl shadow-theatre-gold/15 hover:shadow-theatre-gold/25 hover:scale-105 transition-all duration-300 text-base"
+            className="group flex items-center justify-center space-x-2 w-full sm:w-auto bg-gradient-to-r from-theatre-gold to-theatre-gold-dark hover:from-theatre-gold-light hover:to-theatre-gold text-theatre-grey-deep font-bold px-8 py-4 rounded-full shadow-xl shadow-theatre-gold/15 hover:shadow-theatre-gold/25 hover:scale-105 transition-all duration-300 text-base"
           >
-            <Ticket className="w-5 h-5 text-theatre-green-deep group-hover:rotate-12 transition-transform duration-300" />
+            <Ticket className="w-5 h-5 text-theatre-grey-deep group-hover:rotate-12 transition-transform duration-300" />
             <span>Book Venue Now</span>
           </a>
           <a
             href="#events"
             onClick={(e) => scrollToSection(e, '#events')}
-            className="group flex items-center justify-center space-x-2 w-full sm:w-auto bg-transparent hover:bg-theatre-green/10 text-white hover:text-theatre-gold font-semibold px-8 py-4 rounded-full border border-white/20 hover:border-theatre-gold/40 hover:scale-105 transition-all duration-300 text-base"
+            className="group flex items-center justify-center space-x-2 w-full sm:w-auto bg-transparent hover:bg-theatre-grey/10 text-white hover:text-theatre-gold font-semibold px-8 py-4 rounded-full border border-white/20 hover:border-theatre-gold/40 hover:scale-105 transition-all duration-300 text-base"
           >
             <Calendar className="w-5 h-5 text-gray-400 group-hover:text-theatre-gold transition-colors duration-300" />
             <span>Explore Packages</span>

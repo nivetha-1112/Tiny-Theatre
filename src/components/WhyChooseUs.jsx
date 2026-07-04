@@ -60,7 +60,7 @@ export default function WhyChooseUs() {
   return (
     <section id="why-choose-us" className="relative py-24 bg-gradient-to-b from-theatre-dark/95 to-theatre-dark overflow-hidden">
       {/* Visual background details */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-theatre-green/5 rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-theatre-grey/5 rounded-full blur-[120px] pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
@@ -71,9 +71,9 @@ export default function WhyChooseUs() {
           </span>
           <h2 className="font-serif text-4xl sm:text-5xl font-bold text-white mb-6 leading-tight">
             Unparalleled Experiences <br className="hidden sm:inline" />
-            <span className="text-theatre-green">Crafted Just for You</span>
+            <span className="text-theatre-grey">Crafted Just for You</span>
           </h2>
-          <div className="w-20 h-1 bg-gradient-to-r from-theatre-gold to-theatre-green rounded-full mb-8" />
+          <div className="w-20 h-1 bg-gradient-to-r from-theatre-gold to-theatre-grey rounded-full mb-8" />
           <p className="text-gray-400 text-base sm:text-lg font-sans font-light">
             We merge premium private theatre cinema halls with personalized customer services to bring you something truly unique.
           </p>
@@ -92,7 +92,7 @@ export default function WhyChooseUs() {
               <motion.div
                 key={feat.title}
                 variants={cardVariants}
-                className="glass hover:glass-gold rounded-[32px] overflow-hidden border border-white/5 hover:border-theatre-gold/20 flex flex-col transition-all duration-300 group cursor-default hover:shadow-lg hover:shadow-theatre-green-deep/15"
+                className="glass hover:glass-gold rounded-[32px] overflow-hidden border border-white/5 hover:border-theatre-gold/20 flex flex-col transition-all duration-300 group cursor-default hover:shadow-lg hover:shadow-theatre-grey-deep/15"
               >
                 {/* Feature Header Image */}
                 <div className="h-48 w-full overflow-hidden relative">

@@ -39,7 +39,7 @@ export default function BookingProcess() {
   return (
     <section id="booking-process" className="relative py-24 bg-theatre-dark overflow-hidden">
       {/* Background ambient lighting */}
-      <div className="absolute top-0 right-0 w-96 h-96 bg-theatre-green/5 rounded-full blur-3xl" />
+      <div className="absolute top-0 right-0 w-96 h-96 bg-theatre-grey/5 rounded-full blur-3xl" />
       <div className="absolute bottom-0 left-0 w-96 h-96 bg-theatre-gold/5 rounded-full blur-3xl" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
@@ -51,9 +51,9 @@ export default function BookingProcess() {
           </span>
           <h2 className="font-serif text-4xl sm:text-5xl font-bold text-white mb-6 leading-tight">
             Booking Made <br className="hidden sm:inline" />
-            <span className="text-theatre-green">Seamless & Simple</span>
+            <span className="text-theatre-grey">Seamless & Simple</span>
           </h2>
-          <div className="w-20 h-1 bg-gradient-to-r from-theatre-gold to-theatre-green rounded-full mb-8" />
+          <div className="w-20 h-1 bg-gradient-to-r from-theatre-gold to-theatre-grey rounded-full mb-8" />
           <p className="text-gray-400 text-base sm:text-lg font-sans font-light">
             Follow five simple steps to secure your private screening hall rental.
           </p>
@@ -78,11 +78,11 @@ export default function BookingProcess() {
                   {/* Step Bubble */}
                   <div className="relative mb-6">
                     {/* Circle Background */}
-                    <div className="w-24 h-24 rounded-full bg-theatre-green/10 border border-theatre-green/20 group-hover:border-theatre-gold/40 flex items-center justify-center transition-all duration-500 transform group-hover:scale-110 shadow-lg shadow-theatre-green-deep/30 relative">
-                      <Icon className="w-8 h-8 text-theatre-green group-hover:text-theatre-gold transition-colors duration-500" />
+                    <div className="w-24 h-24 rounded-full bg-theatre-grey/10 border border-theatre-grey/20 group-hover:border-theatre-gold/40 flex items-center justify-center transition-all duration-500 transform group-hover:scale-110 shadow-lg shadow-theatre-grey-deep/30 relative">
+                      <Icon className="w-8 h-8 text-theatre-grey group-hover:text-theatre-gold transition-colors duration-500" />
                       
                       {/* Step Number Tag */}
-                      <span className="absolute -top-1 -right-1 bg-theatre-gold text-theatre-green-deep font-sans text-xs font-bold w-6 h-6 rounded-full flex items-center justify-center border-2 border-theatre-dark">
+                      <span className="absolute -top-1 -right-1 bg-theatre-gold text-theatre-grey-deep font-sans text-xs font-bold w-6 h-6 rounded-full flex items-center justify-center border-2 border-theatre-dark">
                         {step.step}
                       </span>
                     </div>

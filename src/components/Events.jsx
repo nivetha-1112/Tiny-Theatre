@@ -94,7 +94,7 @@ export default function Events({ onBookEvent }) {
   return (
     <section id="events" className="relative py-24 bg-theatre-dark/95 overflow-hidden">
       {/* Background ambient lighting */}
-      <div className="absolute top-1/4 left-0 w-80 h-80 bg-theatre-green/5 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute top-1/4 left-0 w-80 h-80 bg-theatre-grey/5 rounded-full blur-3xl pointer-events-none" />
       <div className="absolute bottom-1/4 right-0 w-80 h-80 bg-theatre-gold/5 rounded-full blur-3xl pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
@@ -106,9 +106,9 @@ export default function Events({ onBookEvent }) {
           </span>
           <h2 className="font-serif text-4xl sm:text-5xl font-bold text-white mb-6 leading-tight">
             Exclusive Packages <br className="hidden sm:inline" />
-            <span className="text-theatre-green">Crafted Just for You</span>
+            <span className="text-theatre-grey">Crafted Just for You</span>
           </h2>
-          <div className="w-20 h-1 bg-gradient-to-r from-theatre-gold to-theatre-green rounded-full mb-8" />
+          <div className="w-20 h-1 bg-gradient-to-r from-theatre-gold to-theatre-grey rounded-full mb-8" />
           <p className="text-gray-400 text-base sm:text-lg font-sans font-light">
             Select your preferred rental type and book your private movie theatre hall slot today.
           </p>
@@ -122,8 +122,8 @@ export default function Events({ onBookEvent }) {
               onClick={() => setActiveFilter(filter)}
               className={`px-5 py-2.5 rounded-full text-sm font-semibold tracking-wide transition-all duration-300 border ${
                 activeFilter === filter
-                  ? 'bg-theatre-gold text-theatre-green-deep border-theatre-gold shadow-lg shadow-theatre-gold/15 scale-105'
-                  : 'bg-theatre-green/10 text-gray-300 border-white/5 hover:border-theatre-green/30 hover:text-white'
+                  ? 'bg-theatre-gold text-theatre-grey-deep border-theatre-gold shadow-lg shadow-theatre-gold/15 scale-105'
+                  : 'bg-theatre-grey/10 text-gray-300 border-white/5 hover:border-theatre-grey/30 hover:text-white'
               }`}
             >
               {filter}
@@ -145,7 +145,7 @@ export default function Events({ onBookEvent }) {
                 exit={{ opacity: 0, scale: 0.9 }}
                 transition={{ duration: 0.4 }}
                 key={event.id}
-                className="glass hover:glass-gold rounded-3xl overflow-hidden border border-white/5 hover:border-theatre-gold/20 flex flex-col h-full group transition-all duration-300 hover:shadow-xl hover:shadow-theatre-green-deep/20"
+                className="glass hover:glass-gold rounded-3xl overflow-hidden border border-white/5 hover:border-theatre-gold/20 flex flex-col h-full group transition-all duration-300 hover:shadow-xl hover:shadow-theatre-grey-deep/20"
               >
                 {/* Event Image & Tag */}
                 <div className="relative h-56 overflow-hidden">
@@ -157,13 +157,13 @@ export default function Events({ onBookEvent }) {
                   />
                   
                   {/* Category Tag */}
-                  <div className="absolute top-4 left-4 z-20 bg-theatre-green/85 backdrop-blur-md px-3.5 py-1.5 rounded-full border border-theatre-green/30 text-white text-xs font-bold uppercase tracking-wider flex items-center space-x-1.5 shadow-md">
+                  <div className="absolute top-4 left-4 z-20 bg-theatre-grey/85 backdrop-blur-md px-3.5 py-1.5 rounded-full border border-theatre-grey/30 text-white text-xs font-bold uppercase tracking-wider flex items-center space-x-1.5 shadow-md">
                     <Tag className="w-3.5 h-3.5 text-theatre-gold" />
                     <span>{event.category}</span>
                   </div>
 
                   {/* Price Tag */}
-                  <div className="absolute bottom-4 right-4 z-20 bg-theatre-gold text-theatre-green-deep px-3 py-1.5 rounded-xl font-bold font-sans text-sm shadow-md">
+                  <div className="absolute bottom-4 right-4 z-20 bg-theatre-gold text-theatre-grey-deep px-3 py-1.5 rounded-xl font-bold font-sans text-sm shadow-md">
                     {event.price}
                   </div>
                 </div>
@@ -200,7 +200,7 @@ export default function Events({ onBookEvent }) {
                   <div className="pt-4 mt-auto">
                     <button
                       onClick={() => handleBookClick(event.name)}
-                      className="w-full bg-theatre-green hover:bg-theatre-green-dark text-white hover:text-theatre-gold px-5 py-3 rounded-2xl font-semibold text-sm shadow-md hover:shadow-lg hover:shadow-theatre-green/20 border border-theatre-green/20 hover:border-theatre-gold/20 flex items-center justify-center space-x-2 transition-all duration-300 group-hover:scale-[1.02]"
+                      className="w-full bg-gradient-to-r from-theatre-gold to-theatre-gold-dark hover:from-theatre-gold-light hover:to-theatre-gold text-theatre-grey-deep px-5 py-3.5 rounded-2xl font-bold text-sm shadow-md hover:shadow-lg hover:shadow-theatre-gold/20 flex items-center justify-center space-x-2 transition-all duration-300 group-hover:scale-[1.02]"
                     >
                       <span>Book Private Slot</span>
                     </button>

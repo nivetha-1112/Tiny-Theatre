@@ -54,7 +54,7 @@ export default function Navbar() {
     <nav
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         isScrolled
-          ? 'glass-dark py-3 shadow-lg shadow-theatre-green-deep/20'
+          ? 'glass-dark py-3 shadow-lg shadow-theatre-grey-deep/20'
           : 'bg-transparent py-5'
       }`}
     >
@@ -66,7 +66,7 @@ export default function Navbar() {
             onClick={(e) => handleNavClick(e, '#home')}
             className="flex items-center space-x-2 group cursor-pointer"
           >
-            <div className="p-2 bg-theatre-green/20 rounded-lg group-hover:bg-theatre-green/30 transition-all duration-300 border border-theatre-green/30">
+            <div className="p-2 bg-theatre-grey/20 rounded-lg group-hover:bg-theatre-grey/30 transition-all duration-300 border border-theatre-grey/30">
               <Ticket className="w-6 h-6 text-theatre-gold animate-pulse" />
             </div>
             <div>
@@ -98,7 +98,7 @@ export default function Navbar() {
             <a
               href="#book-now"
               onClick={(e) => handleNavClick(e, '#book-now')}
-              className="bg-theatre-gold hover:bg-theatre-gold-light text-theatre-green-deep px-5 py-2.5 rounded-full font-semibold text-sm shadow-md hover:shadow-lg shadow-theatre-gold/20 hover:shadow-theatre-gold/30 hover:scale-105 transition-all duration-300 border border-theatre-gold/10"
+              className="bg-theatre-gold hover:bg-theatre-gold-light text-theatre-grey-deep px-5 py-2.5 rounded-full font-semibold text-sm shadow-md hover:shadow-lg shadow-theatre-gold/20 hover:shadow-theatre-gold/30 hover:scale-105 transition-all duration-300 border border-theatre-gold/10"
             >
               Book Now
             </a>
@@ -108,7 +108,7 @@ export default function Navbar() {
           <div className="flex md:hidden">
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className="inline-flex items-center justify-center p-2 rounded-lg text-gray-400 hover:text-white hover:bg-theatre-green/20 transition-all duration-300"
+              className="inline-flex items-center justify-center p-2 rounded-lg text-gray-400 hover:text-white hover:bg-theatre-grey/20 transition-all duration-300"
               aria-expanded="false"
             >
               <span className="sr-only">Open main menu</span>
@@ -132,8 +132,8 @@ export default function Navbar() {
               onClick={(e) => handleNavClick(e, item.href)}
               className={`block px-3 py-2.5 rounded-lg text-base font-medium transition-all duration-300 ${
                 activeSection === item.href.slice(1)
-                  ? 'bg-theatre-green/20 text-theatre-gold border-l-4 border-theatre-gold'
-                  : 'text-gray-300 hover:bg-theatre-green/10 hover:text-white'
+                  ? 'bg-theatre-grey/20 text-theatre-gold border-l-4 border-theatre-gold'
+                  : 'text-gray-300 hover:bg-theatre-grey/10 hover:text-white'
               }`}
             >
               {item.name}
@@ -143,7 +143,7 @@ export default function Navbar() {
             <a
               href="#book-now"
               onClick={(e) => handleNavClick(e, '#book-now')}
-              className="block w-full text-center bg-theatre-gold hover:bg-theatre-gold-light text-theatre-green-deep px-5 py-3 rounded-full font-semibold shadow-md hover:shadow-lg shadow-theatre-gold/20 transition-all duration-300"
+              className="block w-full text-center bg-theatre-gold hover:bg-theatre-gold-light text-theatre-grey-deep px-5 py-3 rounded-full font-semibold shadow-md hover:shadow-lg shadow-theatre-gold/20 transition-all duration-300"
             >
               Book Now
             </a>

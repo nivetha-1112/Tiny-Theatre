@@ -56,9 +56,9 @@ export default function Footer() {
   ];
 
   return (
-    <footer className="bg-theatre-green-deep border-t border-theatre-green/10 pt-20 pb-8 text-gray-400 font-sans relative overflow-hidden">
+    <footer className="bg-theatre-grey-deep border-t border-theatre-grey/10 pt-20 pb-8 text-gray-400 font-sans relative overflow-hidden">
       {/* Decorative spotlights or flares */}
-      <div className="absolute bottom-0 left-0 w-96 h-96 bg-theatre-green/5 rounded-full blur-[100px] pointer-events-none" />
+      <div className="absolute bottom-0 left-0 w-96 h-96 bg-theatre-grey/5 rounded-full blur-[100px] pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-12 pb-16 border-b border-white/5">
@@ -66,7 +66,7 @@ export default function Footer() {
           {/* Col 1: Brand Info (Col 1-3) */}
           <div className="lg:col-span-3 space-y-6">
             <a href="#home" onClick={(e) => scrollToSection(e, '#home')} className="flex items-center space-x-2 group">
-              <div className="p-2 bg-theatre-green/20 rounded-lg group-hover:bg-theatre-green/30 transition-all duration-300 border border-theatre-green/30">
+              <div className="p-2 bg-theatre-grey/20 rounded-lg group-hover:bg-theatre-grey/30 transition-all duration-300 border border-theatre-grey/30">
                 <Ticket className="w-5 h-5 text-theatre-gold" />
               </div>
               <span className="font-serif text-2xl font-bold tracking-wide text-white">
@@ -84,7 +84,7 @@ export default function Footer() {
                     key={i}
                     href={social.href}
                     title={social.name}
-                    className="p-2.5 bg-white/5 hover:bg-theatre-gold text-gray-400 hover:text-theatre-green-deep rounded-xl border border-white/5 hover:scale-110 transition-all duration-300 flex items-center justify-center"
+                    className="p-2.5 bg-white/5 hover:bg-theatre-gold text-gray-400 hover:text-theatre-grey-deep rounded-xl border border-white/5 hover:scale-110 transition-all duration-300 flex items-center justify-center"
                   >
                     {social.svg}
                   </a>
@@ -153,7 +153,7 @@ export default function Footer() {
               />
               <button
                 type="submit"
-                className="absolute right-1 top-1 bottom-1 px-4 bg-theatre-gold hover:bg-theatre-gold-light text-theatre-green-deep rounded-lg flex items-center justify-center transition-all duration-300"
+                className="absolute right-1 top-1 bottom-1 px-4 bg-theatre-gold hover:bg-theatre-gold-light text-theatre-grey-deep rounded-lg flex items-center justify-center transition-all duration-300"
               >
                 <ArrowRight className="w-4.5 h-4.5" />
               </button>

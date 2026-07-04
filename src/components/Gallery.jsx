@@ -88,7 +88,7 @@ export default function Gallery() {
   return (
     <section id="gallery" className="relative py-24 bg-theatre-dark overflow-hidden">
       {/* Visual background details */}
-      <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-theatre-green/5 rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-theatre-grey/5 rounded-full blur-[120px] pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
@@ -99,9 +99,9 @@ export default function Gallery() {
           </span>
           <h2 className="font-serif text-4xl sm:text-5xl font-bold text-white mb-6 leading-tight">
             Magic Captured, <br className="hidden sm:inline" />
-            <span className="text-theatre-green">Reviews Witnessed</span>
+            <span className="text-theatre-grey">Reviews Witnessed</span>
           </h2>
-          <div className="w-20 h-1 bg-gradient-to-r from-theatre-gold to-theatre-green rounded-full mb-8" />
+          <div className="w-20 h-1 bg-gradient-to-r from-theatre-gold to-theatre-grey rounded-full mb-8" />
           <p className="text-gray-400 text-base sm:text-lg font-sans font-light">
             Browse our photo collections and read the real experiences left by our guests who celebrated their special events with us.
           </p>
@@ -115,8 +115,8 @@ export default function Gallery() {
               onClick={() => setActiveFilter(cat)}
               className={`px-5 py-2 rounded-full text-xs font-semibold tracking-wide transition-all duration-300 border ${
                 activeFilter === cat
-                  ? 'bg-theatre-green text-white border-theatre-green shadow-lg shadow-theatre-green/15 scale-105'
-                  : 'bg-white/5 text-gray-300 border-white/5 hover:border-theatre-green/30 hover:text-white'
+                  ? 'bg-theatre-grey text-white border-theatre-grey shadow-lg shadow-theatre-grey/15 scale-105'
+                  : 'bg-white/5 text-gray-300 border-white/5 hover:border-theatre-grey/30 hover:text-white'
               }`}
             >
               {cat}
@@ -131,7 +131,7 @@ export default function Gallery() {
               layout
               key={item.id}
               onClick={() => setSelectedImageIndex(index)}
-              className="group relative rounded-3xl overflow-hidden cursor-pointer border border-white/5 hover:border-theatre-gold/20 shadow-md hover:shadow-theatre-green-deep/20 transition-all duration-500 h-96"
+              className="group relative rounded-3xl overflow-hidden cursor-pointer border border-white/5 hover:border-theatre-gold/20 shadow-md hover:shadow-theatre-grey-deep/20 transition-all duration-500 h-96"
             >
               {/* Main Visual Image - Fully Vibrant */}
               <img
@@ -144,7 +144,7 @@ export default function Gallery() {
               <div className="absolute inset-0 bg-gradient-to-t from-theatre-dark/95 via-theatre-dark/60 to-transparent z-10 opacity-90 transition-opacity duration-300" />
 
               {/* Top rating badge */}
-              <div className="absolute top-4 right-4 z-20 bg-theatre-green/90 backdrop-blur-md border border-theatre-green/20 px-3 py-1 rounded-full flex items-center space-x-1 shadow-md">
+              <div className="absolute top-4 right-4 z-20 bg-theatre-grey/90 backdrop-blur-md border border-theatre-grey/20 px-3 py-1 rounded-full flex items-center space-x-1 shadow-md">
                 <Star className="w-3.5 h-3.5 text-theatre-gold fill-current" />
                 <span className="text-white text-xs font-bold font-sans">5.0</span>
               </div>
@@ -197,7 +197,7 @@ export default function Gallery() {
                 animate={{ scale: 1, y: 0 }}
                 exit={{ scale: 0.95, y: 15 }}
                 transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-                className="bg-theatre-green-deep/40 border border-white/10 rounded-[32px] overflow-hidden max-w-5xl w-full grid grid-cols-1 md:grid-cols-12 shadow-2xl relative"
+                className="bg-theatre-grey-deep/40 border border-white/10 rounded-[32px] overflow-hidden max-w-5xl w-full grid grid-cols-1 md:grid-cols-12 shadow-2xl relative"
                 onClick={(e) => e.stopPropagation()}
               >
                 {/* Left image column */}
@@ -219,7 +219,7 @@ export default function Gallery() {
                     <h2 className="font-serif text-3xl font-bold text-white leading-tight">
                       {filteredItems[selectedImageIndex].title}
                     </h2>
-                    <div className="w-16 h-1 bg-gradient-to-r from-theatre-gold to-theatre-green rounded-full mt-3" />
+                    <div className="w-16 h-1 bg-gradient-to-r from-theatre-gold to-theatre-grey rounded-full mt-3" />
                   </div>
 
                   {/* Testimonial sheet */}
