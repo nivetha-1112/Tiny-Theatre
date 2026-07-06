@@ -174,7 +174,7 @@ export default function Gallery({ preview, onViewMore }) {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
-                className="fixed inset-0 z-[200] bg-theatre-dark/95 backdrop-blur-md flex items-center justify-center p-4 sm:p-6"
+                className="fixed inset-0 z-[200] bg-theatre-dark/95 backdrop-blur-md overflow-y-auto p-4 sm:p-6 flex items-start justify-center md:items-center"
                 onClick={() => setSelectedImageIndex(null)}
               >
                 {/* Lightbox Card */}
@@ -183,7 +183,7 @@ export default function Gallery({ preview, onViewMore }) {
                   animate={{ scale: 1, y: 0 }}
                   exit={{ scale: 0.95, y: 15 }}
                   transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-                  className="bg-theatre-grey-deep/40 border border-white/10 rounded-[32px] overflow-hidden max-w-5xl w-full grid grid-cols-1 md:grid-cols-12 shadow-2xl relative"
+                  className="bg-theatre-grey-deep/40 border border-white/10 rounded-[32px] overflow-hidden max-w-5xl w-full grid grid-cols-1 md:grid-cols-12 shadow-2xl relative my-auto"
                   onClick={(e) => e.stopPropagation()}
                 >
                   {/* Close button inside modal card */}
@@ -195,7 +195,7 @@ export default function Gallery({ preview, onViewMore }) {
                   </button>
 
                   {/* Left image column */}
-                  <div className="md:col-span-7 h-[300px] md:h-[500px] relative">
+                  <div className="md:col-span-7 h-[240px] sm:h-[300px] md:h-[500px] relative">
                     <img
                       src={filteredItems[selectedImageIndex].image}
                       alt={filteredItems[selectedImageIndex].title}
@@ -221,27 +221,27 @@ export default function Gallery({ preview, onViewMore }) {
                   </div>
 
                   {/* Right detailed column - Reviews sheets layout */}
-                  <div className="md:col-span-5 p-8 flex flex-col justify-center text-left space-y-6">
+                  <div className="md:col-span-5 p-5 sm:p-8 flex flex-col justify-center text-left space-y-4 sm:space-y-6">
                     <div>
                       <span className="text-theatre-gold text-xs font-semibold tracking-widest uppercase block mb-2">
                         {filteredItems[selectedImageIndex].category}
                       </span>
-                      <h2 className="font-serif text-3xl font-bold text-white leading-tight">
+                      <h2 className="font-serif text-2xl sm:text-3xl font-bold text-white leading-tight">
                         {filteredItems[selectedImageIndex].title}
                       </h2>
                       <div className="w-16 h-1 bg-gradient-to-r from-theatre-gold to-theatre-grey rounded-full mt-3" />
                     </div>
 
                     {/* Testimonial sheet */}
-                    <div className="bg-theatre-dark/50 border border-white/5 p-6 rounded-2xl relative shadow-inner">
+                    <div className="bg-theatre-dark/50 border border-white/5 p-4 sm:p-6 rounded-2xl relative shadow-inner">
                       <Quote className="absolute -top-3 -left-3 w-8 h-8 text-theatre-gold/10 transform rotate-180" />
-                      <p className="text-gray-300 font-sans font-light italic leading-relaxed text-sm sm:text-base pl-2">
+                      <p className="text-gray-300 font-sans font-light italic leading-relaxed text-xs sm:text-sm pl-2">
                         "{filteredItems[selectedImageIndex].testimonial}"
                       </p>
                     </div>
 
                     {/* Reviewer details & score */}
-                    <div className="flex items-center justify-between pt-4 border-t border-white/10">
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pt-4 border-t border-white/10">
                       <div>
                         <h4 className="text-white font-serif text-lg font-bold">
                           {filteredItems[selectedImageIndex].reviewer}
@@ -251,7 +251,7 @@ export default function Gallery({ preview, onViewMore }) {
                         </p>
                       </div>
 
-                      <div className="flex items-center space-x-1.5 bg-theatre-gold/10 border border-theatre-gold/30 px-3.5 py-2 rounded-xl">
+                      <div className="flex items-center space-x-1.5 bg-theatre-gold/10 border border-theatre-gold/30 px-3.5 py-2 rounded-xl self-start sm:self-auto">
                         <Star className="w-4 h-4 text-theatre-gold fill-current" />
                         <span className="text-theatre-gold font-bold font-sans text-sm">5.0 / 5.0</span>
                       </div>

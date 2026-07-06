@@ -47,26 +47,26 @@ export default function Navbar() {
           : 'bg-transparent py-5'
       }`}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-12">
           {/* Logo */}
           <a
             href="#home"
             onClick={(e) => handleNavClick(e, '/')}
-            className="flex items-center space-x-2 group cursor-pointer"
+            className="flex items-center space-x-1.5 sm:space-x-2 group cursor-pointer"
           >
-            <div className="p-2 bg-theatre-grey/20 rounded-lg group-hover:bg-theatre-grey/30 transition-all duration-300 border border-theatre-grey/30">
-              <Ticket className="w-6 h-6 text-theatre-gold animate-pulse" />
+            <div className="p-1.5 sm:p-2 bg-theatre-grey/20 rounded-lg group-hover:bg-theatre-grey/30 transition-all duration-300 border border-theatre-grey/30">
+              <Ticket className="w-5 h-5 sm:w-6 sm:h-6 text-theatre-gold animate-pulse" />
             </div>
             <div>
-              <span className="font-serif text-2xl font-bold tracking-wide text-white group-hover:text-theatre-gold transition-colors duration-300">
+              <span className="font-serif text-xl sm:text-2xl font-bold tracking-wide text-white group-hover:text-theatre-gold transition-colors duration-300">
                 The Tiny<span className="text-theatre-gold font-normal italic">Theatre</span>
               </span>
             </div>
           </a>
 
           {/* Desktop Nav Links */}
-          <div className="hidden md:flex items-center space-x-8">
+          <div className="hidden lg:flex items-center space-x-6">
             {menuItems.map((item) => {
               const isActive = location.pathname === item.path;
               return (
@@ -88,8 +88,8 @@ export default function Navbar() {
               );
             })}
             <a
-              // href="#book-now"
-              // onClick={handleBookNowClick}
+              href="/contact"
+              onClick={handleBookNowClick}
               className="bg-theatre-gold hover:bg-theatre-gold-light text-theatre-grey-deep px-5 py-2.5 rounded-full font-semibold text-sm shadow-md hover:shadow-lg shadow-theatre-gold/20 hover:shadow-theatre-gold/30 hover:scale-105 transition-all duration-300 border border-theatre-gold/10"
             >
               Book Now
@@ -97,7 +97,7 @@ export default function Navbar() {
           </div>
 
           {/* Mobile hamburger menu */}
-          <div className="flex md:hidden">
+          <div className="flex lg:hidden">
             <button
               onClick={() => setIsOpen(!isOpen)}
               className="inline-flex items-center justify-center p-2 rounded-lg text-gray-400 hover:text-white hover:bg-theatre-grey/20 transition-all duration-300"
@@ -112,7 +112,7 @@ export default function Navbar() {
 
       {/* Mobile Drawer */}
       <div
-        className={`md:hidden absolute top-full left-0 w-full glass-dark transition-all duration-300 ease-in-out ${
+        className={`lg:hidden absolute top-full left-0 w-full glass-dark transition-all duration-300 ease-in-out ${
           isOpen ? 'opacity-100 translate-y-0 visible' : 'opacity-0 -translate-y-4 invisible'
         }`}
       >
