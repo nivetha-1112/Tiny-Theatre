@@ -1,37 +1,44 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import { Shield, Lightbulb, Utensils, Armchair, User } from 'lucide-react';
 
-export default function WhyChooseUs() {
+export default function WhyChooseUs({ preview, onViewMore }) {
   const features = [
     {
       title: '100% Complete Privacy',
       desc: 'Rent the entire luxury mini-screening room. No strangers, no interruptions—just you and your invited guests.',
-      image: 'https://images.unsplash.com/photo-1517604931442-7e0c8ed2963c?auto=format&fit=crop&w=500&q=80',
+      image: 'https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?auto=format&fit=crop&w=500&q=80',
+      icon: <Shield className="w-6 h-6 text-theatre-gold" />,
     },
     {
       title: 'Custom Celebration Decor',
       desc: 'Celebrate birthdays and anniversaries with our custom balloon arches, flower setups, and romantic LED letters.',
       image: 'https://images.unsplash.com/photo-1530103862676-de8c9debad1d?auto=format&fit=crop&w=500&q=80',
+      icon: <Lightbulb className="w-6 h-6 text-theatre-gold" />,
     },
     {
       title: 'Dolby Acoustics & 4K UHD',
       desc: 'Experience your favorite media on massive 150+ inch screens backed by cinematic Dolby Atmos surround sound.',
-      image: 'https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?auto=format&fit=crop&w=500&q=80',
+      image: 'https://images.unsplash.com/photo-1517604931442-7e0c8ed2963c?auto=format&fit=crop&w=500&q=80',
+      icon: <span className="text-theatre-gold font-bold font-sans text-sm tracking-tighter">4K</span>,
     },
     {
-      title: 'Gourmet Food & Cakes',
-      desc: 'Pre-order custom mocktails, snacks, birthday cakes, and popcorn tubs served directly to your recliner seats.',
+      title: 'Gourmet Food & Beverages',
+      desc: 'Indulge in a wide range of gourmet snacks, premium meals, and refreshing beverages delivered to your seat.',
       image: 'https://images.unsplash.com/photo-1536440136628-849c177e76a1?auto=format&fit=crop&w=500&q=80',
+      icon: <Utensils className="w-6 h-6 text-theatre-gold" />,
     },
     {
-      title: 'Console Gaming (PS5/Xbox)',
-      desc: 'Plug in your favourite gaming consoles for an ultra-responsive, zero-lag multiplayer gaming party on the big screen.',
-      image: 'https://images.unsplash.com/photo-1606144042614-b2417e99c4e3?auto=format&fit=crop&w=500&q=80',
-    },
-    {
-      title: 'Flat-Rate Hourly Pricing',
-      desc: 'We charge flat hourly rates for our private screening halls. Zero per-head ticket charges or hidden fees.',
+      title: 'Plush Seating & Comfort',
+      desc: 'Relax in ultra-comfortable recliners with ample legroom, adjustable seating, and cozy ambiance.',
       image: 'https://images.unsplash.com/photo-1594909122845-11baa439b7bf?auto=format&fit=crop&w=500&q=80',
+      icon: <Armchair className="w-6 h-6 text-theatre-gold" />,
+    },
+    {
+      title: 'Dedicated Concierge',
+      desc: 'Enjoy personalized service from our dedicated team to make your experience seamless and memorable.',
+      image: 'https://images.unsplash.com/photo-1511578314322-379afb476865?auto=format&fit=crop&w=500&q=80',
+      icon: <User className="w-6 h-6 text-theatre-gold" />,
     },
   ];
 
@@ -60,14 +67,14 @@ export default function WhyChooseUs() {
   return (
     <section id="why-choose-us" className="relative py-24 bg-gradient-to-b from-theatre-dark/95 to-theatre-dark overflow-hidden">
       {/* Visual background details */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-theatre-grey/5 rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-theatre-gold/5 rounded-full blur-[120px] pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
         {/* Header */}
         <div className="text-center max-w-3xl mx-auto mb-16 flex flex-col items-center">
           <span className="text-theatre-gold font-semibold tracking-widest uppercase text-xs mb-4 block">
-            Why Choose Tiny Theatre
+            Why Choose The Tiny Theatre
           </span>
           <h2 className="font-serif text-4xl sm:text-5xl font-bold text-white mb-6 leading-tight">
             Unparalleled Experiences <br className="hidden sm:inline" />
@@ -87,15 +94,15 @@ export default function WhyChooseUs() {
           viewport={{ once: true, margin: '-100px' }}
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
         >
-          {features.map((feat) => {
+          {(preview ? features.slice(0, 3) : features).map((feat) => {
             return (
               <motion.div
                 key={feat.title}
                 variants={cardVariants}
-                className="glass hover:glass-gold rounded-[32px] overflow-hidden border border-white/5 hover:border-theatre-gold/20 flex flex-col transition-all duration-300 group cursor-default hover:shadow-lg hover:shadow-theatre-grey-deep/15"
+                className="bg-theatre-grey-deep/15 backdrop-blur-md rounded-[32px] border border-theatre-gold/45 hover:border-theatre-gold/85 flex flex-col transition-all duration-300 group cursor-default hover:shadow-lg hover:shadow-theatre-gold/5 relative"
               >
-                {/* Feature Header Image */}
-                <div className="h-48 w-full overflow-hidden relative">
+                {/* Feature Header Image - Overflow Hidden applied here only to clip top corners */}
+                <div className="h-48 w-full overflow-hidden rounded-t-[32px] relative">
                   <div className="absolute inset-0 bg-gradient-to-t from-theatre-dark via-transparent to-transparent z-10 opacity-70 group-hover:opacity-40 transition-opacity duration-300" />
                   <img
                     src={feat.image}
@@ -104,13 +111,19 @@ export default function WhyChooseUs() {
                   />
                 </div>
 
-                {/* Content Area */}
-                <div className="p-8 space-y-3.5 flex-grow flex flex-col justify-between">
+                {/* Content Area - Relative to position icon over boundary */}
+                <div className="p-8 pt-12 pb-10 space-y-3.5 flex-grow flex flex-col justify-between relative text-center">
+                  
+                  {/* Centered Circular Icon Badge */}
+                  <div className="absolute -top-7 left-1/2 -translate-y-0.5 -translate-x-1/2 w-14 h-14 bg-theatre-dark border border-theatre-gold/60 rounded-full flex items-center justify-center shadow-lg shadow-black/45 z-20 group-hover:border-theatre-gold group-hover:scale-110 transition-all duration-300">
+                    {feat.icon}
+                  </div>
+
                   <div>
-                    <h3 className="font-serif text-xl font-bold text-white mb-2 group-hover:text-theatre-gold transition-colors duration-300">
+                    <h3 className="font-serif text-lg sm:text-xl font-bold text-white mb-2 group-hover:text-theatre-gold transition-colors duration-300">
                       {feat.title}
                     </h3>
-                    <p className="text-sm text-gray-400 leading-relaxed font-sans font-light">
+                    <p className="text-xs sm:text-sm text-gray-400 leading-relaxed font-sans font-light max-w-xs mx-auto">
                       {feat.desc}
                     </p>
                   </div>
@@ -119,6 +132,17 @@ export default function WhyChooseUs() {
             );
           })}
         </motion.div>
+
+        {preview && (
+          <div className="text-center mt-12">
+            <button
+              onClick={onViewMore}
+              className="inline-flex items-center space-x-2 bg-gradient-to-r from-theatre-gold to-theatre-gold-dark hover:from-theatre-gold-light hover:to-theatre-gold text-theatre-grey-deep font-bold px-8 py-4 rounded-full shadow-lg shadow-theatre-gold/15 hover:shadow-theatre-gold/25 hover:scale-105 transition-all duration-300 text-sm cursor-pointer"
+            >
+              <span>View All Features</span>
+            </button>
+          </div>
+        )}
       </div>
     </section>
   );

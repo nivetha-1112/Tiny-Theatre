@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Ticket, Calendar, User, Mail, Phone, MessageSquare, AlertCircle, CheckCircle2, Armchair, Sparkles, Printer } from 'lucide-react';
+import { Calendar, User, Mail, Phone, MessageSquare, AlertCircle, CheckCircle2, Sparkles, MapPin } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import { eventsData } from './Events';
 
@@ -10,15 +10,12 @@ export default function BookNow({ selectedEventName, clearSelectedEvent }) {
     email: '',
     phone: '',
     event: '',
-    ticketsCount: 1,
     preferredDate: '',
     message: '',
   });
 
   const [errors, setErrors] = useState({});
-  const [selectedSeats, setSelectedSeats] = useState([]);
   const [isBooked, setIsBooked] = useState(false);
-  const [isSelectingSeats, setIsSelectingSeats] = useState(false);
 
   // Sync pre-selected event from parent
   useEffect(() => {
@@ -27,29 +24,6 @@ export default function BookNow({ selectedEventName, clearSelectedEvent }) {
       setFormData((prev) => ({ ...prev, preferredDate: '2026-07-15' })); // Dummy standard date matching
     }
   }, [selectedEventName]);
-
-  // Seating map rows (5 rows, 6 columns = 30 seats)
-  const rows = ['A', 'B', 'C', 'D', 'E'];
-  const cols = [1, 2, 3, 4, 5, 6];
-  
-  // Simulated booked seats
-  const blockedSeats = ['A3', 'A4', 'C2', 'C3', 'E5'];
-
-  const handleSeatClick = (seatCode) => {
-    if (blockedSeats.includes(seatCode)) return;
-
-    if (selectedSeats.includes(seatCode)) {
-      setSelectedSeats(prev => prev.filter(s => s !== seatCode));
-    } else {
-      // Limit selection to guest count
-      if (selectedSeats.length < formData.ticketsCount) {
-        setSelectedSeats(prev => [...prev, seatCode]);
-      } else {
-        // Swap last selected seat
-        setSelectedSeats(prev => [...prev.slice(1), seatCode]);
-      }
-    }
-  };
 
   const validateForm = () => {
     const tempErrors = {};
@@ -69,10 +43,6 @@ export default function BookNow({ selectedEventName, clearSelectedEvent }) {
 
     if (!formData.event) tempErrors.event = 'Please select a package.';
     if (!formData.preferredDate) tempErrors.preferredDate = 'Please select a date.';
-    
-    if (selectedSeats.length !== Number(formData.ticketsCount)) {
-      tempErrors.seats = `Please select exactly ${formData.ticketsCount} recliner(s). Current selected: ${selectedSeats.length}`;
-    }
 
     setErrors(tempErrors);
     return Object.keys(tempErrors).length === 0;
@@ -83,18 +53,13 @@ export default function BookNow({ selectedEventName, clearSelectedEvent }) {
     if (validateForm()) {
       setIsBooked(true);
       
-      // Trigger full confetti celebratory effect
+      // Trigger confetti effect
       confetti({
-        particleCount: 150,
-        spread: 80,
+        particleCount: 120,
+        spread: 70,
         origin: { y: 0.6 },
-        colors: ['#708090', '#F4C430', '#FFFFFF']
+        colors: ['#7B8491', '#F4C430', '#FFFFFF']
       });
-    } else {
-      // Scroll to seat map if seats error exists
-      if (!isSelectingSeats && selectedSeats.length !== Number(formData.ticketsCount)) {
-        setIsSelectingSeats(true);
-      }
     }
   };
 
@@ -104,14 +69,11 @@ export default function BookNow({ selectedEventName, clearSelectedEvent }) {
       email: '',
       phone: '',
       event: '',
-      ticketsCount: 1,
       preferredDate: '',
       message: '',
     });
-    setSelectedSeats([]);
     setErrors({});
     setIsBooked(false);
-    setIsSelectingSeats(false);
     clearSelectedEvent();
   };
 
@@ -125,11 +87,11 @@ export default function BookNow({ selectedEventName, clearSelectedEvent }) {
         {/* Header */}
         <div className="text-center max-w-3xl mx-auto mb-16 flex flex-col items-center">
           <span className="text-theatre-gold font-semibold tracking-widest uppercase text-xs mb-4 block">
-            Private Booking
+            Contact Us
           </span>
           <h2 className="font-serif text-4xl sm:text-5xl font-bold text-white mb-6 leading-tight">
-            Secure Your <br className="hidden sm:inline" />
-            <span className="text-theatre-grey">Private Screening Slot</span>
+            Get in Touch & <br className="hidden sm:inline" />
+            <span className="text-theatre-grey">Book Your Experience</span>
           </h2>
           <div className="w-20 h-1 bg-gradient-to-r from-theatre-gold to-theatre-grey rounded-full mb-8" />
         </div>
@@ -143,8 +105,22 @@ export default function BookNow({ selectedEventName, clearSelectedEvent }) {
               className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-stretch"
             >
               
-              {/* Left Column: Form Details (Col 1-7) */}
-              <div className="lg:col-span-7 bg-theatre-grey/5 backdrop-blur-md rounded-3xl p-6 sm:p-10 border border-theatre-grey/20 shadow-xl flex flex-col justify-between">
+              {/* Left Column: Google Map Embed */}
+              <div className="lg:col-span-6 bg-theatre-grey-deep/15 backdrop-blur-md rounded-3xl p-3 border border-theatre-gold/45 shadow-xl overflow-hidden min-h-[450px] flex flex-col">
+                <iframe 
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3888.889493694166!2d80.12429867454573!3d12.914823416121624!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a525f0072aa223d%3A0x864d12b68c18b61!2sUMA%20COMPLEX!5e0!3m2!1sen!2sin!4v1783315027393!5m2!1sen!2sin" 
+                  width="100%" 
+                  height="100%" 
+                  style={{ border: 0, minHeight: '430px' }} 
+                  allowFullScreen="" 
+                  loading="lazy" 
+                  referrerPolicy="strict-origin-when-cross-origin"
+                  className="rounded-2xl flex-grow"
+                />
+              </div>
+
+              {/* Right Column: Contact/Enquiry Form */}
+              <div className="lg:col-span-6 bg-theatre-grey-deep/15 backdrop-blur-md rounded-3xl p-6 sm:p-10 border border-theatre-gold/45 shadow-xl flex flex-col justify-between">
                 <form onSubmit={handleSubmit} className="space-y-6">
                   
                   {/* Row 1: Name & Email */}
@@ -190,7 +166,7 @@ export default function BookNow({ selectedEventName, clearSelectedEvent }) {
                     </div>
                   </div>
 
-                  {/* Row 2: Phone & Guests Count */}
+                  {/* Row 2: Phone & Preferred Date */}
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                     <div className="space-y-2">
                       <label className="text-sm font-semibold text-gray-300 block">Phone Number</label>
@@ -208,48 +184,6 @@ export default function BookNow({ selectedEventName, clearSelectedEvent }) {
                         <p className="text-red-400 text-xs flex items-center space-x-1 mt-1">
                           <AlertCircle className="w-3.5 h-3.5" />
                           <span>{errors.phone}</span>
-                        </p>
-                      )}
-                    </div>
-
-                    <div className="space-y-2">
-                      <label className="text-sm font-semibold text-gray-300 block">Number of Guests</label>
-                      <div className="relative">
-                        <Ticket className="absolute left-4 top-1/2 -translate-y-1/2 w-4.5 h-4.5 text-gray-500" />
-                        <select
-                          value={formData.ticketsCount}
-                          onChange={(e) => {
-                            setFormData({...formData, ticketsCount: Number(e.target.value)});
-                            setSelectedSeats([]); // reset seat selections
-                          }}
-                          className="w-full bg-theatre-dark/60 text-white pl-11 pr-4 py-3.5 rounded-2xl border border-white/10 focus:border-theatre-grey focus:ring-1 focus:ring-theatre-grey transition-all duration-300 text-sm outline-none appearance-none"
-                        >
-                          {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15].map(n => (
-                            <option key={n} value={n} className="bg-theatre-dark text-white">{n} Guest{n > 1 ? 's' : ''}</option>
-                          ))}
-                        </select>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Row 3: Package Selection & Date */}
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                    <div className="space-y-2">
-                      <label className="text-sm font-semibold text-gray-300 block">Select Booking Package</label>
-                      <select
-                        value={formData.event}
-                        onChange={(e) => setFormData({...formData, event: e.target.value})}
-                        className="w-full bg-theatre-dark/60 text-white px-4 py-3.5 rounded-2xl border border-white/10 focus:border-theatre-grey focus:ring-1 focus:ring-theatre-grey transition-all duration-300 text-sm outline-none"
-                      >
-                        <option value="">-- Choose Package --</option>
-                        {eventsData.map(ev => (
-                          <option key={ev.id} value={ev.name} className="bg-theatre-dark text-white">{ev.name} ({ev.category})</option>
-                        ))}
-                      </select>
-                      {errors.event && (
-                        <p className="text-red-400 text-xs flex items-center space-x-1 mt-1">
-                          <AlertCircle className="w-3.5 h-3.5" />
-                          <span>{errors.event}</span>
                         </p>
                       )}
                     </div>
@@ -275,6 +209,27 @@ export default function BookNow({ selectedEventName, clearSelectedEvent }) {
                     </div>
                   </div>
 
+                  {/* Row 3: Package Selection */}
+                  <div className="space-y-2">
+                    <label className="text-sm font-semibold text-gray-300 block">Select Experience / Package</label>
+                    <select
+                      value={formData.event}
+                      onChange={(e) => setFormData({...formData, event: e.target.value})}
+                      className="w-full bg-theatre-dark/60 text-white px-4 py-3.5 rounded-2xl border border-white/10 focus:border-theatre-grey focus:ring-1 focus:ring-theatre-grey transition-all duration-300 text-sm outline-none"
+                    >
+                      <option value="">-- Choose Package --</option>
+                      {eventsData.map(ev => (
+                        <option key={ev.id} value={ev.name} className="bg-theatre-dark text-white">{ev.name} ({ev.category})</option>
+                      ))}
+                    </select>
+                    {errors.event && (
+                      <p className="text-red-400 text-xs flex items-center space-x-1 mt-1">
+                        <AlertCircle className="w-3.5 h-3.5" />
+                        <span>{errors.event}</span>
+                      </p>
+                    )}
+                  </div>
+
                   {/* Row 4: Message */}
                   <div className="space-y-2">
                     <label className="text-sm font-semibold text-gray-300 block">Special Request / Message (Optional)</label>
@@ -284,135 +239,29 @@ export default function BookNow({ selectedEventName, clearSelectedEvent }) {
                         rows="3"
                         value={formData.message}
                         onChange={(e) => setFormData({...formData, message: e.target.value})}
-                        placeholder="E.g., Special cake flavor, custom LED sign wordings, or proposal timing..."
+                        placeholder="E.g., Custom balloon decorations, catering requirements, or presentation setup..."
                         className="w-full bg-theatre-dark/60 text-white pl-11 pr-4 py-3.5 rounded-2xl border border-white/10 focus:border-theatre-grey focus:ring-1 focus:ring-theatre-grey transition-all duration-300 text-sm placeholder:text-gray-600 outline-none resize-none"
                       />
                     </div>
                   </div>
 
-                  {/* Submission buttons */}
-                  <div className="pt-4 flex flex-col sm:flex-row gap-4">
+                  {/* Submission button */}
+                  <div className="pt-4">
                     <button
                       type="submit"
-                      className="flex-1 bg-gradient-to-r from-theatre-gold to-theatre-gold-dark hover:from-theatre-gold-light hover:to-theatre-gold text-theatre-grey-deep font-bold py-4 rounded-2xl shadow-lg hover:shadow-theatre-gold/20 flex items-center justify-center space-x-2 text-base transition-all duration-300 hover:scale-[1.01]"
+                      className="w-full bg-gradient-to-r from-theatre-gold to-theatre-gold-dark hover:from-theatre-gold-light hover:to-theatre-gold text-theatre-grey-deep font-bold py-4 rounded-2xl shadow-lg hover:shadow-theatre-gold/20 flex items-center justify-center space-x-2 text-base transition-all duration-300 hover:scale-[1.01]"
                     >
-                      <Ticket className="w-5 h-5 text-theatre-grey-deep" />
-                      <span>Confirm Private Booking</span>
-                    </button>
-                    
-                    <button
-                      type="button"
-                      onClick={() => setIsSelectingSeats(!isSelectingSeats)}
-                      className="bg-theatre-grey/10 hover:bg-theatre-grey/20 text-theatre-gold font-semibold py-4 px-6 rounded-2xl border border-theatre-grey/20 hover:border-theatre-gold/30 flex items-center justify-center space-x-2 transition-all duration-300 text-sm"
-                    >
-                      <Armchair className="w-5 h-5" />
-                      <span>{isSelectingSeats ? 'Hide Seats Map' : 'Show Seats Map'}</span>
+                      <Mail className="w-5 h-5 text-theatre-grey-deep" />
+                      <span>Send Inquiry Request</span>
                     </button>
                   </div>
 
                 </form>
               </div>
 
-              {/* Right Column: Seating Plan Selection (Col 8-12) */}
-              <div className="lg:col-span-5 bg-theatre-grey/5 backdrop-blur-md rounded-3xl p-6 sm:p-10 border border-theatre-grey/20 shadow-xl flex flex-col justify-between relative overflow-hidden">
-                <div className="space-y-6">
-                  <div>
-                    <h3 className="font-serif text-xl font-bold text-white mb-1">Private Theatre Seating Layout</h3>
-                    <p className="text-xs text-gray-400 font-sans">
-                      Select exactly {formData.ticketsCount} recliners for your guests.
-                    </p>
-                  </div>
-
-                  {/* Screen Representation */}
-                  <div className="relative pt-6 pb-2 text-center">
-                    <div className="w-full h-2 bg-gradient-to-r from-transparent via-theatre-gold/60 to-transparent rounded-full shadow-lg shadow-theatre-gold/25" />
-                    <span className="text-[10px] text-theatre-gold uppercase tracking-widest font-bold mt-1.5 block">
-                      SCREEN VIEW
-                    </span>
-                  </div>
-
-                  {/* Seats Grid */}
-                  <div className="grid gap-3.5 max-w-sm mx-auto pt-4">
-                    {rows.map((row) => (
-                      <div key={row} className="flex items-center justify-center space-x-3.5">
-                        <span className="w-5 text-center text-xs font-bold text-gray-500 font-serif">{row}</span>
-                        <div className="flex space-x-2">
-                          {cols.map((col) => {
-                            const seatCode = `${row}${col}`;
-                            const isBlocked = blockedSeats.includes(seatCode);
-                            const isSelected = selectedSeats.includes(seatCode);
-                            
-                            return (
-                              <button
-                                key={seatCode}
-                                type="button"
-                                disabled={isBlocked}
-                                onClick={() => handleSeatClick(seatCode)}
-                                className={`w-8 h-8 rounded-lg flex items-center justify-center text-[10px] font-bold font-sans transition-all duration-300 ${
-                                  isBlocked
-                                    ? 'bg-red-950/40 text-red-700/30 border border-red-900/20 cursor-not-allowed'
-                                    : isSelected
-                                      ? 'bg-theatre-gold text-theatre-grey-deep border border-theatre-gold shadow-md shadow-theatre-gold/30 hover:scale-105'
-                                      : 'bg-theatre-dark/80 text-gray-400 hover:text-white border border-white/10 hover:border-theatre-grey hover:bg-theatre-grey/20'
-                                }`}
-                                title={isBlocked ? `Recliner ${seatCode} (Reserved)` : `Recliner ${seatCode}`}
-                              >
-                                {col}
-                              </button>
-                            );
-                          })}
-                        </div>
-                        <span className="w-5 text-center text-xs font-bold text-gray-500 font-serif">{row}</span>
-                      </div>
-                    ))}
-                  </div>
-
-                  {/* Seating Legend */}
-                  <div className="flex items-center justify-center space-x-6 text-xs text-gray-400 pt-6 border-t border-white/5">
-                    <div className="flex items-center space-x-2">
-                      <div className="w-3.5 h-3.5 bg-theatre-dark rounded border border-white/10" />
-                      <span>Available</span>
-                    </div>
-                    <div className="flex items-center space-x-2">
-                      <div className="w-3.5 h-3.5 bg-theatre-gold rounded" />
-                      <span>Selected</span>
-                    </div>
-                    <div className="flex items-center space-x-2">
-                      <div className="w-3.5 h-3.5 bg-red-950/40 rounded border border-red-900/20" />
-                      <span>Reserved</span>
-                    </div>
-                  </div>
-
-                  {/* Seat Error message */}
-                  {errors.seats && (
-                    <p className="text-red-400 text-xs text-center flex items-center justify-center space-x-1 mt-4">
-                      <AlertCircle className="w-3.5 h-3.5" />
-                      <span>{errors.seats}</span>
-                    </p>
-                  )}
-                </div>
-
-                {/* Live Seating summary summary */}
-                <div className="bg-theatre-grey/10 border border-theatre-grey/20 rounded-2xl p-4.5 mt-8 flex justify-between items-center">
-                  <div>
-                    <span className="text-[10px] text-gray-400 uppercase block tracking-wider font-semibold">Selected Recliners</span>
-                    <span className="text-base font-bold text-theatre-gold font-serif">
-                      {selectedSeats.length > 0 ? selectedSeats.sort().join(', ') : 'None'}
-                    </span>
-                  </div>
-                  <div className="text-right">
-                    <span className="text-[10px] text-gray-400 uppercase block tracking-wider font-semibold">Total Price</span>
-                    <span className="text-base font-bold text-white">
-                      ${formData.ticketsCount * (eventsData.find(e => e.name === formData.event)?.price.replace('$', '') || 30)}
-                    </span>
-                  </div>
-                </div>
-
-              </div>
-
             </motion.div>
           ) : (
-            /* Golden Digital Ticket Printout SUCCESS STATE */
+            /* Digital Ticket SUCCESS STATE */
             <motion.div
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
@@ -430,21 +279,21 @@ export default function BookNow({ selectedEventName, clearSelectedEvent }) {
                   <div className="inline-flex p-3 bg-theatre-gold/10 text-theatre-gold rounded-full border border-theatre-gold/20 mb-2">
                     <CheckCircle2 className="w-8 h-8" />
                   </div>
-                  <h3 className="font-serif text-3xl font-bold text-white">Booking Confirmed!</h3>
+                  <h3 className="font-serif text-3xl font-bold text-white">Inquiry Received!</h3>
                   <p className="text-sm text-gray-300 font-sans max-w-md mx-auto">
-                    Your private screen slot is reserved. Please show this digital card when arriving at the venue.
+                    Thank you for reaching out. Our box office representative will contact you shortly to confirm your slot availability and preferences.
                   </p>
                 </div>
 
                 {/* Digital Ticket Representation */}
                 <div className="bg-theatre-dark/90 rounded-2xl p-6 border border-theatre-grey/20 relative my-8 shadow-inner">
-                  {/* Decorative cutouts at the left and right sides of ticket split line */}
+                  {/* Decorative cutouts */}
                   <div className="absolute top-1/2 -left-3 w-6 h-6 bg-theatre-dark border-r border-theatre-grey/20 rounded-full -translate-y-1/2 z-10" />
                   <div className="absolute top-1/2 -right-3 w-6 h-6 bg-theatre-dark border-l border-theatre-grey/20 rounded-full -translate-y-1/2 z-10" />
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 pb-6 border-b border-white/5">
                     <div>
-                      <span className="text-[10px] text-gray-500 uppercase tracking-widest block font-bold mb-1">BOOKING PACKAGE</span>
+                      <span className="text-[10px] text-gray-500 uppercase tracking-widest block font-bold mb-1">CHOSEN PACKAGE</span>
                       <span className="text-lg font-serif font-bold text-white">{formData.event}</span>
                     </div>
                     <div>
@@ -453,61 +302,29 @@ export default function BookNow({ selectedEventName, clearSelectedEvent }) {
                     </div>
                   </div>
 
-                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 pt-6">
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 pt-6">
                     <div>
-                      <span className="text-[10px] text-gray-500 uppercase tracking-widest block font-bold mb-1">DATE</span>
+                      <span className="text-[10px] text-gray-500 uppercase tracking-widest block font-bold mb-1">PREFERRED DATE</span>
                       <span className="text-sm font-sans font-semibold text-white">{formData.preferredDate}</span>
                     </div>
                     <div>
-                      <span className="text-[10px] text-gray-500 uppercase tracking-widest block font-bold mb-1">TIME SLOT</span>
-                      <span className="text-sm font-sans font-semibold text-white">
-                        {eventsData.find(e => e.name === formData.event)?.time || '3-Hour Slot'}
-                      </span>
+                      <span className="text-[10px] text-gray-500 uppercase tracking-widest block font-bold mb-1">CONTACT EMAIL</span>
+                      <span className="text-sm font-sans font-semibold text-white truncate block">{formData.email}</span>
                     </div>
                     <div>
-                      <span className="text-[10px] text-gray-500 uppercase tracking-widest block font-bold mb-1">RECLINERS</span>
-                      <span className="text-sm font-serif font-bold text-theatre-gold">{selectedSeats.sort().join(', ')}</span>
+                      <span className="text-[10px] text-gray-500 uppercase tracking-widest block font-bold mb-1">CONTACT PHONE</span>
+                      <span className="text-sm font-sans font-semibold text-white">{formData.phone}</span>
                     </div>
-                    <div>
-                      <span className="text-[10px] text-gray-500 uppercase tracking-widest block font-bold mb-1">GUESTS</span>
-                      <span className="text-sm font-sans font-semibold text-white">{formData.ticketsCount} Guest(s)</span>
-                    </div>
-                  </div>
-
-                  {/* QR Code Placeholder Representation */}
-                  <div className="mt-8 flex flex-col items-center justify-center space-y-3 pt-6 border-t border-white/5">
-                    <div className="w-28 h-28 bg-white p-2 rounded-xl border border-gray-200 shadow-lg flex items-center justify-center">
-                      <div className="grid grid-cols-4 gap-1 w-full h-full opacity-80">
-                        {[...Array(16)].map((_, i) => (
-                          <div 
-                            key={i} 
-                            className={`rounded-sm ${
-                              (i % 3 === 0 || i === 7 || i === 11 || i === 14) ? 'bg-theatre-grey-deep' : 'bg-transparent'
-                            }`} 
-                          />
-                        ))}
-                      </div>
-                    </div>
-                    <span className="text-[10px] text-gray-400 font-sans tracking-widest font-medium select-all uppercase">
-                      ID: TT-{Math.floor(100000 + Math.random() * 900000)}
-                    </span>
                   </div>
                 </div>
 
-                {/* Bottom Receipt actions */}
-                <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                  <button
-                    onClick={() => window.print()}
-                    className="bg-theatre-grey hover:bg-theatre-grey-dark text-white px-6 py-3.5 rounded-2xl font-semibold text-sm shadow-md hover:shadow-lg flex items-center justify-center space-x-2 transition-all duration-300 border border-theatre-grey/20 hover:scale-[1.02]"
-                  >
-                    <Printer className="w-4.5 h-4.5" />
-                    <span>Print Booking Pass</span>
-                  </button>
+                {/* Reset Action */}
+                <div className="flex justify-center pt-2">
                   <button
                     onClick={handleReset}
-                    className="bg-transparent hover:bg-white/5 text-gray-300 hover:text-white px-6 py-3.5 rounded-2xl font-semibold text-sm transition-all duration-300 border border-white/10 flex items-center justify-center"
+                    className="bg-transparent hover:bg-white/5 text-gray-300 hover:text-white px-8 py-3.5 rounded-2xl font-semibold text-sm transition-all duration-300 border border-white/10 flex items-center justify-center"
                   >
-                    <span>Book Another Slot</span>
+                    <span>Submit Another Inquiry</span>
                   </button>
                 </div>
 

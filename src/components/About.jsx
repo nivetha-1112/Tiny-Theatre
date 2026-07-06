@@ -3,7 +3,7 @@ import { motion } from 'framer-motion';
 import { Award, Compass, Star, Users, Target, Eye } from 'lucide-react';
 import aboutImg from '../assets/about.jpg';
 
-export default function About() {
+export default function About({ preview, onViewMore }) {
   const stats = [
     { label: 'Private Screenings', value: '5,000+', icon: Award },
     { label: 'Happy Guests', value: '25k+', icon: Users },
@@ -28,7 +28,7 @@ export default function About() {
             {/* Header */}
             <div className="flex flex-col items-start">
               <span className="text-theatre-gold font-semibold tracking-widest uppercase text-xs sm:text-sm mb-4 block">
-                About Tiny Theatre
+                About The Tiny Theatre
               </span>
               <h2 className="font-serif text-4xl sm:text-5xl lg:text-6xl font-bold text-white leading-tight mb-6">
                 Exclusive Spaces, <br />
@@ -43,48 +43,65 @@ export default function About() {
             <div className="text-gray-300 space-y-6 text-base sm:text-lg leading-relaxed font-sans font-light">
               <p>
                 Founded on the concept of luxurious privacy and cinematic excellence, 
-                <strong className="text-white font-medium"> Tiny Theatre</strong> provides fully-equipped private mini movie screening halls for custom hire. We specialize in turning your special milestones into magical memories with premium Dolby Atmos acoustics, 4K projection, and completely private, pre-decorated spaces.
+                <strong className="text-white font-medium"> The Tiny Theatre</strong> provides fully-equipped private mini movie screening halls for custom hire. We specialize in turning your special milestones into magical memories with premium Dolby Atmos acoustics, 4K projection, and completely private, pre-decorated spaces.
+              </p>
+            </div>
+            <div className="text-gray-300 space-y-6 text-base sm:text-lg leading-relaxed font-sans font-light">
+              <p>
+                Founded on the concept of luxurious privacy and cinematic excellence, 
+                <strong className="text-white font-medium"> The Tiny Theatre</strong> provides fully-equipped private mini movie screening halls for custom hire. We specialize in turning your special milestones into magical memories with premium Dolby Atmos acoustics, 4K projection, and completely private, pre-decorated spaces.
               </p>
             </div>
 
-            {/* Mission & Vision cards - Redesigned with premium glassmorphism and icons */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 pt-4">
-              <motion.div 
-                whileHover={{ y: -5 }}
-                className="glass p-6 rounded-3xl border border-theatre-grey/20 relative overflow-hidden group shadow-md hover:shadow-theatre-grey-deep/30 transition-all duration-300"
-              >
-                <div className="absolute top-0 left-0 w-1.5 h-full bg-theatre-grey" />
-                <div className="flex items-center space-x-3 mb-3">
-                  <div className="p-2 bg-theatre-grey/10 text-theatre-grey rounded-xl group-hover:bg-theatre-grey/20 transition-all duration-300">
-                    <Target className="w-5 h-5" />
+            {preview ? (
+              <div className="pt-4">
+                <button
+                  onClick={onViewMore}
+                  className="inline-flex items-center space-x-2 bg-gradient-to-r from-theatre-gold to-theatre-gold-dark hover:from-theatre-gold-light hover:to-theatre-gold text-theatre-grey-deep font-bold px-8 py-4 rounded-full shadow-lg shadow-theatre-gold/15 hover:shadow-theatre-gold/25 hover:scale-105 transition-all duration-300 text-sm cursor-pointer"
+                >
+                  <span>View More About Us</span>
+                </button>
+              </div>
+            ) : (
+              /* Mission & Vision cards - Redesigned with premium glassmorphism and icons */
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 pt-4">
+                <motion.div 
+                  whileHover={{ y: -5 }}
+                  className="glass p-6 rounded-3xl border border-theatre-grey/20 relative overflow-hidden group shadow-md hover:shadow-theatre-grey-deep/30 transition-all duration-300"
+                >
+                  <div className="absolute top-0 left-0 w-1.5 h-full bg-theatre-grey" />
+                  <div className="flex items-center space-x-3 mb-3">
+                    <div className="p-2 bg-theatre-grey/10 text-theatre-grey rounded-xl group-hover:bg-theatre-grey/20 transition-all duration-300">
+                      <Target className="w-5 h-5" />
+                    </div>
+                    <h4 className="font-serif text-lg font-bold text-white group-hover:text-theatre-gold transition-colors duration-300">
+                      Our Mission
+                    </h4>
                   </div>
-                  <h4 className="font-serif text-lg font-bold text-white group-hover:text-theatre-gold transition-colors duration-300">
-                    Our Mission
-                  </h4>
-                </div>
-                <p className="text-sm text-gray-400 leading-relaxed font-sans font-light">
-                  To create intimate, premium-grade private movie screening experiences that host safe, joyful, and bespoke celebrations for birthdays, romantic proposals, and anniversaries.
-                </p>
-              </motion.div>
+                  <p className="text-sm text-gray-400 leading-relaxed font-sans font-light">
+                    To create intimate, premium-grade private movie screening experiences that host safe, joyful, and bespoke celebrations for birthdays, romantic proposals, and anniversaries.
+                  </p>
+                </motion.div>
 
-              <motion.div 
-                whileHover={{ y: -5 }}
-                className="glass p-6 rounded-3xl border border-theatre-grey/20 relative overflow-hidden group shadow-md hover:shadow-theatre-gold/25 transition-all duration-300"
-              >
-                <div className="absolute top-0 left-0 w-1.5 h-full bg-theatre-gold" />
-                <div className="flex items-center space-x-3 mb-3">
-                  <div className="p-2 bg-theatre-gold/10 text-theatre-gold rounded-xl group-hover:bg-theatre-gold/20 transition-all duration-300">
-                    <Eye className="w-5 h-5" />
+                <motion.div 
+                  whileHover={{ y: -5 }}
+                  className="glass p-6 rounded-3xl border border-theatre-grey/20 relative overflow-hidden group shadow-md hover:shadow-theatre-gold/25 transition-all duration-300"
+                >
+                  <div className="absolute top-0 left-0 w-1.5 h-full bg-theatre-gold" />
+                  <div className="flex items-center space-x-3 mb-3">
+                    <div className="p-2 bg-theatre-gold/10 text-theatre-gold rounded-xl group-hover:bg-theatre-gold/20 transition-all duration-300">
+                      <Eye className="w-5 h-5" />
+                    </div>
+                    <h4 className="font-serif text-lg font-bold text-white group-hover:text-theatre-grey transition-colors duration-300">
+                      Our Vision
+                    </h4>
                   </div>
-                  <h4 className="font-serif text-lg font-bold text-white group-hover:text-theatre-grey transition-colors duration-300">
-                    Our Vision
-                  </h4>
-                </div>
-                <p className="text-sm text-gray-400 leading-relaxed font-sans font-light">
-                  To be the country's leading private cinema brand, blending next-generation projection systems and personalized decorations with supreme privacy.
-                </p>
-              </motion.div>
-            </div>
+                  <p className="text-sm text-gray-400 leading-relaxed font-sans font-light">
+                    To be the country's leading private cinema brand, blending next-generation projection systems and personalized decorations with supreme privacy.
+                  </p>
+                </motion.div>
+              </div>
+            )}
           </div>
 
           {/* Right Side: Visual Collage Card (Col 8-12) */}
@@ -117,31 +134,33 @@ export default function About() {
         </div>
 
         {/* Stats Strip - Grid counter section at bottom */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mt-24">
-          {stats.map((stat, i) => {
-            const Icon = stat.icon;
-            return (
-              <motion.div
-                key={stat.label}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: '-50px' }}
-                transition={{ duration: 0.6, delay: i * 0.1 }}
-                className="glass-gold hover:glass p-6 sm:p-8 rounded-3xl border border-white/5 hover:border-theatre-gold/20 text-center flex flex-col items-center group transition-all duration-300"
-              >
-                <div className="p-3 bg-theatre-grey/10 rounded-2xl group-hover:bg-theatre-gold/15 transition-all duration-300 text-theatre-grey group-hover:text-theatre-gold mb-4 border border-theatre-grey/10 group-hover:border-theatre-gold/10">
-                  <Icon className="w-6 h-6" />
-                </div>
-                <h3 className="font-serif text-3xl sm:text-4xl font-bold text-white mb-2 group-hover:text-theatre-gold transition-colors duration-300">
-                  {stat.value}
-                </h3>
-                <p className="text-xs sm:text-sm text-gray-400 font-sans tracking-wide uppercase font-medium">
-                  {stat.label}
-                </p>
-              </motion.div>
-            );
-          })}
-        </div>
+        {!preview && (
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mt-24">
+            {stats.map((stat, i) => {
+              const Icon = stat.icon;
+              return (
+                <motion.div
+                  key={stat.label}
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: '-50px' }}
+                  transition={{ duration: 0.6, delay: i * 0.1 }}
+                  className="bg-theatre-grey-deep/15 backdrop-blur-md p-6 sm:p-8 rounded-3xl border border-theatre-gold/45 hover:border-theatre-gold/80 text-center flex flex-col items-center group transition-all duration-300 shadow-md"
+                >
+                  <div className="p-3 bg-theatre-grey/10 rounded-2xl group-hover:bg-theatre-gold/15 transition-all duration-300 text-theatre-grey group-hover:text-theatre-gold mb-4 border border-theatre-grey/10 group-hover:border-theatre-gold/10">
+                    <Icon className="w-6 h-6" />
+                  </div>
+                  <h3 className="font-serif text-3xl sm:text-4xl font-bold text-white mb-2 group-hover:text-theatre-gold transition-colors duration-300">
+                    {stat.value}
+                  </h3>
+                  <p className="text-xs sm:text-sm text-gray-400 font-sans tracking-wide uppercase font-medium">
+                    {stat.label}
+                  </p>
+                </motion.div>
+              );
+            })}
+          </div>
+        )}
 
       </div>
     </section>

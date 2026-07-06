@@ -1,13 +1,13 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Search, Calendar, Armchair, ShieldCheck, Ticket } from 'lucide-react';
+import { Search, Calendar, Mail, ShieldCheck, Ticket } from 'lucide-react';
 
-export default function BookingProcess() {
+export default function BookingProcess({ preview, onViewMore }) {
   const steps = [
     {
       step: '01',
       title: 'Choose Package',
-      desc: 'Select a customized celebration rental package (e.g., Birthday Party, Romantic Proposal, Console Gaming).',
+      desc: 'Select a customized celebration rental package (e.g., Birthday Party, Romantic Proposal, Get Together & Corporate Gathering).',
       icon: Search,
     },
     {
@@ -18,20 +18,20 @@ export default function BookingProcess() {
     },
     {
       step: '03',
-      title: 'Pick Recliners',
-      desc: 'Choose the best luxury sofa recliners inside the hall for you and your invited guests.',
-      icon: Armchair,
+      title: 'Contact & Enquiry',
+      desc: 'Submit your details and custom preferences via our Contact Us form on the right.',
+      icon: Mail,
     },
     {
       step: '04',
-      title: 'Secure Payment',
-      desc: 'Complete payment seamlessly via encrypted channels (SSL) with all major credit cards.',
+      title: 'Quick Confirmation',
+      desc: 'Our box office team will reach out to confirm your booking slot, decoration options, and pricing.',
       icon: ShieldCheck,
     },
     {
       step: '05',
-      title: 'Get Booking Pass',
-      desc: 'Instantly download your digital entry pass with a barcode to scan at the private theatre gate.',
+      title: 'Get Entry Pass',
+      desc: 'Instantly receive your digital entry ticket pass and confirmation details via email.',
       icon: Ticket,
     },
   ];
@@ -63,8 +63,8 @@ export default function BookingProcess() {
         <div className="relative">
 
           {/* Steps Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-12 lg:gap-8 relative z-10">
-            {steps.map((step, index) => {
+          <div className={`grid grid-cols-1 md:grid-cols-2 ${preview ? 'lg:grid-cols-3' : 'lg:grid-cols-5'} gap-12 lg:gap-8 relative z-10`}>
+            {(preview ? steps.slice(0, 3) : steps).map((step, index) => {
               const Icon = step.icon;
               return (
                 <motion.div
@@ -78,8 +78,8 @@ export default function BookingProcess() {
                   {/* Step Bubble */}
                   <div className="relative mb-6">
                     {/* Circle Background */}
-                    <div className="w-24 h-24 rounded-full bg-theatre-grey/10 border border-theatre-grey/20 group-hover:border-theatre-gold/40 flex items-center justify-center transition-all duration-500 transform group-hover:scale-110 shadow-lg shadow-theatre-grey-deep/30 relative">
-                      <Icon className="w-8 h-8 text-theatre-grey group-hover:text-theatre-gold transition-colors duration-500" />
+                    <div className="w-24 h-24 rounded-full bg-theatre-grey-deep/15 backdrop-blur-md border border-theatre-gold/30 group-hover:border-theatre-gold flex items-center justify-center transition-all duration-500 transform group-hover:scale-110 shadow-lg shadow-theatre-gold/5 relative">
+                      <Icon className="w-8 h-8 text-gray-400 group-hover:text-theatre-gold transition-colors duration-500" />
                       
                       {/* Step Number Tag */}
                       <span className="absolute -top-1 -right-1 bg-theatre-gold text-theatre-grey-deep font-sans text-xs font-bold w-6 h-6 rounded-full flex items-center justify-center border-2 border-theatre-dark">
@@ -99,6 +99,17 @@ export default function BookingProcess() {
               );
             })}
           </div>
+
+          {preview && (
+            <div className="text-center mt-16">
+              <button
+                onClick={onViewMore}
+                className="inline-flex items-center space-x-2 bg-gradient-to-r from-theatre-gold to-theatre-gold-dark hover:from-theatre-gold-light hover:to-theatre-gold text-theatre-grey-deep font-bold px-8 py-4 rounded-full shadow-lg shadow-theatre-gold/15 hover:shadow-theatre-gold/25 hover:scale-105 transition-all duration-300 text-sm cursor-pointer"
+              >
+                <span>View Complete Process</span>
+              </button>
+            </div>
+          )}
         </div>
 
       </div>

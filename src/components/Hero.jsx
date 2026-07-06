@@ -1,9 +1,12 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
 import { Sparkles, Calendar, Ticket } from 'lucide-react';
 import bannerImg from '../assets/banner.jpg';
 
 export default function Hero() {
+  const navigate = useNavigate();
+
   const scrollToSection = (e, id) => {
     e.preventDefault();
     const target = document.querySelector(id);
@@ -65,7 +68,7 @@ export default function Hero() {
           transition={{ duration: 0.8, delay: 0.4, ease: 'easeOut' }}
           className="text-lg sm:text-xl text-gray-300 max-w-3xl mx-auto mb-10 leading-relaxed font-sans font-light"
         >
-          Book an exclusive premium private movie theatre for birthdays, romantic proposals, intimate anniversaries, or custom gaming nights with friends.
+          Book an exclusive premium private movie theatre for birthdays, romantic proposals, intimate anniversaries, or private get-togethers and corporate gatherings.
         </motion.p>
 
         {/* Call to action buttons */}
@@ -76,8 +79,11 @@ export default function Hero() {
           className="flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-6"
         >
           <a
-            href="#book-now"
-            onClick={(e) => scrollToSection(e, '#book-now')}
+            href="/contact"
+            onClick={(e) => {
+              e.preventDefault();
+              navigate('/contact');
+            }}
             className="group flex items-center justify-center space-x-2 w-full sm:w-auto bg-gradient-to-r from-theatre-gold to-theatre-gold-dark hover:from-theatre-gold-light hover:to-theatre-gold text-theatre-grey-deep font-bold px-8 py-4 rounded-full shadow-xl shadow-theatre-gold/15 hover:shadow-theatre-gold/25 hover:scale-105 transition-all duration-300 text-base"
           >
             <Ticket className="w-5 h-5 text-theatre-grey-deep group-hover:rotate-12 transition-transform duration-300" />

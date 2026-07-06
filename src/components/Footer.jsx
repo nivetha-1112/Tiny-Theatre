@@ -1,16 +1,17 @@
 import React from 'react';
 import { Ticket, Mail, Phone, MapPin, ArrowRight } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 export default function Footer() {
-  const scrollToSection = (e, id) => {
+  const navigate = useNavigate();
+  
+  const handleNavClick = (e, path) => {
     e.preventDefault();
-    const target = document.querySelector(id);
-    if (target) {
-      window.scrollTo({
-        top: target.offsetTop - 80,
-        behavior: 'smooth',
-      });
-    }
+    navigate(path);
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    });
   };
 
   const socials = [
@@ -65,12 +66,12 @@ export default function Footer() {
           
           {/* Col 1: Brand Info (Col 1-3) */}
           <div className="lg:col-span-3 space-y-6">
-            <a href="#home" onClick={(e) => scrollToSection(e, '#home')} className="flex items-center space-x-2 group">
+            <a href="#home" onClick={(e) => handleNavClick(e, '/')} className="flex items-center space-x-2 group">
               <div className="p-2 bg-theatre-grey/20 rounded-lg group-hover:bg-theatre-grey/30 transition-all duration-300 border border-theatre-grey/30">
                 <Ticket className="w-5 h-5 text-theatre-gold" />
               </div>
               <span className="font-serif text-2xl font-bold tracking-wide text-white">
-                Tiny<span className="text-theatre-gold font-normal italic">Theatre</span>
+                The Tiny<span className="text-theatre-gold font-normal italic">Theatre</span>
               </span>
             </a>
             <p className="text-sm text-gray-400 leading-relaxed font-light">
@@ -98,17 +99,18 @@ export default function Footer() {
             <h4 className="text-white font-serif text-base font-bold tracking-wide">Quick Links</h4>
             <ul className="space-y-3.5 text-sm font-light">
               {[
-                { name: 'Home', href: '#home' },
-                { name: 'About Us', href: '#about' },
-                { name: 'Why Choose Us', href: '#why-choose-us' },
-                { name: 'Booking Process', href: '#booking-process' },
-                { name: 'Booking Packages', href: '#events' },
-                { name: 'Photo Gallery', href: '#gallery' },
+                { name: 'Home', href: '#home', path: '/' },
+                { name: 'About Us', href: '#about', path: '/about' },
+                { name: 'Why Choose Us', href: '#why-choose-us', path: '/why-choose-us' },
+                { name: 'Booking Process', href: '#booking-process', path: '/booking-process' },
+                { name: 'Terms & Conditions', href: '#terms-and-conditions', path: '/terms-and-conditions' },
+                { name: 'Photo Gallery', href: '#gallery', path: '/gallery' },
+                { name: 'Contact Us', href: '#book-now', path: '/contact' },
               ].map((link) => (
                 <li key={link.name}>
                   <a
                     href={link.href}
-                    onClick={(e) => scrollToSection(e, link.href)}
+                    onClick={(e) => handleNavClick(e, link.path)}
                     className="hover:text-theatre-gold transition-colors duration-300 flex items-center space-x-1"
                   >
                     <span>{link.name}</span>
@@ -164,10 +166,10 @@ export default function Footer() {
 
         {/* Bottom copyright bar */}
         <div className="flex flex-col sm:flex-row justify-between items-center pt-8 text-xs font-light text-gray-500 gap-4">
-          <p>© {new Date().getFullYear()} Tiny Theatre Inc. All rights reserved.</p>
+          <p>© {new Date().getFullYear()} The Tiny Theatre Inc. All rights reserved.</p>
           <div className="flex space-x-6">
             <a href="#" className="hover:text-theatre-gold transition-colors duration-300">Privacy Policy</a>
-            <a href="#" className="hover:text-theatre-gold transition-colors duration-300">Terms of Service</a>
+            <a href="#terms-and-conditions" onClick={(e) => handleNavClick(e, '/terms-and-conditions')} className="hover:text-theatre-gold transition-colors duration-300">Terms & Conditions</a>
             <a href="#" className="hover:text-theatre-gold transition-colors duration-300">Sitemap</a>
           </div>
         </div>

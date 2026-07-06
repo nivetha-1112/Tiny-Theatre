@@ -28,7 +28,7 @@ export const eventsData = [
   {
     id: 3,
     name: 'Private Movie Night',
-    category: 'Gaming & Fun',
+    category: 'Get Together',
     date: 'Select Any Date',
     time: '3-Hour Private Slot',
     venue: 'Screen 2 (Cosy Lounge - up to 6 Guests)',
@@ -38,14 +38,14 @@ export const eventsData = [
   },
   {
     id: 4,
-    name: 'Console Gaming Showdown',
-    category: 'Gaming & Fun',
+    name: 'Family Get-Together & Reunions',
+    category: 'Get Together',
     date: 'Select Any Date',
     time: '3-Hour Private Slot',
-    venue: 'Arena Screen (Gaming Zone)',
-    desc: 'Plug in your PlayStation 5, Xbox, or Nintendo Switch and play multiplayer games with your friends on a massive 150-inch 4K screen with zero input lag.',
-    image: 'https://images.unsplash.com/photo-1606144042614-b2417e99c4e3?auto=format&fit=crop&w=800&q=80',
-    price: '$100',
+    venue: 'Cosy Lounge / Crown Screen',
+    desc: 'Host private reunions, family gatherings, social get-togethers, or watch parties in a premium and cozy environment with custom buffet catering options.',
+    image: 'https://images.unsplash.com/photo-1511578314322-379afb476865?auto=format&fit=crop&w=800&q=80',
+    price: '$110',
   },
   {
     id: 5,
@@ -71,10 +71,10 @@ export const eventsData = [
   },
 ];
 
-export default function Events({ onBookEvent }) {
+export default function Events({ onBookEvent, preview, onViewMore }) {
   const [activeFilter, setActiveFilter] = useState('All');
 
-  const filters = ['All', 'Celebrations', 'Romance', 'Gaming & Fun', 'Corporate'];
+  const filters = ['All', 'Celebrations', 'Romance', 'Get Together', 'Corporate'];
 
   const filteredEvents = activeFilter === 'All'
     ? eventsData
@@ -82,13 +82,6 @@ export default function Events({ onBookEvent }) {
 
   const handleBookClick = (eventName) => {
     onBookEvent(eventName);
-    const bookingSection = document.querySelector('#book-now');
-    if (bookingSection) {
-      window.scrollTo({
-        top: bookingSection.offsetTop - 80,
-        behavior: 'smooth',
-      });
-    }
   };
 
   return (
@@ -115,21 +108,23 @@ export default function Events({ onBookEvent }) {
         </div>
 
         {/* Filters bar */}
-        <div className="flex flex-wrap items-center justify-center gap-3 mb-16">
-          {filters.map((filter) => (
-            <button
-              key={filter}
-              onClick={() => setActiveFilter(filter)}
-              className={`px-5 py-2.5 rounded-full text-sm font-semibold tracking-wide transition-all duration-300 border ${
-                activeFilter === filter
-                  ? 'bg-theatre-gold text-theatre-grey-deep border-theatre-gold shadow-lg shadow-theatre-gold/15 scale-105'
-                  : 'bg-theatre-grey/10 text-gray-300 border-white/5 hover:border-theatre-grey/30 hover:text-white'
-              }`}
-            >
-              {filter}
-            </button>
-          ))}
-        </div>
+        {!preview && (
+          <div className="flex flex-wrap items-center justify-center gap-3 mb-16">
+            {filters.map((filter) => (
+              <button
+                key={filter}
+                onClick={() => setActiveFilter(filter)}
+                className={`px-5 py-2.5 rounded-full text-sm font-semibold tracking-wide transition-all duration-300 border ${
+                  activeFilter === filter
+                    ? 'bg-theatre-gold text-theatre-grey-deep border-theatre-gold shadow-lg shadow-theatre-gold/15 scale-105'
+                    : 'bg-theatre-grey/10 text-gray-300 border-white/5 hover:border-theatre-grey/30 hover:text-white'
+                }`}
+              >
+                {filter}
+              </button>
+            ))}
+          </div>
+        )}
 
         {/* Events Grid */}
         <motion.div
@@ -137,7 +132,7 @@ export default function Events({ onBookEvent }) {
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
         >
           <AnimatePresence mode="popLayout">
-            {filteredEvents.map((event) => (
+            {(preview ? eventsData.slice(0, 3) : filteredEvents).map((event) => (
               <motion.div
                 layout
                 initial={{ opacity: 0, scale: 0.9 }}
@@ -145,7 +140,7 @@ export default function Events({ onBookEvent }) {
                 exit={{ opacity: 0, scale: 0.9 }}
                 transition={{ duration: 0.4 }}
                 key={event.id}
-                className="glass hover:glass-gold rounded-3xl overflow-hidden border border-white/5 hover:border-theatre-gold/20 flex flex-col h-full group transition-all duration-300 hover:shadow-xl hover:shadow-theatre-grey-deep/20"
+                className="bg-theatre-grey-deep/15 backdrop-blur-md rounded-3xl overflow-hidden border border-theatre-gold/45 hover:border-theatre-gold/80 flex flex-col h-full group transition-all duration-300 hover:shadow-xl hover:shadow-theatre-gold/5"
               >
                 {/* Event Image & Tag */}
                 <div className="relative h-56 overflow-hidden">
@@ -200,7 +195,7 @@ export default function Events({ onBookEvent }) {
                   <div className="pt-4 mt-auto">
                     <button
                       onClick={() => handleBookClick(event.name)}
-                      className="w-full bg-gradient-to-r from-theatre-gold to-theatre-gold-dark hover:from-theatre-gold-light hover:to-theatre-gold text-theatre-grey-deep px-5 py-3.5 rounded-2xl font-bold text-sm shadow-md hover:shadow-lg hover:shadow-theatre-gold/20 flex items-center justify-center space-x-2 transition-all duration-300 group-hover:scale-[1.02]"
+                      className="w-full bg-gradient-to-r from-theatre-gold to-theatre-gold-dark hover:from-theatre-gold-light hover:to-theatre-gold text-theatre-grey-deep px-5 py-3.5 rounded-2xl font-bold text-sm shadow-md hover:shadow-lg hover:shadow-theatre-gold/20 flex items-center justify-center space-x-2 transition-all duration-300 group-hover:scale-[1.02] cursor-pointer"
                     >
                       <span>Book Private Slot</span>
                     </button>
@@ -210,6 +205,17 @@ export default function Events({ onBookEvent }) {
             ))}
           </AnimatePresence>
         </motion.div>
+
+        {preview && (
+          <div className="text-center mt-16">
+            <button
+              onClick={onViewMore}
+              className="inline-flex items-center space-x-2 bg-gradient-to-r from-theatre-gold to-theatre-gold-dark hover:from-theatre-gold-light hover:to-theatre-gold text-theatre-grey-deep font-bold px-8 py-4 rounded-full shadow-lg shadow-theatre-gold/15 hover:shadow-theatre-gold/25 hover:scale-105 transition-all duration-300 text-sm cursor-pointer"
+            >
+              <span>View All Packages</span>
+            </button>
+          </div>
+        )}
 
       </div>
     </section>
