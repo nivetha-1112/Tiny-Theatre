@@ -182,9 +182,8 @@ export default function BookingProcess({ preview, onViewMore }) {
                       </span>
                     </div>
 
-                    <h3 className="font-serif text-lg font-bold text-white mb-3 group-hover:text-theatre-gold transition-colors duration-300 flex items-center gap-2">
-                      <span>{step.emoji}</span>
-                      <span>{step.title}</span>
+                    <h3 className="font-serif text-lg font-bold text-white mb-3 group-hover:text-theatre-gold transition-colors duration-300">
+                      {step.title}
                     </h3>
                     <p className="text-xs sm:text-sm text-gray-400 leading-relaxed font-sans font-light">
                       {step.desc}
@@ -235,9 +234,8 @@ export default function BookingProcess({ preview, onViewMore }) {
                             <div className="p-2.5 bg-theatre-gold/10 rounded-2xl border border-theatre-gold/20 text-theatre-gold group-hover:bg-theatre-gold group-hover:text-theatre-grey-deep transition-all duration-500 flex-shrink-0">
                               <StepIcon className="w-5 h-5" />
                             </div>
-                            <h3 className="font-serif text-lg sm:text-xl font-bold text-white group-hover:text-theatre-gold transition-colors duration-300 flex items-center gap-2">
-                              <span>{step.emoji}</span>
-                              <span>{step.title}</span>
+                            <h3 className="font-serif text-lg sm:text-xl font-bold text-white group-hover:text-theatre-gold transition-colors duration-300">
+                              {step.title}
                             </h3>
                           </div>
 

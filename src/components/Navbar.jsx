@@ -107,7 +107,7 @@ export default function Navbar() {
             
             {/* Call Icon Button */}
             <a
-              href="tel:+12125550199"
+              href="tel:+917338848840"
               title="Call Us"
               className="p-2.5 bg-white/5 hover:bg-theatre-gold text-gray-300 hover:text-theatre-grey-deep rounded-full border border-white/10 hover:scale-110 transition-all duration-300 flex items-center justify-center cursor-pointer flex-shrink-0"
             >
@@ -116,7 +116,7 @@ export default function Navbar() {
 
             {/* WhatsApp Icon Button */}
             <a
-              href="https://wa.me/12125550199"
+              href="https://wa.me/7338848840"
               target="_blank"
               rel="noopener noreferrer"
               title="WhatsApp Chat"

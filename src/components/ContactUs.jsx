@@ -303,9 +303,7 @@ export default function ContactUs({ selectedEventName, clearSelectedEvent }) {
               <div className="w-8 h-px bg-theatre-gold/30 mb-4" />
               <h4 className="text-white font-sans text-lg font-bold tracking-wide mb-3">Call Support</h4>
               <p className="text-gray-400 font-sans font-light text-sm leading-relaxed space-y-1">
-                <span>+91 95436 68094</span><br />
-                <span>+91 93913 91162</span><br />
-                <span>+91 78457 69348</span>
+                       <span>+91 7338848840</span>
               </p>
             </div>
 

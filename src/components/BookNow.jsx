@@ -794,11 +794,11 @@ export default function BookNow({ selectedEventName, clearSelectedEvent }) {
 
                     <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4 pt-2">
                       {[
-                        { name: 'Movie Watching', emoji: '🎬', icon: Tv },
-                        { name: 'Birthday Celebration', emoji: '🎂', icon: CakeIcon },
-                        { name: 'Anniversary', emoji: '❤️', icon: Heart },
-                        { name: 'Bride To Be', emoji: '💍', icon: Sparkles },
-                        { name: 'Baby Shower', emoji: '👶', icon: Baby }
+                        { name: 'Movie Watching', icon: Tv },
+                        { name: 'Birthday Celebration', icon: CakeIcon },
+                        { name: 'Anniversary', icon: Heart },
+                        { name: 'Bride To Be', icon: Sparkles },
+                        { name: 'Baby Shower', icon: Baby }
                       ].map(cat => {
                         const Icon = cat.icon;
                         const isSelected = eventCategory === cat.name;
@@ -806,15 +806,14 @@ export default function BookNow({ selectedEventName, clearSelectedEvent }) {
                           <div
                             key={cat.name}
                             onClick={() => setEventCategory(cat.name)}
-                            className={`p-5 rounded-2xl border cursor-pointer text-center flex flex-col items-center justify-between min-h-[140px] transition-all duration-300 ${
+                            className={`p-5 rounded-2xl border cursor-pointer text-center flex flex-col items-center justify-center min-h-[140px] transition-all duration-300 space-y-3 ${
                               isSelected
                                 ? 'border-theatre-gold bg-theatre-gold/10 text-theatre-gold scale-105 shadow-md shadow-theatre-gold/15'
                                 : 'border-white/10 bg-theatre-dark/40 text-gray-400 hover:border-white/20'
                             }`}
                           >
-                            <span className="text-2xl block mb-2">{cat.emoji}</span>
-                            <div className="w-8 h-8 rounded-full bg-white/5 flex items-center justify-center mb-2">
-                              <Icon className="w-4.5 h-4.5" />
+                            <div className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center">
+                              <Icon className="w-5 h-5" />
                             </div>
                             <span className="text-[10px] font-sans font-bold uppercase tracking-wider block leading-tight">
                               {cat.name.split(' ')[0]} <br /> {cat.name.split(' ')[1] || ''}
