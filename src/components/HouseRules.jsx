@@ -1,120 +1,68 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { useNavigate } from 'react-router-dom';
-import { Shield, ArrowLeft } from 'lucide-react';
+import { Shield } from 'lucide-react';
 
-export default function TermsAndConditions() {
-  const navigate = useNavigate();
-
+export default function HouseRules() {
   const sections = [
     {
       id: 1,
-      title: "Bookings",
+      title: "Before Your Visit",
       content: [
-        "All bookings are subject to availability.",
-        "A booking is confirmed only after the required advance payment is received.",
-        "The booking confirmation will be shared through the contact details provided by the customer."
+        "Arrive 10–15 minutes before your scheduled booking.",
+        "Carry your booking confirmation.",
+        "Inform us in advance of any special celebration or decoration requests."
       ]
     },
     {
       id: 2,
-      title: "Payments",
+      title: "During Your Visit",
       content: [
-        "Advance payment is required to confirm your reservation.",
-        "The remaining balance, if any, must be paid before the start of your session unless otherwise agreed.",
-        "Prices are subject to change without prior notice; however, confirmed bookings will be charged at the agreed price."
+        "Treat the theatre, furniture, decorations, and equipment with care.",
+        "Follow the guidance of our staff at all times.",
+        "Keep the theatre clean and use the bins provided.",
+        "Supervise children throughout the visit.",
+        "Maintain a respectful environment for staff and other guests."
       ]
     },
     {
       id: 3,
-      title: "Cancellation & Rescheduling",
+      title: "Food & Beverages",
       content: [
-        "Cancellation and rescheduling requests must be made within the time limits communicated at the time of booking.",
-        "Refund eligibility, if any, will depend on the applicable cancellation policy.",
-        "The Tiny Theatre reserves the right to cancel or reschedule a booking due to unforeseen circumstances. In such cases, customers will be offered an alternative slot or an appropriate refund, where applicable."
+        "Food and beverages should be consumed responsibly.",
+        "Outside food or decorations are permitted only with prior approval, if applicable."
       ]
     },
     {
       id: 4,
-      title: "Arrival & Session Timing",
+      title: "Prohibited Activities",
       content: [
-        "Guests are requested to arrive 10–15 minutes before the scheduled booking time.",
-        "Sessions start and end as per the confirmed schedule.",
-        "Late arrival may reduce the available viewing time, and extensions are subject to availability and additional charges."
+        "The following are not permitted:",
+        "Smoking or vaping inside the premises.",
+        "Illegal drugs or unlawful activities.",
+        "Damage to theatre property.",
+        "Dangerous or disruptive behaviour.",
+        "Bringing hazardous materials or weapons onto the premises."
       ]
     },
     {
       id: 5,
-      title: "Guest Conduct",
+      title: "Personal Belongings",
       content: [
-        "To ensure a pleasant experience for everyone:",
-        "Treat staff, equipment, furniture, and décor with respect.",
-        "Follow all safety instructions provided by our team.",
-        "Avoid any behaviour that may disturb others or damage the property."
+        "Guests are responsible for their personal belongings. The Tiny Theatre is not responsible for lost, stolen, or unattended items."
       ]
     },
     {
       id: 6,
-      title: "Damage to Property",
+      title: "Content Played",
       content: [
-        "Customers may be held responsible for any intentional or negligent damage caused to the theatre, equipment, furniture, or decorations during their booking."
+        "Guests are responsible for ensuring that any movies, music, or other media they play or stream are used lawfully and in accordance with the terms of the relevant streaming or content service."
       ]
     },
     {
       id: 7,
-      title: "Food & Decorations",
-      content: [
-        "Food, beverages, cakes, and decoration services are subject to availability and package selection.",
-        "Outside food or decorations may be permitted only with prior approval."
-      ]
-    },
-    {
-      id: 8,
-      title: "Content Responsibility",
-      content: [
-        "Customers are responsible for ensuring they have the legal right to play or stream any movies, music, videos, photos, or other content they bring to the theatre. The Tiny Theatre is not responsible for any copyright or licensing violations arising from customer-provided content."
-      ]
-    },
-    {
-      id: 9,
       title: "Safety",
       content: [
-        "Guests must comply with all safety instructions and emergency procedures while on the premises."
-      ]
-    },
-    {
-      id: 10,
-      title: "Photography & Social Media",
-      content: [
-        "The Tiny Theatre may capture photographs or videos for promotional purposes only with the customer's permission. If you prefer not to be photographed, please inform our team before your session."
-      ]
-    },
-    {
-      id: 11,
-      title: "Limitation of Liability",
-      content: [
-        "While we strive to provide an excellent experience, The Tiny Theatre is not liable for delays, interruptions, or cancellations caused by events beyond our reasonable control, including power outages, internet disruptions, equipment failures, or natural disasters."
-      ]
-    },
-    {
-      id: 12,
-      title: "Privacy",
-      content: [
-        "Personal information collected during booking will be used only to manage reservations, communicate with customers, process payments, and improve our services. We do not sell personal information to third parties."
-      ]
-    },
-    {
-      id: 13,
-      title: "Changes to These Terms",
-      content: [
-        "The Tiny Theatre may update these Terms & Conditions from time to time. The latest version will always be available on our website."
-      ]
-    },
-    {
-      id: 14,
-      title: "Contact Us",
-      content: [
-        "If you have any questions regarding these Terms & Conditions, please contact us using the details provided on our Contact page."
+        "Please familiarise yourself with emergency exits and follow staff instructions during any emergency."
       ]
     }
   ];
@@ -127,18 +75,16 @@ export default function TermsAndConditions() {
 
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
-        
-
         {/* Subtitle */}
         <div className="text-center mb-2">
           <span className="text-theatre-gold text-xs font-semibold tracking-[0.25em] uppercase">
-            → HOUSE POLICIES ←
+            → THEATRE CODE ←
           </span>
         </div>
 
         {/* Title */}
         <h1 className="text-center font-serif text-4xl sm:text-5xl font-bold text-white mb-4 leading-tight">
-          Terms & <span className="text-theatre-gold">Conditions</span>
+          Theatre <span className="text-theatre-gold">House Rules</span>
         </h1>
 
         {/* Decorative Divider */}
@@ -155,7 +101,7 @@ export default function TermsAndConditions() {
 
         {/* Introduction */}
         <div className="bg-theatre-grey-deep/30 border border-theatre-gold/25 rounded-2xl p-6 sm:p-8 mb-12 text-gray-300 font-sans font-light leading-relaxed text-center sm:text-left">
-          Welcome to The Tiny Theatre. By making a booking or using our services, you agree to the following Terms & Conditions.
+          Welcome to The Tiny Theatre. To ensure a safe, comfortable, and enjoyable experience for everyone, please follow these house rules.
         </div>
 
         {/* Clause List */}
@@ -214,8 +160,9 @@ export default function TermsAndConditions() {
           <div className="w-12 h-12 bg-theatre-grey/10 border border-theatre-gold/50 rounded-full flex items-center justify-center shadow-lg mb-4">
             <Shield className="w-5 h-5 text-theatre-gold" />
           </div>
-          <p className="text-gray-400 text-sm font-sans font-light leading-relaxed max-w-md">
-            Thank you for reviewing our terms. We look forward to hosting your exclusive blockbusters and milestones at The Tiny Theatre!
+          <p className="text-gray-300 text-sm font-sans font-light leading-relaxed max-w-md">
+            Thank you for helping us maintain a clean, safe, and welcoming environment.<br />
+            <strong>MOVIES. MUNCHIES. MEMORIES.</strong>
           </p>
         </div>
 

@@ -1,120 +1,60 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { useNavigate } from 'react-router-dom';
-import { Shield, ArrowLeft } from 'lucide-react';
+import { Shield } from 'lucide-react';
 
-export default function TermsAndConditions() {
-  const navigate = useNavigate();
-
+export default function CancellationPolicy() {
   const sections = [
     {
       id: 1,
-      title: "Bookings",
+      title: "Booking Confirmation",
       content: [
-        "All bookings are subject to availability.",
-        "A booking is confirmed only after the required advance payment is received.",
-        "The booking confirmation will be shared through the contact details provided by the customer."
+        "A booking is confirmed only after the required advance payment has been received."
       ]
     },
     {
       id: 2,
-      title: "Payments",
+      title: "Cancellation by Customer",
       content: [
-        "Advance payment is required to confirm your reservation.",
-        "The remaining balance, if any, must be paid before the start of your session unless otherwise agreed.",
-        "Prices are subject to change without prior notice; however, confirmed bookings will be charged at the agreed price."
+        "Cancellation requests must be made through the same contact details used for the booking.",
+        "Any refund, if applicable, will be processed according to the cancellation terms communicated at the time of booking."
       ]
     },
     {
       id: 3,
-      title: "Cancellation & Rescheduling",
+      title: "Rescheduling",
       content: [
-        "Cancellation and rescheduling requests must be made within the time limits communicated at the time of booking.",
-        "Refund eligibility, if any, will depend on the applicable cancellation policy.",
-        "The Tiny Theatre reserves the right to cancel or reschedule a booking due to unforeseen circumstances. In such cases, customers will be offered an alternative slot or an appropriate refund, where applicable."
+        "Rescheduling requests are subject to availability.",
+        "We will make reasonable efforts to accommodate your preferred new date and time."
       ]
     },
     {
       id: 4,
-      title: "Arrival & Session Timing",
+      title: "Cancellation by The Tiny Theatre",
       content: [
-        "Guests are requested to arrive 10–15 minutes before the scheduled booking time.",
-        "Sessions start and end as per the confirmed schedule.",
-        "Late arrival may reduce the available viewing time, and extensions are subject to availability and additional charges."
+        "If we are unable to provide your booking due to unforeseen circumstances, we will offer:",
+        "An alternative date or time, or",
+        "A refund of the amount paid, where applicable."
       ]
     },
     {
       id: 5,
-      title: "Guest Conduct",
+      title: "No-Show",
       content: [
-        "To ensure a pleasant experience for everyone:",
-        "Treat staff, equipment, furniture, and décor with respect.",
-        "Follow all safety instructions provided by our team.",
-        "Avoid any behaviour that may disturb others or damage the property."
+        "Guests who do not arrive for their confirmed booking without prior notice may not be eligible for a refund or rescheduling."
       ]
     },
     {
       id: 6,
-      title: "Damage to Property",
+      title: "Refund Processing",
       content: [
-        "Customers may be held responsible for any intentional or negligent damage caused to the theatre, equipment, furniture, or decorations during their booking."
+        "Where a refund is approved, it will be processed using the original payment method. Processing times may vary depending on your payment provider."
       ]
     },
     {
       id: 7,
-      title: "Food & Decorations",
+      title: "Contact",
       content: [
-        "Food, beverages, cakes, and decoration services are subject to availability and package selection.",
-        "Outside food or decorations may be permitted only with prior approval."
-      ]
-    },
-    {
-      id: 8,
-      title: "Content Responsibility",
-      content: [
-        "Customers are responsible for ensuring they have the legal right to play or stream any movies, music, videos, photos, or other content they bring to the theatre. The Tiny Theatre is not responsible for any copyright or licensing violations arising from customer-provided content."
-      ]
-    },
-    {
-      id: 9,
-      title: "Safety",
-      content: [
-        "Guests must comply with all safety instructions and emergency procedures while on the premises."
-      ]
-    },
-    {
-      id: 10,
-      title: "Photography & Social Media",
-      content: [
-        "The Tiny Theatre may capture photographs or videos for promotional purposes only with the customer's permission. If you prefer not to be photographed, please inform our team before your session."
-      ]
-    },
-    {
-      id: 11,
-      title: "Limitation of Liability",
-      content: [
-        "While we strive to provide an excellent experience, The Tiny Theatre is not liable for delays, interruptions, or cancellations caused by events beyond our reasonable control, including power outages, internet disruptions, equipment failures, or natural disasters."
-      ]
-    },
-    {
-      id: 12,
-      title: "Privacy",
-      content: [
-        "Personal information collected during booking will be used only to manage reservations, communicate with customers, process payments, and improve our services. We do not sell personal information to third parties."
-      ]
-    },
-    {
-      id: 13,
-      title: "Changes to These Terms",
-      content: [
-        "The Tiny Theatre may update these Terms & Conditions from time to time. The latest version will always be available on our website."
-      ]
-    },
-    {
-      id: 14,
-      title: "Contact Us",
-      content: [
-        "If you have any questions regarding these Terms & Conditions, please contact us using the details provided on our Contact page."
+        "For cancellation or refund assistance, please contact our team before your scheduled booking."
       ]
     }
   ];
@@ -127,18 +67,16 @@ export default function TermsAndConditions() {
 
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
-        
-
         {/* Subtitle */}
         <div className="text-center mb-2">
           <span className="text-theatre-gold text-xs font-semibold tracking-[0.25em] uppercase">
-            → HOUSE POLICIES ←
+            → REFUND RULES ←
           </span>
         </div>
 
         {/* Title */}
         <h1 className="text-center font-serif text-4xl sm:text-5xl font-bold text-white mb-4 leading-tight">
-          Terms & <span className="text-theatre-gold">Conditions</span>
+          Cancellation & <span className="text-theatre-gold">Refund Policy</span>
         </h1>
 
         {/* Decorative Divider */}
@@ -155,7 +93,7 @@ export default function TermsAndConditions() {
 
         {/* Introduction */}
         <div className="bg-theatre-grey-deep/30 border border-theatre-gold/25 rounded-2xl p-6 sm:p-8 mb-12 text-gray-300 font-sans font-light leading-relaxed text-center sm:text-left">
-          Welcome to The Tiny Theatre. By making a booking or using our services, you agree to the following Terms & Conditions.
+          Our goal is to provide flexibility while ensuring fair scheduling for all guests.
         </div>
 
         {/* Clause List */}
@@ -215,7 +153,7 @@ export default function TermsAndConditions() {
             <Shield className="w-5 h-5 text-theatre-gold" />
           </div>
           <p className="text-gray-400 text-sm font-sans font-light leading-relaxed max-w-md">
-            Thank you for reviewing our terms. We look forward to hosting your exclusive blockbusters and milestones at The Tiny Theatre!
+            Thank you for reviewing our policies. If you need cancellation assistance, please get in touch with our representative.
           </p>
         </div>
 

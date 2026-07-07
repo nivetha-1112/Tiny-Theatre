@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { Menu, X, Ticket } from 'lucide-react';
+import { Menu, X, Phone } from 'lucide-react';
 import { useNavigate, useLocation } from 'react-router-dom';
+import logoImg from '../assets/logo.png';
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
@@ -10,11 +11,10 @@ export default function Navbar() {
 
   const menuItems = [
     { name: 'Home', href: '#home', path: '/' },
-    { name: 'About Us', href: '#about', path: '/about' },
     { name: 'Why Choose Us', href: '#why-choose-us', path: '/why-choose-us' },
     { name: 'Booking Process', href: '#booking-process', path: '/booking-process' },
-     { name: 'Gallery', href: '#gallery', path: '/gallery' },
-    { name: 'Terms & Conditions', href: '#terms-and-conditions', path: '/terms-and-conditions' },
+    { name: 'Gallery', href: '#gallery', path: '/gallery' },
+    { name: 'Offers', href: '#offers', path: '/offers' },
     { name: 'Contact Us', href: '#book-now', path: '/contact' }
   ];
 
@@ -29,14 +29,28 @@ export default function Navbar() {
 
   const handleNavClick = (e, path) => {
     e.preventDefault();
+    if (location.pathname !== '/' && path.startsWith('#')) {
+      navigate('/');
+      setTimeout(() => {
+        const element = document.getElementById(path.substring(1));
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth' });
+        }
+      }, 100);
+    } else {
+      navigate(path);
+      const element = document.getElementById(path.substring(1));
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
     setIsOpen(false);
-    navigate(path);
   };
 
   const handleBookNowClick = (e) => {
     e.preventDefault();
     setIsOpen(false);
-    navigate('/contact');
+    navigate('/book-now');
   };
 
   return (
@@ -47,26 +61,22 @@ export default function Navbar() {
           : 'bg-transparent py-5'
       }`}
     >
-      <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
+      <div className="max-w-[85rem] mx-auto px-4 sm:px-8 lg:px-12">
         <div className="flex items-center justify-between h-12">
-          {/* Logo */}
           <a
             href="#home"
             onClick={(e) => handleNavClick(e, '/')}
-            className="flex items-center space-x-1.5 sm:space-x-2 group cursor-pointer"
+            className="flex items-center group cursor-pointer"
           >
-            <div className="p-1.5 sm:p-2 bg-theatre-grey/20 rounded-lg group-hover:bg-theatre-grey/30 transition-all duration-300 border border-theatre-grey/30">
-              <Ticket className="w-5 h-5 sm:w-6 sm:h-6 text-theatre-gold animate-pulse" />
-            </div>
-            <div>
-              <span className="font-serif text-xl sm:text-2xl font-bold tracking-wide text-white group-hover:text-theatre-gold transition-colors duration-300">
-                The Tiny<span className="text-theatre-gold font-normal italic">Theatre</span>
-              </span>
-            </div>
+            <img 
+              src={logoImg} 
+              alt="The Tiny Theatre" 
+              className="h-20 sm:h-24 w-auto animate-blink object-contain translate-y-1.5"
+            />
           </a>
 
           {/* Desktop Nav Links */}
-          <div className="hidden lg:flex items-center space-x-6">
+          <div className="hidden lg:flex items-center space-x-3 xl:space-x-6">
             {menuItems.map((item) => {
               const isActive = location.pathname === item.path;
               return (
@@ -74,7 +84,7 @@ export default function Navbar() {
                   key={item.name}
                   href={item.href}
                   onClick={(e) => handleNavClick(e, item.path)}
-                  className={`text-sm font-medium tracking-wide transition-all duration-300 hover:text-theatre-gold relative py-1 ${
+                  className={`text-xs xl:text-sm font-medium tracking-wide transition-all duration-300 hover:text-theatre-gold relative py-1 ${
                     isActive
                       ? 'text-theatre-gold font-semibold'
                       : 'text-gray-300'
@@ -88,11 +98,33 @@ export default function Navbar() {
               );
             })}
             <a
-              href="/contact"
+              href="/book-now"
               onClick={handleBookNowClick}
-              className="bg-theatre-gold hover:bg-theatre-gold-light text-theatre-grey-deep px-5 py-2.5 rounded-full font-semibold text-sm shadow-md hover:shadow-lg shadow-theatre-gold/20 hover:shadow-theatre-gold/30 hover:scale-105 transition-all duration-300 border border-theatre-gold/10"
+              className="bg-theatre-gold hover:bg-theatre-gold-light text-theatre-grey-deep px-4 py-2 xl:px-5 xl:py-2.5 rounded-full font-semibold text-xs xl:text-sm shadow-md hover:shadow-lg shadow-theatre-gold/20 hover:shadow-theatre-gold/30 hover:scale-105 transition-all duration-300 border border-theatre-gold/10 cursor-pointer flex-shrink-0"
             >
               Book Now
+            </a>
+            
+            {/* Call Icon Button */}
+            <a
+              href="tel:+12125550199"
+              title="Call Us"
+              className="p-2.5 bg-white/5 hover:bg-theatre-gold text-gray-300 hover:text-theatre-grey-deep rounded-full border border-white/10 hover:scale-110 transition-all duration-300 flex items-center justify-center cursor-pointer flex-shrink-0"
+            >
+              <Phone className="w-4 h-4 xl:w-4.5 xl:h-4.5" />
+            </a>
+
+            {/* WhatsApp Icon Button */}
+            <a
+              href="https://wa.me/12125550199"
+              target="_blank"
+              rel="noopener noreferrer"
+              title="WhatsApp Chat"
+              className="p-2.5 bg-white/5 hover:bg-[#25D366] text-gray-300 hover:text-white rounded-full border border-white/10 hover:scale-110 transition-all duration-300 flex items-center justify-center cursor-pointer flex-shrink-0"
+            >
+              <svg className="w-4 h-4 xl:w-4.5 xl:h-4.5" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M12.012 2c-5.506 0-9.989 4.478-9.99 9.984a9.96 9.96 0 0 0 1.335 4.963L2 22l5.233-1.371a9.924 9.924 0 0 0 4.779 1.218h.004c5.506 0 9.99-4.478 9.99-9.986 0-2.67-1.037-5.18-2.92-7.062C17.182 3.018 14.676 2 12.012 2zm5.726 14.123c-.253.715-1.246 1.304-1.71 1.353-.42.043-.972.072-1.564-.117-.367-.118-.838-.283-1.429-.538-2.52-1.04-4.148-3.641-4.275-3.81-.124-.168-.926-1.24-.926-2.36 0-1.123.582-1.674.793-1.897.21-.223.46-.279.614-.279.155 0 .31.002.444.009.141.007.33-.053.516.398.192.463.655 1.604.713 1.722.059.12.098.26.019.418-.08.157-.12.254-.24.394-.12.14-.251.312-.359.418-.12.118-.246.248-.106.49.14.242.624 1.03 1.34 1.666.924.821 1.7 1.077 1.942 1.197.242.12.384.1.528-.066.142-.167.625-.73 1.134-1.285.25-.274.522-.293.818-.184.298.11 1.888.892 2.21 1.055.321.162.534.242.612.378.078.136.078.79-.175 1.505z" />
+              </svg>
             </a>
           </div>
 
@@ -134,7 +166,7 @@ export default function Navbar() {
               </a>
             );
           })}
-          <div className="pt-4 px-3">
+          <div className="pt-4 px-3 flex flex-col space-y-3">
             <a
               href="#book-now"
               onClick={handleBookNowClick}
@@ -142,6 +174,30 @@ export default function Navbar() {
             >
               Book Now
             </a>
+            
+            <div className="flex justify-center space-x-4 pt-1">
+              {/* Call Icon */}
+              <a
+                href="tel:+12125550199"
+                className="p-3 bg-white/5 hover:bg-theatre-gold text-gray-300 hover:text-theatre-grey-deep rounded-full border border-white/10 transition-all duration-300 flex items-center justify-center flex-grow"
+              >
+                <Phone className="w-5 h-5 mr-2" />
+                <span className="text-sm font-semibold">Call Us</span>
+              </a>
+
+              {/* WhatsApp Icon */}
+              <a
+                href="https://wa.me/12125550199"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="p-3 bg-white/5 hover:bg-[#25D366] text-gray-300 hover:text-white rounded-full border border-white/10 transition-all duration-300 flex items-center justify-center flex-grow"
+              >
+                <svg className="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M12.012 2c-5.506 0-9.989 4.478-9.99 9.984a9.96 9.96 0 0 0 1.335 4.963L2 22l5.233-1.371a9.924 9.924 0 0 0 4.779 1.218h.004c5.506 0 9.99-4.478 9.99-9.986 0-2.67-1.037-5.18-2.92-7.062C17.182 3.018 14.676 2 12.012 2zm5.726 14.123c-.253.715-1.246 1.304-1.71 1.353-.42.043-.972.072-1.564-.117-.367-.118-.838-.283-1.429-.538-2.52-1.04-4.148-3.641-4.275-3.81-.124-.168-.926-1.24-.926-2.36 0-1.123.582-1.674.793-1.897.21-.223.46-.279.614-.279.155 0 .31.002.444.009.141.007.33-.053.516.398.192.463.655 1.604.713 1.722.059.12.098.26.019.418-.08.157-.12.254-.24.394-.12.14-.251.312-.359.418-.12.118-.246.248-.106.49.14.242.624 1.03 1.34 1.666.924.821 1.7 1.077 1.942 1.197.242.12.384.1.528-.066.142-.167.625-.73 1.134-1.285.25-.274.522-.293.818-.184.298.11 1.888.892 2.21 1.055.321.162.534.242.612.378.078.136.078.79-.175 1.505z" />
+                </svg>
+                <span className="text-sm font-semibold">WhatsApp</span>
+              </a>
+            </div>
           </div>
         </div>
       </div>

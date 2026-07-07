@@ -1,41 +1,37 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { BrowserRouter as Router, Routes, Route, useNavigate, useLocation } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
-import About from './components/About';
+import WhatWeOffer from './components/WhatWeOffer';
 import WhyChooseUs from './components/WhyChooseUs';
 import BookingProcess from './components/BookingProcess';
-import Events from './components/Events';
 import Gallery from './components/Gallery';
 import Testimonials from './components/Testimonials';
 import BookNow from './components/BookNow';
+import ContactUs from './components/ContactUs';
 import TermsAndConditions from './components/TermsAndConditions';
+import PrivacyPolicy from './components/PrivacyPolicy';
+import CancellationPolicy from './components/CancellationPolicy';
+import HouseRules from './components/HouseRules';
 import Footer from './components/Footer';
-import { Ticket, ArrowUp } from 'lucide-react';
+import CouponPage from './components/CouponPage';
+import { ArrowUp, Ticket } from 'lucide-react';
+import logoImg from './assets/logo.png';
 
 function AppContent() {
   const [selectedEvent, setSelectedEvent] = useState('');
-  const [loading, setLoading] = useState(true);
-  const [pageLoading, setPageLoading] = useState(false);
   const [showScrollTop, setShowScrollTop] = useState(false);
+  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
   const location = useLocation();
 
-  const isInitialMount = useRef(true);
-
-  // preloader curtain timeout - runs once per session to prevent showing on refresh
+  // preloader curtain timeout
   useEffect(() => {
-    const hasLoadedBefore = sessionStorage.getItem('hasLoadedBefore');
-    if (hasLoadedBefore) {
+    const timer = setTimeout(() => {
       setLoading(false);
-    } else {
-      const timer = setTimeout(() => {
-        setLoading(false);
-        sessionStorage.setItem('hasLoadedBefore', 'true');
-      }, 2300);
-      return () => clearTimeout(timer);
-    }
+    }, 2300);
+    return () => clearTimeout(timer);
   }, []);
 
   // scroll listener for scroll-to-top button
@@ -51,23 +47,10 @@ function AppContent() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Trigger page transition loader on path changes
+  // Trigger scroll to top on path changes
   useEffect(() => {
-    if (loading) return; // Skip showing transition loader during initial preloader
-    
-    // Skip transition loader on initial mount/refresh
-    if (isInitialMount.current) {
-      isInitialMount.current = false;
-      return;
-    }
-    
-    setPageLoading(true);
     window.scrollTo(0, 0);
-    const timer = setTimeout(() => {
-      setPageLoading(false);
-    }, 850);
-    return () => clearTimeout(timer);
-  }, [location.pathname, loading]);
+  }, [location.pathname]);
 
   const handleBookEvent = (eventName) => {
     setSelectedEvent(eventName);
@@ -104,7 +87,7 @@ function AppContent() {
               transition={{ duration: 1.0, delay: 1.2, ease: [0.77, 0, 0.175, 1] }}
               className="absolute top-0 bottom-0 left-0 w-1/2 bg-theatre-grey-deep flex justify-end items-center"
               style={{
-                backgroundImage: 'radial-gradient(circle at 100% 50%, rgba(123, 132, 145, 0.15) 0%, transparent 60%)',
+                backgroundImage: 'radial-gradient(circle at 100% 50%, rgba(244, 196, 48, 0.08) 0%, transparent 60%)',
               }}
             />
 
@@ -115,48 +98,19 @@ function AppContent() {
               transition={{ duration: 1.0, delay: 1.2, ease: [0.77, 0, 0.175, 1] }}
               className="absolute top-0 bottom-0 right-0 w-1/2 bg-theatre-grey-deep flex justify-start items-center"
               style={{
-                backgroundImage: 'radial-gradient(circle at 0% 50%, rgba(123, 132, 145, 0.15) 0%, transparent 60%)',
+                backgroundImage: 'radial-gradient(circle at 0% 50%, rgba(244, 196, 48, 0.08) 0%, transparent 60%)',
               }}
             />
 
-            {/* Loading text/logo in center */}
             <motion.div
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: [0, 1, 1, 0], scale: [0.95, 1, 1, 0.95] }}
               transition={{ duration: 1.2, times: [0, 0.25, 0.75, 1], ease: 'easeInOut' }}
-              className="relative z-50 text-center space-y-4 px-4"
+              className="relative z-50 text-center px-4"
             >
-              <div className="inline-flex p-4 bg-theatre-grey/20 rounded-2xl border border-theatre-grey/30 shadow-lg shadow-theatre-gold/10">
-                <Ticket className="w-12 h-12 text-theatre-gold animate-pulse" />
-              </div>
-              <h2 className="font-serif text-3xl sm:text-4xl font-bold tracking-widest text-white uppercase">
-                The Tiny<span className="text-theatre-gold italic font-normal lowercase">Theatre</span>
-              </h2>
-              <div className="w-16 h-0.5 bg-theatre-gold/50 rounded-full mx-auto" />
-              <p className="text-xs text-gray-400 font-sans tracking-widest uppercase">Opening Curtains...</p>
+              <img src={logoImg} alt="The Tiny Theatre" className="h-28 sm:h-36 w-auto object-contain animate-pulse mx-auto" />
             </motion.div>
 
-          </motion.div>
-        )}
-      </AnimatePresence>
-
-      {/* Page transition loader */}
-      <AnimatePresence>
-        {pageLoading && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.15 }}
-            className="fixed inset-0 z-[90] flex items-center justify-center bg-theatre-dark/95 backdrop-blur-md"
-          >
-            <div className="text-center space-y-4">
-              <div className="inline-flex p-4 bg-theatre-grey/15 rounded-2xl border border-theatre-grey/25 shadow-lg shadow-theatre-gold/5">
-                <Ticket className="w-10 h-10 text-theatre-gold animate-spin" />
-              </div>
-              <div className="w-10 h-0.5 bg-theatre-gold/40 rounded-full mx-auto" />
-              <p className="text-[10px] text-gray-400 font-sans tracking-widest uppercase font-semibold">The Tiny Theatre...</p>
-            </div>
           </motion.div>
         )}
       </AnimatePresence>
@@ -169,55 +123,77 @@ function AppContent() {
           <Route path="/" element={
             <>
               <Hero />
-              <About preview={true} onViewMore={() => navigate('/about')} />
+              <WhatWeOffer preview={true} onViewMore={() => navigate('/what-we-offer')} />
               <WhyChooseUs preview={true} onViewMore={() => navigate('/why-choose-us')} />
               <BookingProcess preview={true} onViewMore={() => navigate('/booking-process')} />
-              <Events preview={true} onViewMore={() => navigate('/packages')} onBookEvent={handleBookEvent} />
               <Gallery preview={true} onViewMore={() => navigate('/gallery')} />
               <Testimonials />
-              <TermsAndConditions />
             </>
           } />
           
-          <Route path="/about" element={
-            <div className="pt-20">
-              <About preview={false} />
+          <Route path="/what-we-offer" element={
+            <div className="pt-32">
+              <WhatWeOffer preview={false} />
+            </div>
+          } />
+
+          <Route path="/offers" element={
+            <div className="pt-32">
+              <CouponPage />
             </div>
           } />
 
           <Route path="/why-choose-us" element={
-            <div className="pt-20">
+            <div className="pt-32">
               <WhyChooseUs preview={false} />
             </div>
           } />
 
           <Route path="/booking-process" element={
-            <div className="pt-20">
+            <div className="pt-32">
               <BookingProcess preview={false} />
             </div>
           } />
 
-          <Route path="/packages" element={
-            <div className="pt-20">
-              <Events preview={false} onBookEvent={handleBookEvent} />
-            </div>
-          } />
-
           <Route path="/gallery" element={
-            <div className="pt-20">
+            <div className="pt-32">
               <Gallery preview={false} />
             </div>
           } />
 
           <Route path="/terms-and-conditions" element={
-            <div className="pt-20">
+            <div className="pt-32">
               <TermsAndConditions />
             </div>
           } />
 
+          <Route path="/privacy-policy" element={
+            <div className="pt-32">
+              <PrivacyPolicy />
+            </div>
+          } />
+
           <Route path="/contact" element={
-            <div className="pt-20">
+            <div className="pt-32">
+              <ContactUs selectedEventName={selectedEvent} clearSelectedEvent={handleClearSelectedEvent} />
+            </div>
+          } />
+
+          <Route path="/book-now" element={
+            <div className="pt-32">
               <BookNow selectedEventName={selectedEvent} clearSelectedEvent={handleClearSelectedEvent} />
+            </div>
+          } />
+
+          <Route path="/cancellation-policy" element={
+            <div className="pt-32">
+              <CancellationPolicy />
+            </div>
+          } />
+
+          <Route path="/house-rules" element={
+            <div className="pt-32">
+              <HouseRules />
             </div>
           } />
         </Routes>

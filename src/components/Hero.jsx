@@ -45,7 +45,7 @@ export default function Hero() {
           className="inline-flex items-center space-x-2 bg-theatre-grey/20 backdrop-blur-md px-4 py-1.5 rounded-full border border-theatre-grey/30 text-theatre-gold text-xs font-semibold tracking-wider uppercase mb-8"
         >
           <Sparkles className="w-4.5 h-4.5 animate-spin" style={{ animationDuration: '4s' }} />
-          <span>Premium Private Theatre Booking</span>
+          <span>Experience Cinema, Your Way</span>
         </motion.div>
 
         {/* Headline */}
@@ -55,9 +55,9 @@ export default function Hero() {
           transition={{ duration: 0.8, delay: 0.2, ease: 'easeOut' }}
           className="font-serif text-5xl sm:text-6xl md:text-7xl font-bold tracking-tight text-white mb-6 leading-[1.1]"
         >
-          Your Own Screen. <br className="sm:hidden" />
+          Where Every Celebration <br className="sm:hidden" />
           <span className="text-transparent bg-clip-text bg-gradient-to-r from-theatre-gold via-theatre-gold-light to-theatre-gold text-shadow-gold">
-            Your Exclusive Space
+            Becomes a Blockbuster 
           </span>
         </motion.h1>
 
@@ -68,9 +68,31 @@ export default function Hero() {
           transition={{ duration: 0.8, delay: 0.4, ease: 'easeOut' }}
           className="text-lg sm:text-xl text-gray-300 max-w-3xl mx-auto mb-10 leading-relaxed font-sans font-light"
         >
-          Book an exclusive premium private movie theatre for birthdays, romantic proposals, intimate anniversaries, or private get-togethers and corporate gatherings.
-        </motion.p>
+         Escape the crowds and enjoy your own private cinema with your favorite people. Whether 
+it's a birthday, anniversary, proposal, date night, bride to be, family gathering, corporate 
+events, or a surprise celebration, The Tiny Theatre offers an exclusive luxury theatre 
+experience designed just for you
 
+        </motion.p>
+        {/* Cinematic Slogan Banner */}
+        <motion.div
+          initial={{ opacity: 0, y: 15 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.5, ease: 'easeOut' }}
+          className="text-sm sm:text-base md:text-lg font-sans font-semibold tracking-[0.2em] text-white uppercase mb-12 flex items-center justify-center space-x-2 sm:space-x-4 flex-wrap gap-y-2"
+        >
+          <span className="flex items-center space-x-1">
+            <span>🎬</span> <span className="hover:text-theatre-gold transition-colors duration-300">Movies</span>
+          </span>
+          <span className="text-theatre-gold text-xs sm:text-sm">•</span>
+          <span className="flex items-center space-x-1">
+            <span>🍿</span> <span className="hover:text-theatre-gold transition-colors duration-300">Munchies</span>
+          </span>
+          <span className="text-theatre-gold text-xs sm:text-sm">•</span>
+          <span className="flex items-center space-x-1">
+            <span>❤️</span> <span className="hover:text-theatre-gold transition-colors duration-300">Memories</span>
+          </span>
+        </motion.div>
         {/* Call to action buttons */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -87,16 +109,9 @@ export default function Hero() {
             className="group flex items-center justify-center space-x-2 w-full sm:w-auto bg-gradient-to-r from-theatre-gold to-theatre-gold-dark hover:from-theatre-gold-light hover:to-theatre-gold text-theatre-grey-deep font-bold px-8 py-4 rounded-full shadow-xl shadow-theatre-gold/15 hover:shadow-theatre-gold/25 hover:scale-105 transition-all duration-300 text-base"
           >
             <Ticket className="w-5 h-5 text-theatre-grey-deep group-hover:rotate-12 transition-transform duration-300" />
-            <span>Book Venue Now</span>
+            <span>Book Now</span>
           </a>
-          <a
-            href="#events"
-            onClick={(e) => scrollToSection(e, '#events')}
-            className="group flex items-center justify-center space-x-2 w-full sm:w-auto bg-transparent hover:bg-theatre-grey/10 text-white hover:text-theatre-gold font-semibold px-8 py-4 rounded-full border border-white/20 hover:border-theatre-gold/40 hover:scale-105 transition-all duration-300 text-base"
-          >
-            <Calendar className="w-5 h-5 text-gray-400 group-hover:text-theatre-gold transition-colors duration-300" />
-            <span>Explore Packages</span>
-          </a>
+         
         </motion.div>
       </div>
 

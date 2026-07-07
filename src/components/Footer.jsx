@@ -1,6 +1,20 @@
 import React from 'react';
-import { Ticket, Mail, Phone, MapPin, ArrowRight } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import { 
+  Mail, 
+  Phone, 
+  MapPin, 
+  Home, 
+  Sparkles, 
+  Award, 
+  Calendar, 
+  Image, 
+  FileText, 
+  ShieldAlert,
+  RotateCcw,
+  BookOpen
+} from 'lucide-react';
+import logoImg from '../assets/logo.png';
 
 export default function Footer() {
   const navigate = useNavigate();
@@ -61,18 +75,17 @@ export default function Footer() {
       {/* Decorative spotlights or flares */}
       <div className="absolute bottom-0 left-0 w-96 h-96 bg-theatre-grey/5 rounded-full blur-[100px] pointer-events-none" />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-12 pb-16 border-b border-white/5">
+      <div className="max-w-[85rem] mx-auto px-4 sm:px-8 lg:px-12 relative z-10">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-y-10 gap-x-6 lg:gap-x-8 pb-16 border-b border-white/5">
           
-          {/* Col 1: Brand Info (Col 1-3) */}
-          <div className="lg:col-span-3 space-y-6">
-            <a href="#home" onClick={(e) => handleNavClick(e, '/')} className="flex items-center space-x-2 group">
-              <div className="p-2 bg-theatre-grey/20 rounded-lg group-hover:bg-theatre-grey/30 transition-all duration-300 border border-theatre-grey/30">
-                <Ticket className="w-5 h-5 text-theatre-gold" />
-              </div>
-              <span className="font-serif text-2xl font-bold tracking-wide text-white">
-                The Tiny<span className="text-theatre-gold font-normal italic">Theatre</span>
-              </span>
+          {/* Col 1: Brand Info (Col 1-4) */}
+          <div className="lg:col-span-4 space-y-6">
+            <a href="#home" onClick={(e) => handleNavClick(e, '/')} className="flex items-center group">
+              <img 
+                src={logoImg} 
+                alt="The Tiny Theatre" 
+                className="h-20 w-auto object-contain"
+              />
             </a>
             <p className="text-sm text-gray-400 leading-relaxed font-light">
               Providing premium, luxurious private movie theatre screening halls and bespoke milestone celebration services.
@@ -94,43 +107,75 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* Col 2: Quick Links (Col 5-7) */}
-          <div className="lg:col-span-3 space-y-6">
+          {/* Col 2: Quick Links (Col 5-6) */}
+          <div className="lg:col-span-2 space-y-6">
             <h4 className="text-white font-serif text-base font-bold tracking-wide">Quick Links</h4>
             <ul className="space-y-3.5 text-sm font-light">
               {[
-                { name: 'Home', href: '#home', path: '/' },
-                { name: 'About Us', href: '#about', path: '/about' },
-                { name: 'Why Choose Us', href: '#why-choose-us', path: '/why-choose-us' },
-                { name: 'Booking Process', href: '#booking-process', path: '/booking-process' },
-                { name: 'Terms & Conditions', href: '#terms-and-conditions', path: '/terms-and-conditions' },
-                { name: 'Photo Gallery', href: '#gallery', path: '/gallery' },
-                { name: 'Contact Us', href: '#book-now', path: '/contact' },
-              ].map((link) => (
-                <li key={link.name}>
-                  <a
-                    href={link.href}
-                    onClick={(e) => handleNavClick(e, link.path)}
-                    className="hover:text-theatre-gold transition-colors duration-300 flex items-center space-x-1"
-                  >
-                    <span>{link.name}</span>
-                  </a>
-                </li>
-              ))}
+                { name: 'Home', href: '#home', path: '/', icon: Home },
+                { name: 'Offers', href: '#offers', path: '/offers', icon: Sparkles },
+                { name: 'Why Choose Us', href: '#why-choose-us', path: '/why-choose-us', icon: Award },
+                { name: 'Booking Process', href: '#booking-process', path: '/booking-process', icon: Calendar },
+                { name: 'Gallery', href: '#gallery', path: '/gallery', icon: Image },
+                { name: 'Contact Us', href: '#contact-us', path: '/contact', icon: Mail },
+              ].map((link) => {
+                const LinkIcon = link.icon;
+                return (
+                  <li key={link.name}>
+                    <a
+                      href={link.href}
+                      onClick={(e) => handleNavClick(e, link.path)}
+                      className="hover:text-theatre-gold transition-colors duration-300 flex items-center space-x-2.5"
+                    >
+                      <LinkIcon className="w-4 h-4 text-theatre-gold/80 flex-shrink-0" />
+                      <span>{link.name}</span>
+                    </a>
+                  </li>
+                );
+              })}
             </ul>
           </div>
 
-          {/* Col 3: Contact Info (Col 8-10) */}
+          {/* Col 3: Policies & Support (Col 7-9) */}
+          <div className="lg:col-span-3 space-y-6">
+            <h4 className="text-white font-serif text-base font-bold tracking-wide">Policies & Support</h4>
+            <ul className="space-y-3.5 text-sm font-light">
+              {[
+                { name: 'Terms & Conditions', href: '#terms-and-conditions', path: '/terms-and-conditions', icon: FileText },
+                { name: 'Privacy Policy', href: '/privacy-policy', path: '/privacy-policy', icon: ShieldAlert },
+                { name: 'Cancellation & Refund Policy', href: '/cancellation-policy', path: '/cancellation-policy', icon: RotateCcw },
+                { name: 'House Rules', href: '/house-rules', path: '/house-rules', icon: BookOpen },
+              ].map((link) => {
+                const LinkIcon = link.icon;
+                return (
+                  <li key={link.name}>
+                    <a
+                      href={link.href}
+                      onClick={(e) => handleNavClick(e, link.path)}
+                      className="hover:text-theatre-gold transition-colors duration-300 flex items-center space-x-2.5"
+                    >
+                      <LinkIcon className="w-4 h-4 text-theatre-gold/80 flex-shrink-0" />
+                      <span>{link.name}</span>
+                    </a>
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
+
+          {/* Col 4: Box Office Info */}
           <div className="lg:col-span-3 space-y-6">
             <h4 className="text-white font-serif text-base font-bold tracking-wide">Box Office Info</h4>
             <ul className="space-y-4 text-sm font-light">
               <li className="flex items-start space-x-3">
                 <MapPin className="w-4.5 h-4.5 text-theatre-gold mt-0.5 flex-shrink-0" />
-                <span>124 Curtain Street, Theatre District, NY 10001</span>
+                <span>UMA Complex, Off Radial Road, Ram Nagar South Extn 12th Street, Pallikaranai, Chennai - 600100</span>
               </li>
               <li className="flex items-center space-x-3">
                 <Phone className="w-4.5 h-4.5 text-theatre-gold flex-shrink-0" />
-                <span>+1 (212) 555-0199</span>
+                <a href="tel:+919543668094" className="hover:text-theatre-gold transition-colors duration-300">
+                  +91 95436 68094
+                </a>
               </li>
               <li className="flex items-center space-x-3">
                 <Mail className="w-4.5 h-4.5 text-theatre-gold flex-shrink-0" />
@@ -141,36 +186,17 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Col 4: Newsletter signup (Col 10-12) */}
-          <div className="lg:col-span-3 space-y-6">
-            <h4 className="text-white font-serif text-base font-bold tracking-wide">Newsletter</h4>
-            <p className="text-xs text-gray-400 leading-relaxed font-light">
-              Subscribe to receive exclusive booking specials and member discount codes.
-            </p>
-            <form onSubmit={(e) => e.preventDefault()} className="relative">
-              <input
-                type="email"
-                placeholder="Your email"
-                className="w-full bg-white/5 border border-white/10 rounded-xl py-3.5 pl-5 pr-14 text-sm text-white placeholder:text-gray-600 focus:border-theatre-gold outline-none"
-              />
-              <button
-                type="submit"
-                className="absolute right-1 top-1 bottom-1 px-4 bg-theatre-gold hover:bg-theatre-gold-light text-theatre-grey-deep rounded-lg flex items-center justify-center transition-all duration-300"
-              >
-                <ArrowRight className="w-4.5 h-4.5" />
-              </button>
-            </form>
-          </div>
-
         </div>
 
         {/* Bottom copyright bar */}
         <div className="flex flex-col sm:flex-row justify-between items-center pt-8 text-xs font-light text-gray-500 gap-4">
-          <p>© {new Date().getFullYear()} The Tiny Theatre Inc. All rights reserved.</p>
+          <div className="space-y-1 text-center sm:text-left">
+            <p>© {new Date().getFullYear()} The Tiny Theatre Inc. All rights reserved.</p>
+          </div>
           <div className="flex space-x-6">
-            <a href="#" className="hover:text-theatre-gold transition-colors duration-300">Privacy Policy</a>
-            <a href="#terms-and-conditions" onClick={(e) => handleNavClick(e, '/terms-and-conditions')} className="hover:text-theatre-gold transition-colors duration-300">Terms & Conditions</a>
-            <a href="#" className="hover:text-theatre-gold transition-colors duration-300">Sitemap</a>
+            <h1 className="text-[15px] text-gray-500">
+              Designed and Developed by <a href="https://www.oceansoftwares.com/" target="_blank" rel="noopener noreferrer" className="hover:text-theatre-gold text-gray-500 hover:underline transition-colors duration-300">Ocean Software</a>
+            </h1>
           </div>
         </div>
 
