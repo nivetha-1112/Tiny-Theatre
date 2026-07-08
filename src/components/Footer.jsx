@@ -195,7 +195,7 @@ export default function Footer() {
           </div>
           <div className="flex space-x-6">
             <h1 className="text-[15px] text-gray-500">
-              Designed and Developed by <a href="https://www.oceansoftwares.com/" target="_blank" rel="noopener noreferrer" className="hover:text-theatre-gold text-gray-500 hover:underline transition-colors duration-300">Ocean Software</a>
+              Designed and Maintained by <a href="https://www.oceansoftwares.com/" target="_blank" rel="noopener noreferrer" className="hover:text-theatre-gold text-gray-500 hover:underline transition-colors duration-300">Ocean Softwares</a>
             </h1>
           </div>
         </div>
