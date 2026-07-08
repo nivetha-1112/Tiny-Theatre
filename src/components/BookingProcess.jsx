@@ -22,7 +22,7 @@ export default function BookingProcess({ preview, onViewMore }) {
       step: '01',
       title: 'Choose Your Screen',
       emoji: '🎬',
-      desc: 'Select the perfect private theatre experience. Choose between Screen A or Screen B based on your preferred seating capacity and package.',
+      desc: 'Select the perfect private theatre experience. Choose between Screen A or Screen B based on your preferred seating capacity.',
       icon: Tv,
       details: []
     },
@@ -62,11 +62,15 @@ export default function BookingProcess({ preview, onViewMore }) {
       icon: Sparkles,
       details: [
         'Movie Watching',
-        'Birthday Celebration',
+        'Birthday',
         'Anniversary',
-        'Bride To Be',
-        'Baby Shower',
-        'Or any special event'
+        'Romantic Date',
+        'Proposal',
+        'Bride/Groom to be',
+        'Farewell',
+        'Baby shower',
+        'Kitty party',
+        'Get together'
       ]
     },
     {
@@ -76,23 +80,18 @@ export default function BookingProcess({ preview, onViewMore }) {
       desc: 'Personalize your experience. Choose optional services like:',
       icon: Cake,
       details: [
-        'Cake',
-        'Balloon Decoration',
-        'Welcome Board',
-        'Party Decoration',
-        'Surprise Setup'
+        'Cakes',
+        'Fog Entry',
+        'Decoration',
+        'LED numbers',
+        'Candle path',
+        'Event Sash',
+        'Crown',
+        'Karaoke setup'
       ]
     },
     {
       step: '07',
-      title: 'Add Extra Services',
-      emoji: '✨',
-      desc: 'Enhance your celebration. Select any additional add-ons available for your booking to make your event even more memorable.',
-      icon: PlusCircle,
-      details: []
-    },
-    {
-      step: '08',
       title: 'Review Your Booking',
       emoji: '📋',
       desc: 'Check everything before payment. Review:',
@@ -109,7 +108,7 @@ export default function BookingProcess({ preview, onViewMore }) {
       ]
     },
     {
-      step: '09',
+      step: '08',
       title: 'Pay Advance Amount',
       emoji: '💳',
       desc: 'Secure your booking instantly. Pay the required ₹1,000 advance using our secure online payment gateway.',
@@ -117,7 +116,7 @@ export default function BookingProcess({ preview, onViewMore }) {
       details: []
     },
     {
-      step: '10',
+      step: '09',
       title: 'Booking Confirmed',
       emoji: '✅',
       desc: "You're all set! Once payment is successful, you'll receive:",
@@ -132,7 +131,7 @@ export default function BookingProcess({ preview, onViewMore }) {
   ];
 
   return (
-    <section id="booking-process" className="relative py-24 bg-theatre-dark overflow-hidden">
+    <section id="booking-process" className="relative py-12 bg-theatre-dark overflow-hidden">
       {/* Background ambient lighting */}
       <div className="absolute top-0 right-0 w-96 h-96 bg-theatre-grey/5 rounded-full blur-3xl pointer-events-none" />
       <div className="absolute bottom-0 left-0 w-96 h-96 bg-theatre-gold/5 rounded-full blur-3xl pointer-events-none" />
@@ -144,12 +143,12 @@ export default function BookingProcess({ preview, onViewMore }) {
           <span className="text-theatre-gold font-semibold tracking-widest uppercase text-xs mb-4 block">
             How It Works
           </span>
-          <h2 className="font-serif text-4xl sm:text-5xl font-bold text-white mb-6 leading-tight">
+          <h2 className="font-serif text-3xl sm:text-4xl font-bold text-white mb-6 leading-tight">
             Booking Process <br className="hidden sm:inline" />
             <span className="text-theatre-grey">Simple & Professional Steps</span>
           </h2>
           <div className="w-20 h-1 bg-gradient-to-r from-theatre-gold to-theatre-grey rounded-full mb-8" />
-          <p className="text-gray-400 text-base sm:text-lg font-sans font-light">
+          <p className="text-gray-400 text-sm sm:text-base font-sans font-light">
             {preview 
               ? "Book your private screening hall rental in just a few simple steps." 
               : "Review the full step-by-step process of booking a celebration slot at The Tiny Theatre."
@@ -182,7 +181,7 @@ export default function BookingProcess({ preview, onViewMore }) {
                       </span>
                     </div>
 
-                    <h3 className="font-serif text-lg font-bold text-white mb-3 group-hover:text-theatre-gold transition-colors duration-300">
+                    <h3 className="font-serif text-base font-bold text-white mb-3 group-hover:text-theatre-gold transition-colors duration-300">
                       {step.title}
                     </h3>
                     <p className="text-xs sm:text-sm text-gray-400 leading-relaxed font-sans font-light">
@@ -234,7 +233,7 @@ export default function BookingProcess({ preview, onViewMore }) {
                             <div className="p-2.5 bg-theatre-gold/10 rounded-2xl border border-theatre-gold/20 text-theatre-gold group-hover:bg-theatre-gold group-hover:text-theatre-grey-deep transition-all duration-500 flex-shrink-0">
                               <StepIcon className="w-5 h-5" />
                             </div>
-                            <h3 className="font-serif text-lg sm:text-xl font-bold text-white group-hover:text-theatre-gold transition-colors duration-300">
+                            <h3 className="font-serif text-base sm:text-lg font-bold text-white group-hover:text-theatre-gold transition-colors duration-300">
                               {step.title}
                             </h3>
                           </div>

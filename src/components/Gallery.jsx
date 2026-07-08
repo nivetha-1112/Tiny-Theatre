@@ -76,18 +76,20 @@ export default function Gallery({ preview, onViewMore }) {
     ? galleryItems
     : galleryItems.filter(item => item.category === activeFilter);
 
+  const itemsToDisplay = preview ? galleryItems.slice(0, 3) : filteredItems;
+
   const handlePrev = (e) => {
     e.stopPropagation();
-    setSelectedImageIndex((prev) => (prev === 0 ? filteredItems.length - 1 : prev - 1));
+    setSelectedImageIndex((prev) => (prev === 0 ? itemsToDisplay.length - 1 : prev - 1));
   };
 
   const handleNext = (e) => {
     e.stopPropagation();
-    setSelectedImageIndex((prev) => (prev === filteredItems.length - 1 ? 0 : prev + 1));
+    setSelectedImageIndex((prev) => (prev === itemsToDisplay.length - 1 ? 0 : prev + 1));
   };
 
   return (
-    <section id="gallery" className="relative py-24 bg-theatre-dark overflow-hidden">
+    <section id="gallery" className="relative py-12 bg-theatre-dark overflow-hidden">
       {/* Visual background details */}
       <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-theatre-grey/5 rounded-full blur-[120px] pointer-events-none" />
 
@@ -98,12 +100,12 @@ export default function Gallery({ preview, onViewMore }) {
           <span className="text-theatre-gold font-semibold tracking-widest uppercase text-xs mb-4 block">
             Review Gallery
           </span>
-          <h2 className="font-serif text-4xl sm:text-5xl font-bold text-white mb-6 leading-tight">
+          <h2 className="font-serif text-3xl sm:text-4xl font-bold text-white mb-6 leading-tight">
             Magic Captured, <br className="hidden sm:inline" />
             <span className="text-theatre-grey">Reviews Witnessed</span>
           </h2>
           <div className="w-20 h-1 bg-gradient-to-r from-theatre-gold to-theatre-grey rounded-full mb-8" />
-          <p className="text-gray-400 text-base sm:text-lg font-sans font-light">
+          <p className="text-gray-400 text-sm sm:text-base font-sans font-light">
             Browse our photo collections and read the real experiences left by our guests who celebrated their special events with us.
           </p>
         </div>
@@ -129,7 +131,7 @@ export default function Gallery({ preview, onViewMore }) {
 
         {/* Gallery Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {(preview ? galleryItems.slice(0, 3) : filteredItems).map((item, index) => (
+          {itemsToDisplay.map((item, index) => (
             <motion.div
               layout
               key={item.id}
@@ -149,7 +151,7 @@ export default function Gallery({ preview, onViewMore }) {
                   <Maximize2 className="w-5 h-5" />
                 </div>
                 <span className="text-white text-xs font-semibold tracking-wider uppercase font-sans">
-                  View Review Details
+                  Zoom Image
                 </span>
               </div>
             </motion.div>
@@ -174,89 +176,49 @@ export default function Gallery({ preview, onViewMore }) {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
-                className="fixed inset-0 z-[200] bg-theatre-dark/95 backdrop-blur-md overflow-y-auto p-4 sm:p-6 flex items-start justify-center md:items-center"
+                className="fixed inset-0 z-[200] bg-black/90 backdrop-blur-md flex items-center justify-center p-4"
                 onClick={() => setSelectedImageIndex(null)}
               >
-                {/* Lightbox Card */}
+                {/* Close button */}
+                <button
+                  onClick={() => setSelectedImageIndex(null)}
+                  className="absolute top-6 right-6 text-white/80 hover:text-white p-3 rounded-full bg-white/5 hover:bg-white/10 transition-colors z-[210] cursor-pointer"
+                >
+                  <X className="w-6 h-6" />
+                </button>
+
+                {/* Centered Image Container */}
                 <motion.div
-                  initial={{ scale: 0.95, y: 15 }}
-                  animate={{ scale: 1, y: 0 }}
-                  exit={{ scale: 0.95, y: 15 }}
-                  transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-                  className="bg-theatre-grey-deep/40 border border-white/10 rounded-[32px] overflow-hidden max-w-5xl w-full grid grid-cols-1 md:grid-cols-12 shadow-2xl relative my-auto"
+                  initial={{ scale: 0.95 }}
+                  animate={{ scale: 1 }}
+                  exit={{ scale: 0.95 }}
+                  transition={{ type: 'spring', damping: 25, stiffness: 250 }}
+                  className="relative max-w-4xl w-full max-h-[85vh] flex items-center justify-center"
                   onClick={(e) => e.stopPropagation()}
                 >
-                  {/* Close button inside modal card */}
+                  <img
+                    src={itemsToDisplay[selectedImageIndex].image}
+                    alt={itemsToDisplay[selectedImageIndex].title}
+                    className="max-w-full max-h-[80vh] object-contain rounded-2xl border border-white/10 shadow-2xl"
+                  />
+                  
+                  {/* Left navigation arrow */}
                   <button
-                    onClick={() => setSelectedImageIndex(null)}
-                    className="absolute top-4 right-4 text-gray-400 hover:text-white p-2 rounded-full bg-white/5 hover:bg-white/10 transition-colors z-[130]"
+                    onClick={handlePrev}
+                    className="absolute -left-4 sm:-left-16 top-1/2 -translate-y-1/2 z-30 p-3 rounded-full bg-black/60 hover:bg-theatre-gold border border-white/10 hover:border-theatre-gold text-white hover:text-theatre-grey-deep transition-all duration-300 shadow-lg hover:scale-110 cursor-pointer"
+                    aria-label="Previous image"
                   >
-                    <X className="w-5 h-5" />
+                    <ChevronLeft className="w-6 h-6" />
                   </button>
 
-                  {/* Left image column */}
-                  <div className="md:col-span-7 h-[240px] sm:h-[300px] md:h-[500px] relative">
-                    <img
-                      src={filteredItems[selectedImageIndex].image}
-                      alt={filteredItems[selectedImageIndex].title}
-                      className="w-full h-full object-cover"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-theatre-dark/80 to-transparent md:hidden" />
-                    
-                    {/* Aligned navigation arrows inside image column */}
-                    <button
-                      onClick={handlePrev}
-                      className="absolute left-4 top-1/2 -translate-y-1/2 z-30 p-2.5 rounded-full bg-theatre-dark/80 hover:bg-theatre-gold border border-white/10 hover:border-theatre-gold text-white hover:text-theatre-grey-deep transition-all duration-300 shadow-lg hover:scale-110 cursor-pointer"
-                      aria-label="Previous review image"
-                    >
-                      <ChevronLeft className="w-5 h-5" />
-                    </button>
-                    <button
-                      onClick={handleNext}
-                      className="absolute right-4 top-1/2 -translate-y-1/2 z-30 p-2.5 rounded-full bg-theatre-dark/80 hover:bg-theatre-gold border border-white/10 hover:border-theatre-gold text-white hover:text-theatre-grey-deep transition-all duration-300 shadow-lg hover:scale-110 cursor-pointer"
-                      aria-label="Next review image"
-                    >
-                      <ChevronRight className="w-5 h-5" />
-                    </button>
-                  </div>
-
-                  {/* Right detailed column - Reviews sheets layout */}
-                  <div className="md:col-span-5 p-5 sm:p-8 flex flex-col justify-center text-left space-y-4 sm:space-y-6">
-                    <div>
-                      <span className="text-theatre-gold text-xs font-semibold tracking-widest uppercase block mb-2">
-                        {filteredItems[selectedImageIndex].category}
-                      </span>
-                      <h2 className="font-serif text-2xl sm:text-3xl font-bold text-white leading-tight">
-                        {filteredItems[selectedImageIndex].title}
-                      </h2>
-                      <div className="w-16 h-1 bg-gradient-to-r from-theatre-gold to-theatre-grey rounded-full mt-3" />
-                    </div>
-
-                    {/* Testimonial sheet */}
-                    <div className="bg-theatre-dark/50 border border-white/5 p-4 sm:p-6 rounded-2xl relative shadow-inner">
-                      <Quote className="absolute -top-3 -left-3 w-8 h-8 text-theatre-gold/10 transform rotate-180" />
-                      <p className="text-gray-300 font-sans font-light italic leading-relaxed text-xs sm:text-sm pl-2">
-                        "{filteredItems[selectedImageIndex].testimonial}"
-                      </p>
-                    </div>
-
-                    {/* Reviewer details & score */}
-                    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pt-4 border-t border-white/10">
-                      <div>
-                        <h4 className="text-white font-serif text-lg font-bold">
-                          {filteredItems[selectedImageIndex].reviewer}
-                        </h4>
-                        <p className="text-xs text-gray-400 font-sans tracking-wide">
-                          {filteredItems[selectedImageIndex].role}
-                        </p>
-                      </div>
-
-                      <div className="flex items-center space-x-1.5 bg-theatre-gold/10 border border-theatre-gold/30 px-3.5 py-2 rounded-xl self-start sm:self-auto">
-                        <Star className="w-4 h-4 text-theatre-gold fill-current" />
-                        <span className="text-theatre-gold font-bold font-sans text-sm">5.0 / 5.0</span>
-                      </div>
-                    </div>
-                  </div>
+                  {/* Right navigation arrow */}
+                  <button
+                    onClick={handleNext}
+                    className="absolute -right-4 sm:-right-16 top-1/2 -translate-y-1/2 z-30 p-3 rounded-full bg-black/60 hover:bg-theatre-gold border border-white/10 hover:border-theatre-gold text-white hover:text-theatre-grey-deep transition-all duration-300 shadow-lg hover:scale-110 cursor-pointer"
+                    aria-label="Next image"
+                  >
+                    <ChevronRight className="w-6 h-6" />
+                  </button>
                 </motion.div>
               </motion.div>
             )}

@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { BrowserRouter as Router, Routes, Route, useNavigate, useLocation } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
-import WhatWeOffer from './components/WhatWeOffer';
+import PerfectFor from './components/PerfectFor';
 import WhyChooseUs from './components/WhyChooseUs';
 import BookingProcess from './components/BookingProcess';
 import Gallery from './components/Gallery';
@@ -106,9 +106,17 @@ function AppContent() {
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: [0, 1, 1, 0], scale: [0.95, 1, 1, 0.95] }}
               transition={{ duration: 1.2, times: [0, 0.25, 0.75, 1], ease: 'easeInOut' }}
-              className="relative z-50 text-center px-4"
+              className="relative z-50 text-center px-4 flex flex-col items-center"
             >
-              <img src={logoImg} alt="The Tiny Theatre" className="h-28 sm:h-36 w-auto object-contain animate-pulse mx-auto" />
+              <img 
+                src={logoImg} 
+                alt="The Tiny Theatre" 
+                className="h-28 sm:h-36 w-auto object-contain animate-pulse mx-auto" 
+                style={{ filter: 'drop-shadow(0 0 20px rgba(244, 196, 48, 0.65))' }}
+              />
+              <p className="text-theatre-gold mt-4 font-serif text-sm sm:text-base tracking-[0.25em] uppercase font-bold animate-pulse text-shadow-gold">
+                Opening Curtains...
+              </p>
             </motion.div>
 
           </motion.div>
@@ -123,19 +131,15 @@ function AppContent() {
           <Route path="/" element={
             <>
               <Hero />
-              <WhatWeOffer preview={true} onViewMore={() => navigate('/what-we-offer')} />
               <WhyChooseUs preview={true} onViewMore={() => navigate('/why-choose-us')} />
+              <PerfectFor />
               <BookingProcess preview={true} onViewMore={() => navigate('/booking-process')} />
               <Gallery preview={true} onViewMore={() => navigate('/gallery')} />
               <Testimonials />
             </>
           } />
           
-          <Route path="/what-we-offer" element={
-            <div className="pt-32">
-              <WhatWeOffer preview={false} />
-            </div>
-          } />
+
 
           <Route path="/offers" element={
             <div className="pt-32">

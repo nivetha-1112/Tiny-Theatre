@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Menu, X, Phone } from 'lucide-react';
+import { Menu, X, Phone, Ticket } from 'lucide-react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import logoImg from '../assets/logo.png';
 
@@ -61,7 +61,7 @@ export default function Navbar() {
           : 'bg-transparent py-5'
       }`}
     >
-      <div className="max-w-[85rem] mx-auto px-4 sm:px-8 lg:px-12">
+      <div className="max-w-[85rem] mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-12">
           <a
             href="#home"
@@ -97,21 +97,14 @@ export default function Navbar() {
                 </a>
               );
             })}
-            <a
-              href="/book-now"
-              onClick={handleBookNowClick}
-              className="bg-theatre-gold hover:bg-theatre-gold-light text-theatre-grey-deep px-4 py-2 xl:px-5 xl:py-2.5 rounded-full font-semibold text-xs xl:text-sm shadow-md hover:shadow-lg shadow-theatre-gold/20 hover:shadow-theatre-gold/30 hover:scale-105 transition-all duration-300 border border-theatre-gold/10 cursor-pointer flex-shrink-0"
-            >
-              Book Now
-            </a>
             
             {/* Call Icon Button */}
             <a
               href="tel:+917338848840"
               title="Call Us"
-              className="p-2.5 bg-white/5 hover:bg-theatre-gold text-gray-300 hover:text-theatre-grey-deep rounded-full border border-white/10 hover:scale-110 transition-all duration-300 flex items-center justify-center cursor-pointer flex-shrink-0"
+              className="w-10 h-10 bg-transparent border border-theatre-gold/80 hover:border-theatre-gold text-theatre-gold hover:bg-theatre-gold/10 hover:scale-110 transition-all duration-300 rounded-full flex items-center justify-center cursor-pointer flex-shrink-0"
             >
-              <Phone className="w-4 h-4 xl:w-4.5 xl:h-4.5" />
+              <Phone className="w-4 h-4 xl:w-4.5 xl:h-4.5 text-theatre-gold" />
             </a>
 
             {/* WhatsApp Icon Button */}
@@ -120,11 +113,20 @@ export default function Navbar() {
               target="_blank"
               rel="noopener noreferrer"
               title="WhatsApp Chat"
-              className="p-2.5 bg-white/5 hover:bg-[#25D366] text-gray-300 hover:text-white rounded-full border border-white/10 hover:scale-110 transition-all duration-300 flex items-center justify-center cursor-pointer flex-shrink-0"
+              className="w-10 h-10 bg-transparent border border-theatre-gold/80 hover:border-theatre-gold text-theatre-gold hover:bg-theatre-gold/10 hover:scale-110 transition-all duration-300 rounded-full flex items-center justify-center cursor-pointer flex-shrink-0"
             >
-              <svg className="w-4 h-4 xl:w-4.5 xl:h-4.5" fill="currentColor" viewBox="0 0 24 24">
+              <svg className="w-4.5 h-4.5 text-theatre-gold" fill="currentColor" viewBox="0 0 24 24">
                 <path d="M12.012 2c-5.506 0-9.989 4.478-9.99 9.984a9.96 9.96 0 0 0 1.335 4.963L2 22l5.233-1.371a9.924 9.924 0 0 0 4.779 1.218h.004c5.506 0 9.99-4.478 9.99-9.986 0-2.67-1.037-5.18-2.92-7.062C17.182 3.018 14.676 2 12.012 2zm5.726 14.123c-.253.715-1.246 1.304-1.71 1.353-.42.043-.972.072-1.564-.117-.367-.118-.838-.283-1.429-.538-2.52-1.04-4.148-3.641-4.275-3.81-.124-.168-.926-1.24-.926-2.36 0-1.123.582-1.674.793-1.897.21-.223.46-.279.614-.279.155 0 .31.002.444.009.141.007.33-.053.516.398.192.463.655 1.604.713 1.722.059.12.098.26.019.418-.08.157-.12.254-.24.394-.12.14-.251.312-.359.418-.12.118-.246.248-.106.49.14.242.624 1.03 1.34 1.666.924.821 1.7 1.077 1.942 1.197.242.12.384.1.528-.066.142-.167.625-.73 1.134-1.285.25-.274.522-.293.818-.184.298.11 1.888.892 2.21 1.055.321.162.534.242.612.378.078.136.078.79-.175 1.505z" />
               </svg>
+            </a>
+
+            <a
+              href="/book-now"
+              onClick={handleBookNowClick}
+              className="bg-theatre-gold hover:bg-theatre-gold-light text-theatre-grey-deep px-4 py-2.5 xl:px-5 xl:py-3 rounded-xl font-bold text-xs xl:text-sm shadow-md hover:shadow-lg shadow-theatre-gold/20 hover:shadow-theatre-gold/30 hover:scale-105 transition-all duration-300 cursor-pointer flex-shrink-0 flex items-center space-x-2"
+            >
+              <Ticket className="w-4 h-4 xl:w-4.5 xl:h-4.5 text-theatre-grey-deep" />
+              <span>Book Now</span>
             </a>
           </div>
 

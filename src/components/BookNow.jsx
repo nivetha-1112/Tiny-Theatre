@@ -25,7 +25,9 @@ import {
   Volume2, 
   Lightbulb, 
   MessageSquare, 
-  Star 
+  Star,
+  Mic,
+  Wind
 } from 'lucide-react';
 import confetti from 'canvas-confetti';
 
@@ -126,7 +128,12 @@ export default function BookNow({ selectedEventName, clearSelectedEvent }) {
     'speaker': { name: 'Bluetooth Party Speaker', price: 300 },
     'lighting': { name: 'Special Disco Lighting', price: 500 },
     'message': { name: 'Personalized Message on Screen', price: 400 },
-    'surprise': { name: 'Surprise Entry Decor & Smoke', price: 1000 }
+    'fog_entry': { name: 'Fog Entry', price: 1000 },
+    'led_numbers': { name: 'LED Numbers', price: 300 },
+    'candle_path': { name: 'Candle Path', price: 400 },
+    'event_sash': { name: 'Event Sash', price: 150 },
+    'crown': { name: 'Crown', price: 150 },
+    'karaoke': { name: 'Karaoke Setup', price: 800 }
   };
   const addonsCharges = selectedAddons.reduce((sum, key) => sum + (addonsPrices[key]?.price || 0), 0);
 
@@ -795,10 +802,15 @@ export default function BookNow({ selectedEventName, clearSelectedEvent }) {
                     <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4 pt-2">
                       {[
                         { name: 'Movie Watching', icon: Tv },
-                        { name: 'Birthday Celebration', icon: CakeIcon },
+                        { name: 'Birthday', icon: CakeIcon },
                         { name: 'Anniversary', icon: Heart },
-                        { name: 'Bride To Be', icon: Sparkles },
-                        { name: 'Baby Shower', icon: Baby }
+                        { name: 'Romantic Date', icon: Heart },
+                        { name: 'Proposal', icon: Sparkles },
+                        { name: 'Bride/Groom to be', icon: Sparkles },
+                        { name: 'Farewell', icon: Gift },
+                        { name: 'Baby shower', icon: Baby },
+                        { name: 'Kitty party', icon: Users },
+                        { name: 'Get together', icon: Users }
                       ].map(cat => {
                         const Icon = cat.icon;
                         const isSelected = eventCategory === cat.name;
@@ -816,7 +828,7 @@ export default function BookNow({ selectedEventName, clearSelectedEvent }) {
                               <Icon className="w-5 h-5" />
                             </div>
                             <span className="text-[10px] font-sans font-bold uppercase tracking-wider block leading-tight">
-                              {cat.name.split(' ')[0]} <br /> {cat.name.split(' ')[1] || ''}
+                              {cat.name}
                             </span>
                           </div>
                         );
@@ -977,14 +989,19 @@ export default function BookNow({ selectedEventName, clearSelectedEvent }) {
                       <p className="text-xs sm:text-sm text-gray-400">Select extra bespoke services to capture and elevate your booking.</p>
                     </div>
 
-                    <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 pt-2">
+                    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 pt-2">
                       {[
                         { key: 'photography', name: 'Professional Photography', price: '₹1,500', icon: Camera },
                         { key: 'videography', name: 'Cinematic Videography', price: '₹2,500', icon: Camera },
                         { key: 'speaker', name: 'Bluetooth Speaker', price: '₹300', icon: Volume2 },
                         { key: 'lighting', name: 'Special Lighting', price: '₹500', icon: Lightbulb },
                         { key: 'message', name: 'Personalized Screen Msg', price: '₹400', icon: MessageSquare },
-                        { key: 'surprise', name: 'Surprise Entry Setup', price: '₹1,000', icon: Gift }
+                        { key: 'fog_entry', name: 'Fog Entry', price: '₹1,000', icon: Wind },
+                        { key: 'led_numbers', name: 'LED Numbers', price: '₹300', icon: Lightbulb },
+                        { key: 'candle_path', name: 'Candle Path', price: '₹400', icon: Sparkles },
+                        { key: 'event_sash', name: 'Event Sash', price: '₹150', icon: Star },
+                        { key: 'crown', name: 'Crown', price: '₹150', icon: Star },
+                        { key: 'karaoke', name: 'Karaoke Setup', price: '₹800', icon: Mic }
                       ].map(addon => {
                         const Icon = addon.icon;
                         const isSelected = selectedAddons.includes(addon.key);

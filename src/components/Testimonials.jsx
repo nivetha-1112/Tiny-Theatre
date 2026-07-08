@@ -73,7 +73,7 @@ export default function Testimonials() {
   return (
     <section 
       id="testimonials" 
-      className="relative py-24 bg-gradient-to-b from-theatre-dark/95 to-theatre-dark overflow-hidden"
+      className="relative py-12 bg-gradient-to-b from-theatre-dark/95 to-theatre-dark overflow-hidden"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
@@ -87,7 +87,7 @@ export default function Testimonials() {
           <span className="text-theatre-gold font-semibold tracking-widest uppercase text-xs mb-4 block">
             Guest Reviews
           </span>
-          <h2 className="font-serif text-4xl sm:text-5xl font-bold text-white mb-6 leading-tight">
+          <h2 className="font-serif text-3xl sm:text-4xl font-bold text-white mb-6 leading-tight">
             What Our <span className="text-theatre-grey">Guests Say</span>
           </h2>
           <div className="w-20 h-1 bg-gradient-to-r from-theatre-gold to-theatre-grey rounded-full" />

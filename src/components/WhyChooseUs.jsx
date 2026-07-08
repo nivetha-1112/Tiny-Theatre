@@ -1,18 +1,16 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
-import { 
-  Shield, 
-  Sparkles, 
-  ArrowLeft, 
-  Film, 
-  Volume2, 
-  PartyPopper, 
-  Coffee, 
-  Armchair, 
-  Heart, 
-  Handshake 
-} from 'lucide-react';
+
+// Import local images from src/assets
+import imgExclusivePrivateTheatre from '../assets/Exclusive-Private-Theatre.webp';
+import imgCinemaQualityAudioVisuals from '../assets/Cinema-Quality-Audio-and-Visuals.webp';
+import imgPerfectForEveryCelebration from '../assets/Perfect-for-Every-Celebration.jpeg';
+import imgDeliciousCakesRefreshments from '../assets/Delicious-Cakes-and-Refreshments.png';
+import imgComfortMeetsLuxury from '../assets/comforts.png';
+import imgMemoriesThatLast from '../assets/Memories-That-Last.jpg';
+import imgFriendlyHassleFreeService from '../assets/hasslefreeservice.png';
+import imgCorporateGatheringMeeting from '../assets/corporate-meetings.png';
 
 export default function WhyChooseUs({ preview, onViewMore }) {
   const navigate = useNavigate();
@@ -21,50 +19,42 @@ export default function WhyChooseUs({ preview, onViewMore }) {
     {
       title: "Exclusive Private Theatre",
       desc: "Enjoy the entire theatre exclusively with your family, friends, or loved ones—no strangers, no interruptions.",
-      icon: Film,
-      image: "https://images.unsplash.com/photo-1517604931442-7e0c8ed2963c?auto=format&fit=crop&w=600&q=80"
+      image: imgExclusivePrivateTheatre
     },
     {
       title: "Cinema-Quality Audio & Visuals",
       desc: "Experience your favourite movies, shows, and music on a giant screen with immersive sound that brings every moment to life.",
-      icon: Volume2,
-      image: "https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?auto=format&fit=crop&w=600&q=80"
+      image: imgCinemaQualityAudioVisuals
     },
     {
       title: "Perfect for Every Celebration",
       desc: "From birthdays and anniversaries to proposals, date nights, family gatherings, and surprise parties, we help make every occasion memorable.",
-      icon: PartyPopper,
-      image: "https://images.unsplash.com/photo-1513151233558-d860c5398176?auto=format&fit=crop&w=600&q=80"
+      image: imgPerfectForEveryCelebration
     },
     {
-      title: "Beautifully Customisable",
-      desc: "Choose from a range of decoration themes, lighting, and celebration add-ons to create an experience that's uniquely yours.",
-      icon: Sparkles,
-      image: "https://images.unsplash.com/photo-1530103862676-de8c9debad1d?auto=format&fit=crop&w=600&q=80"
-    },
-    {
-      title: "Delicious Food & Refreshments",
-      desc: "Complete your celebration with popcorn, snacks, beverages, cakes, and other treats available as part of your experience.",
-      icon: Coffee,
-      image: "https://images.unsplash.com/photo-1578849278619-e73505e9610f?auto=format&fit=crop&w=600&q=80"
+      title: "Delicious Cakes & Refreshments",
+      desc: "Complete your celebration with popcorn, snacks, beverages, delicious cakes, and other treats available as part of your experience.",
+      image: imgDeliciousCakesRefreshments
     },
     {
       title: "Comfort Meets Luxury",
       desc: "Relax in comfortable seating within a clean, stylish, and air-conditioned environment designed for a premium experience.",
-      icon: Armchair,
-      image: "https://images.unsplash.com/photo-1595769816263-9b910be24d5f?auto=format&fit=crop&w=600&q=80"
+      image: imgComfortMeetsLuxury
     },
     {
       title: "Memories That Last",
       desc: "We don't just provide a movie screen—we create moments that you'll cherish long after the credits roll.",
-      icon: Heart,
-      image: "https://images.unsplash.com/photo-1536440136628-849c177e76a1?auto=format&fit=crop&w=600&q=80"
+      image: imgMemoriesThatLast
     },
     {
       title: "Friendly & Hassle-Free Service",
       desc: "Our team is dedicated to ensuring your booking, celebration, and overall experience are smooth, enjoyable, and stress-free.",
-      icon: Handshake,
-      image: "https://images.unsplash.com/photo-1511578314322-379afb476865?auto=format&fit=crop&w=600&q=80"
+      image: imgFriendlyHassleFreeService
+    },
+    {
+      title: "Corporate Gathering and Meeting",
+      desc: "Be it hosting a presentation or enjoying a day out with your team, we provide the best amenities and service.",
+      image: imgCorporateGatheringMeeting
     }
   ];
 
@@ -93,7 +83,7 @@ export default function WhyChooseUs({ preview, onViewMore }) {
   };
 
   return (
-    <section id="why-choose-us" className="relative py-24 bg-gradient-to-b from-theatre-dark to-theatre-dark/95 overflow-hidden">
+    <section id="why-choose-us" className="relative py-12 bg-gradient-to-b from-theatre-dark to-theatre-dark/95 overflow-hidden">
       {/* Premium ambient glows */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-theatre-gold/5 rounded-full blur-[120px] pointer-events-none" />
       <div className="absolute top-0 left-0 w-[400px] h-[400px] bg-theatre-grey/5 rounded-full blur-[100px] -translate-x-1/2 -translate-y-1/2 pointer-events-none" />
@@ -107,11 +97,11 @@ export default function WhyChooseUs({ preview, onViewMore }) {
           <span className="text-theatre-gold font-semibold tracking-widest uppercase text-xs sm:text-sm mb-4 block">
             Why Choose The Tiny Theatre?
           </span>
-          <h2 className="font-serif text-4xl sm:text-5xl font-bold text-white mb-6 leading-tight">
+          <h2 className="font-serif text-3xl sm:text-4xl font-bold text-white mb-6 leading-tight">
             Designed for Unforgettable <span className="text-theatre-gold">Experiences</span>
           </h2>
           <div className="w-20 h-1 bg-gradient-to-r from-theatre-gold to-theatre-grey rounded-full mb-8" />
-          <p className="text-gray-400 text-base sm:text-lg font-sans font-light leading-relaxed">
+          <p className="text-gray-400 text-sm sm:text-base font-sans font-light leading-relaxed">
             At The Tiny Theatre, we believe every celebration deserves a private, comfortable, and unforgettable experience. Here's what makes us special:
           </p>
         </div>
@@ -128,7 +118,6 @@ export default function WhyChooseUs({ preview, onViewMore }) {
           }`}
         >
           {(preview ? previewFeatures : features).map((feat, idx) => {
-            const FeatIcon = feat.icon;
             return (
               <motion.div
                 key={idx}
@@ -142,21 +131,20 @@ export default function WhyChooseUs({ preview, onViewMore }) {
                     src={feat.image}
                     alt={feat.title}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                    onError={(e) => {
+                      e.target.onerror = null;
+                      e.target.src = "https://images.unsplash.com/photo-1593305841991-05c297ba4575?auto=format&fit=crop&w=600&q=80";
+                    }}
                   />
-                  
-                  {/* Float Icon Badge */}
-                  <div className="absolute top-4 left-4 z-20 w-11 h-11 rounded-xl bg-theatre-dark/95 border border-theatre-gold/40 flex items-center justify-center text-theatre-gold shadow-md">
-                    <FeatIcon className="w-5 h-5" />
-                  </div>
                 </div>
 
               {/* Content Area */}
               <div className="p-6 flex-grow flex flex-col justify-between">
                 <div>
-                  <h3 className="font-serif text-lg sm:text-xl font-bold text-white mb-2.5 group-hover:text-theatre-gold transition-colors duration-300">
+                  <h3 className="font-serif text-base sm:text-lg font-bold text-white mb-2.5 group-hover:text-theatre-gold transition-colors duration-300 text-center">
                     {feat.title}
                   </h3>
-                  <p className="text-sm text-gray-400 leading-relaxed font-sans font-light">
+                  <p className="text-sm text-gray-400 leading-relaxed font-sans font-light text-left">
                     {feat.desc}
                   </p>
                 </div>
