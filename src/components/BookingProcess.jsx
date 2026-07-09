@@ -30,7 +30,7 @@ export default function BookingProcess({ preview, onViewMore }) {
       step: '02',
       title: 'Pick Your Date & Time',
       emoji: '📅',
-      desc: 'Select your preferred date and available time slot. Only available slots are displayed to ensure a smooth booking experience.',
+      desc: 'Select your preferred date and Available time slot. Only Available slots are displayed to ensure a smooth booking experience.',
       icon: Calendar,
       details: []
     },

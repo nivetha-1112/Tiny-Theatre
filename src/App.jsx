@@ -112,7 +112,7 @@ function AppContent() {
                 src={logoImg} 
                 alt="The Tiny Theatre" 
                 className="h-28 sm:h-36 w-auto object-contain animate-pulse mx-auto" 
-                style={{ filter: 'drop-shadow(0 0 20px rgba(244, 196, 48, 0.65))' }}
+                style={{ filter: 'drop-shadow(0 0 30px rgba(244, 196, 48, 0.8)) brightness(1.25) saturate(1.4) contrast(1.1)' }}
               />
               <p className="text-theatre-gold mt-4 font-serif text-sm sm:text-base tracking-[0.25em] uppercase font-bold animate-pulse text-shadow-gold">
                 Opening Curtains...

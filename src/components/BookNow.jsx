@@ -37,9 +37,18 @@ export default function BookNow({ selectedEventName, clearSelectedEvent }) {
   // Current active step of the wizard (1 to 11)
   const [activeStep, setActiveStep] = useState(1);
   
+  // Default Date helper
+  const getTodayDateString = () => {
+    const today = new Date();
+    const yyyy = today.getFullYear();
+    const mm = String(today.getMonth() + 1).padStart(2, '0');
+    const dd = String(today.getDate()).padStart(2, '0');
+    return `${yyyy}-${mm}-${dd}`;
+  };
+
   // States representing user inputs
   const [selectedScreen, setSelectedScreen] = useState(null); // 'A' or 'B'
-  const [selectedDate, setSelectedDate] = useState('');
+  const [selectedDate, setSelectedDate] = useState(getTodayDateString());
   const [selectedTimeSlot, setSelectedTimeSlot] = useState('');
   
   const [customerInfo, setCustomerInfo] = useState({
@@ -55,23 +64,37 @@ export default function BookNow({ selectedEventName, clearSelectedEvent }) {
   const [sendingOtp, setSendingOtp] = useState(false);
   const [otpError, setOtpError] = useState('');
 
-  // Guest counts
+  // Guest counts (Split into Adults, Kids 3-10, Kids <3)
   const [guests, setGuests] = useState({
-    adults: 2,
-    children: 0
+    adults: 0,
+    kids3to10: 0,
+    kidsBelow3: 0
   });
 
-  const [eventCategory, setEventCategory] = useState(selectedEventName || 'Movie Watching');
+  const [eventCategory, setEventCategory] = useState(selectedEventName || '');
   
   // Cake customization
   const [wantsCake, setWantsCake] = useState(false);
   const [cakeFlavor, setCakeFlavor] = useState('Chocolate Truffle');
+  const [cakeMessage, setCakeMessage] = useState('');
   
-  // Decoration packages
-  const [decorPackage, setDecorPackage] = useState('none'); // 'none', 'basic', 'premium', 'luxury'
+  // Decoration package toggle & optional details
+  const [wantsDecor, setWantsDecor] = useState(false);
 
-  // Add-ons checklist
+  // Add-ons checklist & details
   const [selectedAddons, setSelectedAddons] = useState([]);
+  const [ledNumberText, setLedNumberText] = useState('');
+  const [sashOccasion, setSashOccasion] = useState('Bride to be');
+
+  // Booked slots from localStorage for availability persistence
+  const [bookedSlots, setBookedSlots] = useState(() => {
+    try {
+      const saved = localStorage.getItem('tiny_theatre_booked_slots');
+      return saved ? JSON.parse(saved) : [];
+    } catch {
+      return [];
+    }
+  });
 
   // Payment method
   const [paymentMethod, setPaymentMethod] = useState('upi');
@@ -93,15 +116,18 @@ export default function BookNow({ selectedEventName, clearSelectedEvent }) {
   const [stepErrors, setStepErrors] = useState({});
 
   // Calculations
-  const basePrice = selectedScreen === 'A' ? 2000 : selectedScreen === 'B' ? 1500 : 0;
-  const totalGuests = Number(guests.adults) + Number(guests.children);
+  const basePrice = selectedScreen === 'A' ? 2399 : selectedScreen === 'B' ? 1799 : 0;
   const maxCapacity = selectedScreen === 'A' ? 15 : selectedScreen === 'B' ? 6 : 0;
+  const totalGuests = Number(guests.adults) + Number(guests.kids3to10) + Number(guests.kidsBelow3);
   
-  // Additional guest charges: first 4 members free, additional charged based on rules
-  const freeGuestsLimit = 4;
-  const additionalGuestsCount = totalGuests > freeGuestsLimit ? totalGuests - freeGuestsLimit : 0;
-  const guestRate = selectedScreen === 'A' ? 400 : selectedScreen === 'B' ? 350 : 0;
-  const additionalGuestCharges = additionalGuestsCount * guestRate;
+  // Additional guest charges: first 4 adults free, additional adults charged at guestRate
+  const additionalAdults = guests.adults > 4 ? guests.adults - 4 : 0;
+  const guestRate = selectedScreen === 'A' ? 450 : selectedScreen === 'B' ? 400 : 0;
+  const additionalGuestCharges = additionalAdults * guestRate;
+
+  // Kids between 3 to 10 charges
+  const kids3to10Rate = selectedScreen === 'A' ? 250 : 200;
+  const kids3to10Charges = Number(guests.kids3to10) * kids3to10Rate;
 
   // Cake flavor prices
   const cakePrices = {
@@ -112,14 +138,8 @@ export default function BookNow({ selectedEventName, clearSelectedEvent }) {
   };
   const cakeCharges = wantsCake ? cakePrices[cakeFlavor] || 800 : 0;
 
-  // Decor packages prices
-  const decorPrices = {
-    'none': 0,
-    'basic': 1000,
-    'premium': 2000,
-    'luxury': 3500
-  };
-  const decorCharges = decorPrices[decorPackage] || 0;
+  // Decor charges: flat rates inclusive of GST
+  const decorCharges = wantsDecor ? (selectedScreen === 'A' ? 900 : 800) : 0;
 
   // Add-on pricing definitions
   const addonsPrices = {
@@ -137,9 +157,9 @@ export default function BookNow({ selectedEventName, clearSelectedEvent }) {
   };
   const addonsCharges = selectedAddons.reduce((sum, key) => sum + (addonsPrices[key]?.price || 0), 0);
 
-  const subtotal = basePrice + additionalGuestCharges + cakeCharges + decorCharges + addonsCharges;
-  const gstCharges = Math.round(subtotal * 0.18);
-  const totalAmount = subtotal + gstCharges;
+  const subtotal = basePrice + additionalGuestCharges + kids3to10Charges + cakeCharges + decorCharges + addonsCharges;
+  const gstCharges = 0; // Inclusive of GST
+  const totalAmount = subtotal;
   const advancePaymentRequired = 1000;
   const remainingBalance = totalAmount - advancePaymentRequired;
 
@@ -167,6 +187,30 @@ export default function BookNow({ selectedEventName, clearSelectedEvent }) {
     } else {
       setOtpError('Invalid OTP code. Please enter 1234 for simulation.');
     }
+  };
+
+  // Next Step Disabled helper
+  const isNextDisabled = () => {
+    if (activeStep === 1) {
+      return !selectedScreen;
+    }
+    if (activeStep === 2) {
+      return !selectedDate || !selectedTimeSlot;
+    }
+    if (activeStep === 3) {
+      const cleanedPhone = (customerInfo.phone || '').replace(/\D/g, '');
+      const isPhoneValid = /^[6-9]\d{9}$/.test(cleanedPhone);
+      const isEmailValid = /\S+@\S+\.\S+/.test(customerInfo.email);
+      const isNameValid = customerInfo.fullName.trim().length > 0;
+      return !isNameValid || !isEmailValid || !isPhoneValid || !otpVerified;
+    }
+    if (activeStep === 4) {
+      return totalGuests === 0;
+    }
+    if (activeStep === 5) {
+      return !eventCategory;
+    }
+    return false;
   };
 
   // Step Validation logic before proceeding
@@ -210,11 +254,13 @@ export default function BookNow({ selectedEventName, clearSelectedEvent }) {
 
     setStepErrors({});
     setActiveStep(prev => prev + 1);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const handlePrevStep = () => {
     setStepErrors({});
     setActiveStep(prev => Math.max(1, prev - 1));
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   // Mock Payment Action
@@ -223,12 +269,27 @@ export default function BookNow({ selectedEventName, clearSelectedEvent }) {
     setTimeout(() => {
       setIsPaying(false);
       
+      // Save booked slot to state and localStorage
+      const newBooking = {
+        screen: selectedScreen,
+        date: selectedDate,
+        slot: selectedTimeSlot
+      };
+      const updatedBookings = [...bookedSlots, newBooking];
+      setBookedSlots(updatedBookings);
+      try {
+        localStorage.setItem('tiny_theatre_booked_slots', JSON.stringify(updatedBookings));
+      } catch (err) {
+        console.error(err);
+      }
+
       // Generate random booking code
       const code = `TT-${Math.floor(10000 + Math.random() * 90000)}`;
       setBookingId(code);
       
-      // Navigate to success state (Step 11)
-      setActiveStep(11);
+      // Navigate to success state (Step 10)
+      setActiveStep(10);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
 
       // Trigger Confetti
       confetti({
@@ -244,16 +305,19 @@ export default function BookNow({ selectedEventName, clearSelectedEvent }) {
   const handleReset = () => {
     setActiveStep(1);
     setSelectedScreen(null);
-    setSelectedDate('');
+    setSelectedDate(getTodayDateString());
     setSelectedTimeSlot('');
     setCustomerInfo({ fullName: '', email: '', phone: '', otp: '' });
     setOtpSent(false);
     setOtpVerified(false);
-    setGuests({ adults: 2, children: 0 });
+    setGuests({ adults: 0, kids3to10: 0, kidsBelow3: 0 });
     setWantsCake(false);
     setCakeFlavor('Chocolate Truffle');
-    setDecorPackage('none');
+    setCakeMessage('');
+    setWantsDecor(false);
     setSelectedAddons([]);
+    setLedNumberText('');
+    setSashOccasion('Bride to be');
     setStepErrors({});
     if (clearSelectedEvent) {
       clearSelectedEvent();
@@ -271,11 +335,13 @@ export default function BookNow({ selectedEventName, clearSelectedEvent }) {
 
   const stepNames = [
     'Screen', 'Slot', 'Details', 'Guests', 'Occasion', 
-    'Cake', 'Decor', 'Add-ons', 'Summary', 'Payment'
+    'Cake', 'Decor', 'Add-ons', 'Payment'
   ];
 
   return (
-    <section id="book-now" className="relative py-16 bg-theatre-dark/95 overflow-hidden min-h-screen">
+    <section id="book-now" className={`relative bg-theatre-dark/95 overflow-hidden min-h-screen transition-all duration-500 ${
+      activeStep === 10 ? 'py-6 md:py-8' : 'py-16'
+    }`}>
       {/* Visual backgrounds */}
       <div className="absolute top-0 left-0 w-[500px] h-[500px] bg-theatre-grey/10 rounded-full blur-[120px] pointer-events-none" />
       <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-theatre-gold/5 rounded-full blur-[120px] pointer-events-none" />
@@ -283,17 +349,9 @@ export default function BookNow({ selectedEventName, clearSelectedEvent }) {
       <div className="max-w-[85rem] mx-auto px-4 sm:px-8 lg:px-12 relative z-10">
         
         {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-12 flex flex-col items-center">
-          <span className="text-theatre-gold font-semibold tracking-widest uppercase text-xs mb-4 block">
-            Online Booking Panel
-          </span>
-          <h2 className="font-serif text-3xl sm:text-4xl font-bold text-white mb-4">
-            Private Cinema <span className="text-theatre-gold">Reservation</span>
-          </h2>
-          <div className="w-16 h-0.5 bg-theatre-gold/50 rounded-full mx-auto" />
-        </div>
+       
 
-        {activeStep <= 10 && (
+        {activeStep <= 9 && (
           /* horizontal Progress Steps Bar */
           <div className="max-w-5xl mx-auto mb-12 overflow-x-auto pb-4 scrollbar-thin">
             <div className="flex items-center justify-between min-w-[700px] px-4">
@@ -336,8 +394,14 @@ export default function BookNow({ selectedEventName, clearSelectedEvent }) {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start max-w-6xl mx-auto">
           
           {/* LEFT PANEL: Wizard Steps (Col Span 8 on large, Full on mobile) */}
-          <div className={`col-span-1 lg:col-span-8 bg-theatre-grey-deep/20 backdrop-blur-md border border-white/5 rounded-3xl p-6 sm:p-8 min-h-[500px] flex flex-col justify-between ${
-            activeStep === 11 ? 'lg:col-span-12' : ''
+          <div className={`col-span-1 lg:col-span-8 bg-theatre-grey-deep/20 backdrop-blur-md border border-white/5 rounded-3xl flex flex-col justify-between transition-all duration-300 ${
+            activeStep === 10
+              ? 'p-4 sm:p-6 pt-2 sm:pt-2 lg:col-span-12 min-h-0'
+              : `p-6 sm:p-8 ${
+                  (activeStep === 6 && !wantsCake) || activeStep === 7
+                    ? 'min-h-[300px]'
+                    : 'min-h-[480px]'
+                }`
           }`}>
             <AnimatePresence mode="wait">
               <motion.div
@@ -389,17 +453,25 @@ export default function BookNow({ selectedEventName, clearSelectedEvent }) {
                             <p className="text-xs text-gray-400 font-light leading-relaxed">Ideal for large group movie nights, reunions, and grand parties.</p>
                           </div>
                           <div className="space-y-2 border-t border-white/5 pt-3">
-                            <div className="flex justify-between text-xs">
-                              <span className="text-gray-500">Capacity:</span>
-                              <span className="text-white font-semibold">1 to 15 Members</span>
+                            <div className="flex justify-between items-baseline text-xs">
+                              <span className="text-gray-500 mr-2">Capacity:</span>
+                              <span className="text-white font-semibold whitespace-nowrap text-right">Upto 15 Members</span>
                             </div>
-                            <div className="flex justify-between text-xs">
-                              <span className="text-gray-500">Base Price (1-4 members):</span>
-                              <span className="text-theatre-gold font-bold">₹2,000 + GST</span>
+                            <div className="flex justify-between items-baseline text-xs">
+                              <span className="text-gray-500 mr-2">Base Price (covers 4 members):</span>
+                              <span className="text-theatre-gold font-bold whitespace-nowrap text-right">₹2,399 (Inc. GST)</span>
                             </div>
-                            <div className="flex justify-between text-xs">
-                              <span className="text-gray-500">Additional Member:</span>
-                              <span className="text-white">₹400 / each</span>
+                            <div className="flex justify-between items-baseline text-xs">
+                              <span className="text-gray-500 mr-2">Extra Guest (above 4):</span>
+                              <span className="text-white whitespace-nowrap text-right">₹450 / each (Inc. GST)</span>
+                            </div>
+                            <div className="flex justify-between items-baseline text-xs">
+                              <span className="text-gray-500 mr-2">Kids (Below 3 years):</span>
+                              <span className="text-green-500 font-bold whitespace-nowrap text-right">Free</span>
+                            </div>
+                            <div className="flex justify-between items-baseline text-xs">
+                              <span className="text-gray-500 mr-2">Kids (3 to 10 years):</span>
+                              <span className="text-white whitespace-nowrap text-right">₹250 / each</span>
                             </div>
                           </div>
                           
@@ -441,21 +513,27 @@ export default function BookNow({ selectedEventName, clearSelectedEvent }) {
                             <p className="text-xs text-gray-400 font-light leading-relaxed">Perfect for intimate date nights, couples, and small family gatherings.</p>
                           </div>
                           <div className="space-y-2 border-t border-white/5 pt-3">
-                            <div className="flex justify-between text-xs">
-                              <span className="text-gray-500">Capacity:</span>
-                              <span className="text-white font-semibold">1 to 6 Members</span>
+                            <div className="flex justify-between items-baseline text-xs">
+                              <span className="text-gray-500 mr-2">Capacity:</span>
+                              <span className="text-white font-semibold whitespace-nowrap text-right">Upto 6 Members</span>
                             </div>
-                            <div className="flex justify-between text-xs">
-                              <span className="text-gray-500">Base Price (1-4 members):</span>
-                              <span className="text-theatre-gold font-bold">₹1,500 + GST</span>
+                            <div className="flex justify-between items-baseline text-xs">
+                              <span className="text-gray-500 mr-2">Base Price (covers 4 members):</span>
+                              <span className="text-theatre-gold font-bold whitespace-nowrap text-right">₹1,799 (Inc. GST)</span>
                             </div>
-                            <div className="flex justify-between text-xs">
-                              <span className="text-gray-500">Additional Member:</span>
-                              <span className="text-white">₹350 / each</span>
+                            <div className="flex justify-between items-baseline text-xs">
+                              <span className="text-gray-500 mr-2">Extra Guest (above 4):</span>
+                              <span className="text-white whitespace-nowrap text-right">₹400 / each (Inc. GST)</span>
+                            </div>
+                            <div className="flex justify-between items-baseline text-xs">
+                              <span className="text-gray-500 mr-2">Kids (Below 3 years):</span>
+                              <span className="text-green-500 font-bold whitespace-nowrap text-right">Free</span>
+                            </div>
+                            <div className="flex justify-between items-baseline text-xs">
+                              <span className="text-gray-500 mr-2">Kids (3 to 10 years):</span>
+                              <span className="text-white whitespace-nowrap text-right">₹200 / each</span>
                             </div>
                           </div>
-
-
 
                           <button 
                             className={`w-full py-2.5 rounded-xl font-sans text-xs font-bold transition-all duration-300 ${
@@ -469,6 +547,13 @@ export default function BookNow({ selectedEventName, clearSelectedEvent }) {
                         </div>
                       </div>
                     </div>
+
+                    {/* Overall pricing info footnote */}
+                    <div className="p-4 bg-theatre-gold/5 rounded-2xl border border-theatre-gold/20 text-center">
+                      <p className="text-xs text-theatre-gold font-sans font-medium">
+                        ★ Note: All prices shown above are fully <strong>Inclusive of GST</strong>. No extra taxes will be added at checkout.
+                      </p>
+                    </div>
                   </div>
                 )}
 
@@ -477,7 +562,7 @@ export default function BookNow({ selectedEventName, clearSelectedEvent }) {
                   <div className="space-y-6">
                     <div className="space-y-1">
                       <h3 className="text-xl font-serif font-bold text-white">Step 2: Choose Date & Time Slot</h3>
-                      <p className="text-xs sm:text-sm text-gray-400">Select an available date and preferred private screening time window.</p>
+                      <p className="text-xs sm:text-sm text-gray-400">Select an Available date and preferred private screening time window.</p>
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-8 pt-2">
@@ -507,27 +592,44 @@ export default function BookNow({ selectedEventName, clearSelectedEvent }) {
                         <label className="text-sm font-semibold text-gray-300 block">Available Slots</label>
                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                           {[
-                            '09:00 AM - 12:00 PM',
-                            '12:30 PM - 03:30 PM',
-                            '04:00 PM - 07:00 PM',
-                            '07:30 PM - 10:30 PM',
-                            '11:00 PM - 02:00 AM'
+                            '9:00 AM to 12 PM (3 hours)',
+                            '12:30 PM to 3:30 PM (3 hours)',
+                            '4:00 PM to 7:00 PM (3 hours)',
+                            '7:30 PM to 10:30 PM (3 hours)',
+                            '11:00 PM to 2:00 AM (3 hours)'
                           ].map(slot => {
                             const isSelected = selectedTimeSlot === slot;
+                            const isBooked = bookedSlots.some(b => 
+                              b.screen === selectedScreen && 
+                              b.date === selectedDate && 
+                              b.slot === slot
+                            );
                             return (
                               <button
                                 key={slot}
-                                onClick={() => { setSelectedTimeSlot(slot); setStepErrors({}); }}
+                                onClick={() => { 
+                                  if (!isBooked) {
+                                    setSelectedTimeSlot(slot); 
+                                    setStepErrors({}); 
+                                  }
+                                }}
+                                disabled={isBooked}
                                 className={`py-3 px-4 rounded-xl text-left border transition-all duration-300 text-xs font-sans ${
                                   isSelected
                                     ? 'border-theatre-gold bg-theatre-gold/10 text-theatre-gold shadow-md'
-                                    : 'border-white/10 bg-theatre-dark/40 text-gray-300 hover:border-white/20'
+                                    : isBooked
+                                      ? 'border-red-500/25 bg-red-950/15 text-gray-500 cursor-not-allowed opacity-50'
+                                      : 'border-white/10 bg-theatre-dark/40 text-gray-300 hover:border-white/20'
                                 }`}
                               >
-                                <div className="font-bold mb-1">{slot.split(' - ')[0]}</div>
+                                <div className="font-bold mb-1">{slot}</div>
                                 <div className="text-[10px] text-gray-500 uppercase tracking-widest flex items-center justify-between">
-                                  <span>3 Hours Slot</span>
-                                  <span className="text-green-500 font-semibold lowercase">available</span>
+                                  <span>Slot Timing</span>
+                                  {isBooked ? (
+                                    <span className="text-red-500 font-semibold capitalize">Booked</span>
+                                  ) : (
+                                    <span className="text-green-500 font-semibold capitalize">Available</span>
+                                  )}
                                 </div>
                               </button>
                             );
@@ -584,7 +686,7 @@ export default function BookNow({ selectedEventName, clearSelectedEvent }) {
                               setCustomerInfo({ ...customerInfo, fullName: e.target.value });
                               setStepErrors(prev => ({ ...prev, fullName: null }));
                             }}
-                            placeholder="John Doe"
+                            placeholder="Enter Full Name"
                             className="w-full bg-theatre-dark/60 text-white pl-11 pr-4 py-3.5 rounded-xl border border-white/10 focus:border-theatre-gold outline-none transition-all duration-300 text-sm placeholder:text-gray-600"
                           />
                         </div>
@@ -608,7 +710,7 @@ export default function BookNow({ selectedEventName, clearSelectedEvent }) {
                               setCustomerInfo({ ...customerInfo, email: e.target.value });
                               setStepErrors(prev => ({ ...prev, email: null }));
                             }}
-                            placeholder="johndoe@example.com"
+                            placeholder="Enter Email Address"
                             className="w-full bg-theatre-dark/60 text-white pl-11 pr-4 py-3.5 rounded-xl border border-white/10 focus:border-theatre-gold outline-none transition-all duration-300 text-sm placeholder:text-gray-600"
                           />
                         </div>
@@ -636,7 +738,7 @@ export default function BookNow({ selectedEventName, clearSelectedEvent }) {
                                 setCustomerInfo({ ...customerInfo, phone: val });
                                 setStepErrors(prev => ({ ...prev, phone: null }));
                               }}
-                              placeholder="9876543210"
+                              placeholder="Enter Mobile Number"
                               className="w-full bg-theatre-dark/60 text-white pl-11 pr-4 py-3.5 rounded-xl border border-white/10 focus:border-theatre-gold outline-none transition-all duration-300 text-sm placeholder:text-gray-600 disabled:opacity-50 disabled:cursor-not-allowed"
                             />
                           </div>
@@ -671,7 +773,7 @@ export default function BookNow({ selectedEventName, clearSelectedEvent }) {
                               disabled={!otpSent || otpVerified}
                               value={customerInfo.otp}
                               onChange={(e) => setCustomerInfo({ ...customerInfo, otp: e.target.value })}
-                              placeholder="Enter 4-Digit Code"
+                              placeholder="Enter 4-Digit OTP"
                               className="w-full bg-theatre-dark/60 text-white pl-11 pr-4 py-3.5 rounded-xl border border-white/10 focus:border-theatre-gold outline-none transition-all duration-300 text-sm placeholder:text-gray-600 disabled:opacity-50 disabled:cursor-not-allowed"
                             />
                           </div>
@@ -719,7 +821,7 @@ export default function BookNow({ selectedEventName, clearSelectedEvent }) {
                   <div className="space-y-6">
                     <div className="space-y-1">
                       <h3 className="text-xl font-serif font-bold text-white">Step 4: Number of People</h3>
-                      <p className="text-xs sm:text-sm text-gray-400">Specify guest counts. Base booking covers up to 4 members; additional members are charged based on screen limits.</p>
+                      <p className="text-xs sm:text-sm text-gray-400">Specify guest counts. Base booking covers up to 4 adults; additional adults and kids are charged according to screen rules.</p>
                     </div>
 
                     <div className="max-w-md space-y-6 pt-2">
@@ -727,11 +829,11 @@ export default function BookNow({ selectedEventName, clearSelectedEvent }) {
                       <div className="flex items-center justify-between bg-theatre-dark/40 p-4 border border-white/5 rounded-2xl">
                         <div className="space-y-0.5">
                           <span className="text-sm font-semibold text-white block">Adults</span>
-                          <span className="text-xs text-gray-500">Ages 12 and above</span>
+                          <span className="text-xs text-gray-500">Ages 11 and above</span>
                         </div>
                         <div className="flex items-center space-x-4">
                           <button 
-                            onClick={() => setGuests({ ...guests, adults: Math.max(1, guests.adults - 1) })}
+                            onClick={() => setGuests({ ...guests, adults: Math.max(0, guests.adults - 1) })}
                             className="w-10 h-10 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 text-white flex items-center justify-center font-bold text-lg cursor-pointer"
                           >
                             -
@@ -746,22 +848,45 @@ export default function BookNow({ selectedEventName, clearSelectedEvent }) {
                         </div>
                       </div>
 
-                      {/* Children count */}
+                      {/* Kids 3-10 count */}
                       <div className="flex items-center justify-between bg-theatre-dark/40 p-4 border border-white/5 rounded-2xl">
                         <div className="space-y-0.5">
-                          <span className="text-sm font-semibold text-white block">Children</span>
-                          <span className="text-xs text-gray-500">Ages 3 to 11</span>
+                          <span className="text-sm font-semibold text-white block">Kids (3 to 10 Years)</span>
+                          <span className="text-xs text-gray-500">₹{selectedScreen === 'A' ? 250 : 200} / each</span>
                         </div>
                         <div className="flex items-center space-x-4">
                           <button 
-                            onClick={() => setGuests({ ...guests, children: Math.max(0, guests.children - 1) })}
+                            onClick={() => setGuests({ ...guests, kids3to10: Math.max(0, guests.kids3to10 - 1) })}
                             className="w-10 h-10 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 text-white flex items-center justify-center font-bold text-lg cursor-pointer"
                           >
                             -
                           </button>
-                          <span className="font-sans font-bold text-base w-6 text-center text-white">{guests.children}</span>
+                          <span className="font-sans font-bold text-base w-6 text-center text-white">{guests.kids3to10}</span>
                           <button 
-                            onClick={() => setGuests({ ...guests, children: guests.children + 1 })}
+                            onClick={() => setGuests({ ...guests, kids3to10: guests.kids3to10 + 1 })}
+                            className="w-10 h-10 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 text-white flex items-center justify-center font-bold text-lg cursor-pointer"
+                          >
+                            +
+                          </button>
+                        </div>
+                      </div>
+
+                      {/* Kids Below 3 count */}
+                      <div className="flex items-center justify-between bg-theatre-dark/40 p-4 border border-white/5 rounded-2xl">
+                        <div className="space-y-0.5">
+                          <span className="text-sm font-semibold text-white block">Kids (Below 3 Years)</span>
+                          <span className="text-xs text-green-500 font-bold">Free</span>
+                        </div>
+                        <div className="flex items-center space-x-4">
+                          <button 
+                            onClick={() => setGuests({ ...guests, kidsBelow3: Math.max(0, guests.kidsBelow3 - 1) })}
+                            className="w-10 h-10 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 text-white flex items-center justify-center font-bold text-lg cursor-pointer"
+                          >
+                            -
+                          </button>
+                          <span className="font-sans font-bold text-base w-6 text-center text-white">{guests.kidsBelow3}</span>
+                          <button 
+                            onClick={() => setGuests({ ...guests, kidsBelow3: guests.kidsBelow3 + 1 })}
                             className="w-10 h-10 rounded-xl bg-white/5 border border-white/10 hover:bg-white/10 text-white flex items-center justify-center font-bold text-lg cursor-pointer"
                           >
                             +
@@ -791,43 +916,57 @@ export default function BookNow({ selectedEventName, clearSelectedEvent }) {
                   </div>
                 )}
 
-                {/* STEP 5: Event Category */}
+                {/* STEP 5: Choose Occasions */}
                 {activeStep === 5 && (
                   <div className="space-y-6">
                     <div className="space-y-1">
-                      <h3 className="text-xl font-serif font-bold text-white">Step 5: Event Category</h3>
+                      <h3 className="text-xl font-serif font-bold text-white">Step 5: Choose Occasions</h3>
                       <p className="text-xs sm:text-sm text-gray-400">Tell us what special occasion you are celebrating to customize your experience.</p>
                     </div>
 
-                    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4 pt-2">
+                    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-6 pt-2">
                       {[
-                        { name: 'Movie Watching', icon: Tv },
-                        { name: 'Birthday', icon: CakeIcon },
-                        { name: 'Anniversary', icon: Heart },
-                        { name: 'Romantic Date', icon: Heart },
-                        { name: 'Proposal', icon: Sparkles },
-                        { name: 'Bride/Groom to be', icon: Sparkles },
-                        { name: 'Farewell', icon: Gift },
-                        { name: 'Baby shower', icon: Baby },
-                        { name: 'Kitty party', icon: Users },
-                        { name: 'Get together', icon: Users }
+                        { name: 'Movie Watching', image: '/movie.png', fallback: 'https://images.unsplash.com/photo-1593305841991-05c297ba4575?auto=format&fit=crop&w=400&q=80' },
+                        { name: 'Birthday', image: '/birthday.png', fallback: 'https://images.unsplash.com/photo-1530103862676-de8c9debad1d?auto=format&fit=crop&w=400&q=80' },
+                        { name: 'Anniversary', image: '/anniversary.png', fallback: 'https://images.unsplash.com/photo-1513151233558-d860c5398176?auto=format&fit=crop&w=400&q=80' },
+                        { name: 'Romantic Date', image: '/romantic date.png', fallback: 'https://images.unsplash.com/photo-1527529482837-4698179dc6ce?auto=format&fit=crop&w=400&q=80' },
+                        { name: 'Proposal', image: '/proposal.png', fallback: 'https://images.unsplash.com/photo-1515934751635-c81c6bc9a2d8?auto=format&fit=crop&w=400&q=80' },
+                        { name: 'Bride/Groom to be', image: '/team.png', fallback: 'https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=400&q=80' },
+                        { name: 'Farewell', image: '/team.png', fallback: 'https://images.unsplash.com/photo-1517263904008-797480d25147?auto=format&fit=crop&w=400&q=80' },
+                        { name: 'Baby shower', image: '/family.png', fallback: 'https://images.unsplash.com/photo-1515488042361-404e9250afef?auto=format&fit=crop&w=400&q=80' },
+                        { name: 'Kitty party', image: '/team.png', fallback: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=400&q=80' },
+                        { name: 'Get together', image: '/family.png', fallback: 'https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&w=400&q=80' }
                       ].map(cat => {
-                        const Icon = cat.icon;
                         const isSelected = eventCategory === cat.name;
                         return (
                           <div
                             key={cat.name}
                             onClick={() => setEventCategory(cat.name)}
-                            className={`p-5 rounded-2xl border cursor-pointer text-center flex flex-col items-center justify-center min-h-[140px] transition-all duration-300 space-y-3 ${
-                              isSelected
-                                ? 'border-theatre-gold bg-theatre-gold/10 text-theatre-gold scale-105 shadow-md shadow-theatre-gold/15'
-                                : 'border-white/10 bg-theatre-dark/40 text-gray-400 hover:border-white/20'
-                            }`}
+                            className="flex flex-col items-center cursor-pointer group select-none"
                           >
-                            <div className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center">
-                              <Icon className="w-5 h-5" />
+                            {/* Image Container (h-36 size, no golden outline, clean white/gray borders) */}
+                            <div className={`relative w-full h-36 rounded-2xl overflow-hidden transition-all duration-300 border bg-theatre-dark/40 ${
+                              isSelected
+                                ? 'border-white/40 shadow-lg shadow-white/5'
+                                : 'border-white/10 hover:border-white/20'
+                            }`}>
+                              <img 
+                                src={cat.image} 
+                                alt={cat.name}
+                                className={`w-full h-full object-cover transition-transform duration-500 ${
+                                  isSelected ? 'scale-105' : 'group-hover:scale-105'
+                                }`}
+                                onError={(e) => {
+                                  e.target.onerror = null;
+                                  e.target.src = cat.fallback;
+                                }}
+                              />
                             </div>
-                            <span className="text-[10px] font-sans font-bold uppercase tracking-wider block leading-tight">
+                            
+                            {/* Occasion text underneath - fixed height to prevent layout shifts */}
+                            <span className={`mt-2.5 text-[10px] font-sans font-bold uppercase tracking-wider text-center h-8 flex items-center justify-center transition-colors duration-300 ${
+                              isSelected ? 'text-theatre-gold font-extrabold' : 'text-gray-400 group-hover:text-white'
+                            }`}>
                               {cat.name}
                             </span>
                           </div>
@@ -905,6 +1044,22 @@ export default function BookNow({ selectedEventName, clearSelectedEvent }) {
                               );
                             })}
                           </div>
+
+                          {/* Message on Cake input */}
+                          <div className="space-y-2 mt-4 max-w-sm">
+                            <label className="text-xs font-semibold text-gray-300 block">Message on Cake (Optional - Max 30 Characters)</label>
+                            <input
+                              type="text"
+                              maxLength={30}
+                              value={cakeMessage}
+                              onChange={(e) => setCakeMessage(e.target.value)}
+                              placeholder="E.g., Happy Birthday John"
+                              className="w-full bg-theatre-dark/60 text-white px-4 py-2.5 rounded-xl border border-white/10 focus:border-theatre-gold outline-none text-xs transition-all duration-300 placeholder:text-gray-600"
+                            />
+                            <div className="text-right text-[10px] text-gray-500">
+                              {cakeMessage.length}/30 characters
+                            </div>
+                          </div>
                         </motion.div>
                       )}
                     </div>
@@ -915,68 +1070,36 @@ export default function BookNow({ selectedEventName, clearSelectedEvent }) {
                 {activeStep === 7 && (
                   <div className="space-y-6">
                     <div className="space-y-1">
-                      <h3 className="text-xl font-serif font-bold text-white">Step 7: Decoration Package</h3>
-                      <p className="text-xs sm:text-sm text-gray-400">Choose a decoration theme package to customize the theatre hall atmosphere.</p>
+                      <h3 className="text-xl font-serif font-bold text-white">Step 7: Decoration Package (Optional)</h3>
+                      <p className="text-xs sm:text-sm text-gray-400">Would you like us to decorate the private screening room for your celebration?</p>
                     </div>
 
-                    <div className="grid grid-cols-1 md:grid-cols-4 gap-4 pt-2">
-                      {[
-                        { 
-                          pkg: 'none', 
-                          title: 'No Decoration', 
-                          price: '₹0', 
-                          desc: 'Standard clean cinematic room setup.',
-                          img: 'https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?auto=format&fit=crop&w=300&q=80'
-                        },
-                        { 
-                          pkg: 'basic', 
-                          title: 'Basic Decor', 
-                          price: '₹1,000', 
-                          desc: 'Balloons arrangement, welcome board, and warm ambient LED lighting.',
-                          img: 'https://images.unsplash.com/photo-1530103862676-de8c9debad1d?auto=format&fit=crop&w=300&q=80'
-                        },
-                        { 
-                          pkg: 'premium', 
-                          title: 'Premium Decor', 
-                          price: '₹2,000', 
-                          desc: 'Metallic balloons, LED letters, welcome banner, and floral backdrop accents.',
-                          img: 'https://images.unsplash.com/photo-1513151233558-d860c5398176?auto=format&fit=crop&w=300&q=80'
-                        },
-                        { 
-                          pkg: 'luxury', 
-                          title: 'Luxury Decor', 
-                          price: '₹3,500', 
-                          desc: 'Premium balloon arch, customized backdrop stand, neon signage, and spotlights.',
-                          img: 'https://images.unsplash.com/photo-1527529482837-4698179dc6ce?auto=format&fit=crop&w=300&q=80'
-                        }
-                      ].map(dec => {
-                        const isSelected = decorPackage === dec.pkg;
-                        return (
-                          <div
-                            key={dec.pkg}
-                            onClick={() => setDecorPackage(dec.pkg)}
-                            className={`rounded-xl overflow-hidden border cursor-pointer bg-theatre-dark/40 flex flex-col justify-between transition-all duration-300 ${
-                              isSelected 
-                                ? 'border-theatre-gold shadow-md shadow-theatre-gold/10 scale-102' 
-                                : 'border-white/10 hover:border-white/20'
-                            }`}
-                          >
-                            <div className="h-28 bg-gray-900 overflow-hidden">
-                              <img src={dec.img} alt={dec.title} className="w-full h-full object-cover" />
-                            </div>
-                            <div className="p-4 flex-grow flex flex-col justify-between space-y-3">
-                              <div className="space-y-1">
-                                <h4 className="text-sm font-serif font-bold text-white leading-tight">{dec.title}</h4>
-                                <p className="text-[10px] text-gray-500 font-light leading-relaxed">{dec.desc}</p>
-                              </div>
-                              <div className="flex justify-between items-center pt-2 border-t border-white/5">
-                                <span className="text-xs text-gray-400">Price:</span>
-                                <span className="text-theatre-gold font-bold text-xs">{dec.price}</span>
-                              </div>
-                            </div>
-                          </div>
-                        );
-                      })}
+                    <div className="space-y-6 pt-2">
+                      {/* Yes/No selection toggle */}
+                      <div className="flex items-center space-x-4">
+                        <button
+                          onClick={() => setWantsDecor(true)}
+                          className={`px-6 py-3 rounded-xl border text-xs font-sans font-bold tracking-wider transition-all duration-300 cursor-pointer ${
+                            wantsDecor 
+                              ? 'bg-theatre-gold border-theatre-gold text-theatre-grey-deep'
+                              : 'bg-white/5 border-white/10 text-gray-300'
+                          }`}
+                        >
+                          Yes, Include Decor
+                        </button>
+                        <button
+                          onClick={() => setWantsDecor(false)}
+                          className={`px-6 py-3 rounded-xl border text-xs font-sans font-bold tracking-wider transition-all duration-300 cursor-pointer ${
+                            !wantsDecor 
+                              ? 'bg-theatre-gold border-theatre-gold text-theatre-grey-deep'
+                              : 'bg-white/5 border-white/10 text-gray-300'
+                          }`}
+                        >
+                          No, Skip Decor
+                        </button>
+                      </div>
+
+                     
                     </div>
                   </div>
                 )}
@@ -1033,78 +1156,56 @@ export default function BookNow({ selectedEventName, clearSelectedEvent }) {
                         );
                       })}
                     </div>
+
+                    {/* Conditional inputs for LED Numbers or Event Sash */}
+                    {(selectedAddons.includes('led_numbers') || selectedAddons.includes('event_sash')) && (
+                      <motion.div 
+                        initial={{ opacity: 0, y: 15 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        className="p-6 rounded-2xl bg-white/[0.02] border border-white/10 space-y-4 mt-6 max-w-md"
+                      >
+                        <h4 className="text-sm font-bold text-white border-b border-white/5 pb-2">Add-on Customizations</h4>
+
+                        {selectedAddons.includes('led_numbers') && (
+                          <div className="space-y-2">
+                            <label className="text-xs font-semibold text-gray-300 block">LED Number(s) Required</label>
+                            <input
+                              type="text"
+                              value={ledNumberText}
+                              onChange={(e) => setLedNumberText(e.target.value)}
+                              placeholder="E.g., 25 or 18"
+                              className="w-full bg-theatre-dark/60 text-white px-4 py-2.5 rounded-xl border border-white/10 focus:border-theatre-gold outline-none text-xs transition-all duration-300 placeholder:text-gray-600"
+                            />
+                          </div>
+                        )}
+
+                        {selectedAddons.includes('event_sash') && (
+                          <div className="space-y-2">
+                            <label className="text-xs font-semibold text-gray-300 block">Sash Occasion</label>
+                            <select
+                              value={sashOccasion}
+                              onChange={(e) => setSashOccasion(e.target.value)}
+                              className="w-full bg-theatre-dark text-white px-4 py-2.5 rounded-xl border border-white/10 focus:border-theatre-gold outline-none text-xs transition-all duration-300 cursor-pointer"
+                            >
+                              <option value="Bride to be">Bride to be</option>
+                              <option value="Groom to be">Groom to be</option>
+                              <option value="Happy Birthday">Happy Birthday</option>
+                              <option value="Congratulations">Congratulations</option>
+                              <option value="Mom to be">Mom to be</option>
+                              <option value="Father to be">Father to be</option>
+                            </select>
+                          </div>
+                        )}
+                      </motion.div>
+                    )}
                   </div>
                 )}
 
-                {/* STEP 9: Price Summary */}
+                {/* STEP 9: Payment Gateway */}
                 {activeStep === 9 && (
                   <div className="space-y-6">
                     <div className="space-y-1">
-                      <h3 className="text-xl font-serif font-bold text-white">Step 9: Price Summary</h3>
-                      <p className="text-xs sm:text-sm text-gray-400">Review your final itemized breakdown invoice list before paying the advance lock fee.</p>
-                    </div>
-
-                    <div className="bg-theatre-dark/60 border border-white/5 rounded-2xl p-6 space-y-4 max-w-lg">
-                      <h4 className="font-serif font-bold text-white border-b border-white/5 pb-2">Itemized Invoice Breakdown</h4>
-                      
-                      <div className="space-y-2.5 text-sm font-light text-gray-300">
-                        <div className="flex justify-between">
-                          <span>Base Screen Price ({selectedScreen === 'A' ? 'Screen A' : 'Screen B'}):</span>
-                          <span className="text-white font-semibold">₹{basePrice}</span>
-                        </div>
-                        {additionalGuestCharges > 0 && (
-                          <div className="flex justify-between">
-                            <span>Extra Guests ({additionalGuestsCount} member(s)):</span>
-                            <span className="text-white font-semibold">₹{additionalGuestCharges}</span>
-                          </div>
-                        )}
-                        {cakeCharges > 0 && (
-                          <div className="flex justify-between">
-                            <span>Cake Arrangement ({cakeFlavor}):</span>
-                            <span className="text-white font-semibold">₹{cakeCharges}</span>
-                          </div>
-                        )}
-                        {decorCharges > 0 && (
-                          <div className="flex justify-between">
-                            <span>Decoration ({decorPackage} Package):</span>
-                            <span className="text-white font-semibold">₹{decorCharges}</span>
-                          </div>
-                        )}
-                        {addonsCharges > 0 && (
-                          <div className="flex justify-between">
-                            <span>Add-ons ({selectedAddons.length} item(s)):</span>
-                            <span className="text-white font-semibold">₹{addonsCharges}</span>
-                          </div>
-                        )}
-                        <div className="flex justify-between border-t border-white/5 pt-2">
-                          <span>GST (18%):</span>
-                          <span className="text-white font-semibold">₹{gstCharges}</span>
-                        </div>
-                        <div className="flex justify-between text-base font-bold text-white pt-2 border-t border-dashed border-white/10">
-                          <span>Total Invoice Amount:</span>
-                          <span className="text-theatre-gold">₹{totalAmount}</span>
-                        </div>
-                      </div>
-
-                      <div className="p-4 bg-theatre-gold/10 border border-theatre-gold/25 rounded-xl space-y-2 mt-4">
-                        <div className="flex justify-between text-sm">
-                          <span className="text-white font-bold">Advance Lock Payment Required:</span>
-                          <span className="text-theatre-gold font-bold">₹{advancePaymentRequired}</span>
-                        </div>
-                        <div className="flex justify-between text-xs text-gray-400">
-                          <span>Remaining Balance (Payable at venue):</span>
-                          <span>₹{remainingBalance}</span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                )}
-
-                {/* STEP 10: Payment Gateway */}
-                {activeStep === 10 && (
-                  <div className="space-y-6">
-                    <div className="space-y-1">
-                      <h3 className="text-xl font-serif font-bold text-white">Step 10: Pay Advance Amount</h3>
+                      <h3 className="text-xl font-serif font-bold text-white">Step 9: Pay Advance Amount</h3>
                       <p className="text-xs sm:text-sm text-gray-400">Authorize your ₹1,000 lock deposit using our secure payment options.</p>
                     </div>
 
@@ -1115,7 +1216,6 @@ export default function BookNow({ selectedEventName, clearSelectedEvent }) {
                         <div className="space-y-3">
                           {[
                             { id: 'upi', name: 'UPI (GPay / PhonePe / Paytm)' },
-                            { id: 'card', name: 'Credit / Debit Card' },
                             { id: 'netbank', name: 'Net Banking' }
                           ].map(method => {
                             const isSelected = paymentMethod === method.id;
@@ -1179,13 +1279,15 @@ export default function BookNow({ selectedEventName, clearSelectedEvent }) {
                   </div>
                 )}
 
-                {/* STEP 11: Booking Confirmation SUCCESS */}
-                {activeStep === 11 && (
-                  <div className="max-w-2xl mx-auto py-4 text-center space-y-6">
-                    <div className="inline-flex p-4 bg-green-500/10 text-green-400 rounded-full border border-green-500/20 mb-2">
+
+
+                {/* STEP 10: Booking Confirmation SUCCESS */}
+                {activeStep === 10 && (
+                  <div className="max-w-2xl mx-auto pt-1 pb-4 text-center space-y-4">
+                    <div className="inline-flex p-4 bg-green-500/10 text-green-400 rounded-full border border-green-500/20">
                       <ShieldCheck className="w-10 h-10" />
                     </div>
-                    <div className="space-y-2">
+                    <div className="space-y-1.5">
                       <h3 className="font-serif text-3xl font-bold text-white">Booking Confirmed!</h3>
                       <p className="text-sm text-gray-400 max-w-md mx-auto leading-relaxed">
                         Your private screening slot has been locked successfully. Check your registered phone number & email address for your ticket validation copy.
@@ -1215,8 +1317,13 @@ export default function BookNow({ selectedEventName, clearSelectedEvent }) {
                           <span className="text-[10px] text-gray-400 block mt-0.5">{selectedTimeSlot}</span>
                         </div>
                         <div>
-                          <span className="text-[10px] text-gray-500 block uppercase font-bold mb-1">TOTAL GUESTS</span>
-                          <span className="text-sm text-white font-sans font-semibold">{totalGuests} Members</span>
+                          <span className="text-[10px] text-gray-500 block uppercase font-bold mb-1">GUEST BREAKDOWN</span>
+                          <span className="text-sm text-white font-sans font-semibold block">{totalGuests} Total</span>
+                          <div className="text-[9px] text-gray-400 mt-1 space-y-0.5 leading-none font-sans font-light">
+                            <div>Adults: {guests.adults}</div>
+                            <div>Kids (3-10 Yrs): {guests.kids3to10}</div>
+                            <div>Kids (Below 3 Yrs): {guests.kidsBelow3}</div>
+                          </div>
                         </div>
                       </div>
 
@@ -1246,7 +1353,7 @@ export default function BookNow({ selectedEventName, clearSelectedEvent }) {
             </AnimatePresence>
 
             {/* Stepper Bottom Controls */}
-            {activeStep <= 10 && (
+            {activeStep <= 9 && (
               <div className="flex justify-between items-center pt-8 border-t border-white/5 mt-8">
                 <button
                   type="button"
@@ -1258,26 +1365,28 @@ export default function BookNow({ selectedEventName, clearSelectedEvent }) {
                   <span>Previous</span>
                 </button>
                 
-                {activeStep < 10 ? (
+                {activeStep < 9 ? (
                   <button
                     type="button"
                     onClick={handleNextStep}
-                    className="inline-flex items-center space-x-1.5 bg-theatre-gold hover:bg-theatre-gold-light text-theatre-grey-deep font-sans text-xs font-bold px-6 py-3 rounded-xl shadow-md hover:shadow-theatre-gold/15 transition-all duration-300 cursor-pointer"
+                    disabled={isNextDisabled()}
+                    className="inline-flex items-center space-x-1.5 bg-theatre-gold hover:bg-theatre-gold-light text-theatre-grey-deep font-sans text-xs font-bold px-6 py-3 rounded-xl shadow-md hover:shadow-theatre-gold/15 transition-all duration-300 cursor-pointer disabled:opacity-30 disabled:cursor-not-allowed"
                   >
                     <span>Proceed Next</span>
                     <ChevronRight className="w-4 h-4 text-theatre-grey-deep" />
                   </button>
                 ) : (
-                  <span className="text-xs text-theatre-gold font-sans font-semibold animate-pulse">
-                    Please authorize payment on right summary panel
-                  </span>
+                  // <span className="text-xs text-theatre-gold font-sans font-semibold animate-pulse">
+                  //   Please authorize payment on right summary panel
+                  // </span>
+                  <></>
                 )}
               </div>
             )}
           </div>
 
           {/* RIGHT PANEL: Live Invoice/Selected Items Summary (Col Span 4 on large, Hidden in success view) */}
-          {activeStep <= 10 && (
+          {activeStep <= 9 && (
             <div className="col-span-1 lg:col-span-4 bg-theatre-grey-deep/20 backdrop-blur-md border border-white/5 rounded-3xl p-6 space-y-6 sticky top-28">
               <h3 className="font-serif text-lg font-bold text-white border-b border-white/5 pb-2">Booking Summary</h3>
               
@@ -1293,53 +1402,118 @@ export default function BookNow({ selectedEventName, clearSelectedEvent }) {
                     <span>Date:</span>
                     <span className="text-white">{selectedDate || 'Not selected'}</span>
                   </div>
-                  <div className="flex justify-between">
-                    <span>Time Slot:</span>
-                    <span className="text-white truncate max-w-[160px] block text-right">{selectedTimeSlot || 'Not selected'}</span>
+                  <div className="flex justify-between items-start">
+                    <span className="flex-shrink-0">Time Slot:</span>
+                    <span className="text-white text-right font-medium pl-4">{selectedTimeSlot || 'Not selected'}</span>
                   </div>
-                  <div className="flex justify-between">
-                    <span>Guests count:</span>
-                    <span className="text-white">{totalGuests} ({guests.adults} Ad / {guests.children} Ch)</span>
+                  
+                  {/* Guests count split 1-by-1 rows */}
+                  <div className="space-y-1.5 py-2 border-t border-b border-white/5 my-1.5">
+                    <div className="flex justify-between font-semibold text-gray-300">
+                      <span>Total Guests:</span>
+                      <span className="text-white">{totalGuests}</span>
+                    </div>
+                    {totalGuests > 0 && (
+                      <>
+                        <div className="flex justify-between text-[11px] text-gray-400 pl-3">
+                          <span>Adults:</span>
+                          <span className="text-white font-medium">{guests.adults}</span>
+                        </div>
+                        <div className="flex justify-between text-[11px] text-gray-400 pl-3">
+                          <span>Kids (3 to 10 Years):</span>
+                          <span className="text-white font-medium">{guests.kids3to10}</span>
+                        </div>
+                        <div className="flex justify-between text-[11px] text-gray-400 pl-3">
+                          <span>Kids (Below 3 Years):</span>
+                          <span className="text-white font-medium">{guests.kidsBelow3}</span>
+                        </div>
+                      </>
+                    )}
                   </div>
-                  <div className="flex justify-between">
-                    <span>Occasion:</span>
-                    <span className="text-white">{eventCategory}</span>
-                  </div>
+
+                  {eventCategory && (
+                    <div className="flex justify-between">
+                      <span>Occasion:</span>
+                      <span className="text-white">{eventCategory}</span>
+                    </div>
+                  )}
                 </div>
 
-                <div className="space-y-1.5 pt-3 border-t border-white/5">
-                  <div className="flex justify-between">
-                    <span>Cake Arrangement:</span>
-                    <span className="text-white">{wantsCake ? cakeFlavor : 'No'}</span>
+                {/* Live Itemized Rates Breakdown */}
+                {selectedScreen && (
+                  <div className="space-y-1.5 pt-3 border-t border-white/5">
+                    <div className="flex justify-between font-medium text-gray-300">
+                      <span>Base Screen Price:</span>
+                      <span className="text-white">₹{basePrice}</span>
+                    </div>
+                    {additionalGuestCharges > 0 && (
+                      <div className="flex justify-between text-gray-400 pl-2">
+                        <span>Extra Adults ({additionalAdults} * ₹{guestRate}):</span>
+                        <span className="text-white">₹{additionalGuestCharges}</span>
+                      </div>
+                    )}
+                    {kids3to10Charges > 0 && (
+                      <div className="flex justify-between text-gray-400 pl-2">
+                        <span>Kids 3-10 ({guests.kids3to10} * ₹{kids3to10Rate}):</span>
+                        <span className="text-white">₹{kids3to10Charges}</span>
+                      </div>
+                    )}
+                    {wantsCake && (
+                      <div className="flex flex-col space-y-0.5 pl-2 text-gray-400">
+                        <div className="flex justify-between">
+                          <span>Cake Arrangement ({cakeFlavor}):</span>
+                          <span className="text-white">₹{cakeCharges}</span>
+                        </div>
+                        {cakeMessage && (
+                          <span className="text-[10px] text-gray-500 italic pl-2 font-mono">Message: "{cakeMessage}"</span>
+                        )}
+                      </div>
+                    )}
+                    {wantsDecor && (
+                      <div className="flex justify-between text-gray-400 pl-2">
+                        <span>Decoration :</span>
+                        <span className="text-white">₹{decorCharges}</span>
+                      </div>
+                    )}
+                    
+                    {/* Add-ons detailed list */}
+                    {selectedAddons.length > 0 && (
+                      <div className="space-y-1 pt-1.5 pl-2 border-t border-white/5">
+                        <span className="text-[10px] font-bold text-gray-400 uppercase tracking-wider block mb-1">Add-ons:</span>
+                        {selectedAddons.map(key => {
+                          const addon = addonsPrices[key];
+                          if (!addon) return null;
+                          let name = addon.name;
+                          if (key === 'led_numbers' && ledNumberText) {
+                            name = `LED Numbers (${ledNumberText})`;
+                          } else if (key === 'event_sash' && sashOccasion) {
+                            name = `Event Sash (${sashOccasion})`;
+                          }
+                          return (
+                            <div key={key} className="flex justify-between text-[11px] text-gray-400 pl-1 font-mono">
+                              <span>+ {name}:</span>
+                              <span className="text-white">₹{addon.price}</span>
+                            </div>
+                          );
+                        })}
+                      </div>
+                    )}
                   </div>
-                  <div className="flex justify-between">
-                    <span>Decor Package:</span>
-                    <span className="text-white capitalize">{decorPackage !== 'none' ? `${decorPackage} Decor` : 'None'}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span>Add-ons selected:</span>
-                    <span className="text-white">{selectedAddons.length} Selected</span>
-                  </div>
-                </div>
+                )}
               </div>
 
               {/* Total Invoice */}
               <div className="border-t border-dashed border-white/10 pt-4 space-y-2">
-                <div className="flex justify-between text-xs text-gray-400">
-                  <span>Subtotal Amount:</span>
-                  <span>₹{subtotal}</span>
-                </div>
-                <div className="flex justify-between text-xs text-gray-400">
-                  <span>GST Taxes (18%):</span>
-                  <span>₹{gstCharges}</span>
-                </div>
                 <div className="flex justify-between text-base font-bold text-white border-t border-white/5 pt-2">
                   <span>Total Amount:</span>
                   <span className="text-theatre-gold">₹{totalAmount}</span>
                 </div>
+                <div className="text-[10px] text-gray-500 text-center italic mt-1 font-sans">
+                  * All prices are inclusive of GST
+                </div>
                 
                 {/* Advance details */}
-                <div className="bg-theatre-gold/10 p-3 rounded-xl border border-theatre-gold/25 mt-4 space-y-1 text-center">
+                <div className="bg-theatre-gold/10 p-3 rounded-xl border border-theatre-gold/25 mt-4 space-y-1 text-center font-sans">
                   <span className="text-[10px] text-gray-400 block uppercase font-bold">Lock Deposit Required</span>
                   <span className="text-lg font-bold text-theatre-gold block">₹{advancePaymentRequired}</span>
                   <span className="text-[9px] text-gray-500 block leading-tight">Payable online to secure slot</span>

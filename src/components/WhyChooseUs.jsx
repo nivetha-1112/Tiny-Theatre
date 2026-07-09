@@ -2,6 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 
+// NOTE: These local images are placeholders and will be replaced in future once our theatre setup is ready.
 // Import local images from src/assets
 import imgExclusivePrivateTheatre from '../assets/Exclusive-Private-Theatre.webp';
 import imgCinemaQualityAudioVisuals from '../assets/Cinema-Quality-Audio-and-Visuals.webp';

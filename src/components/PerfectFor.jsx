@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 
+// NOTE: These local images (e.g. /movie.png, /birthday.png) are placeholders and will be replaced in future once our theatre setup is ready.
 export default function PerfectFor() {
   const perfectFor = [
     {
