@@ -1,12 +1,26 @@
-import React from 'react';
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { useNavigate } from 'react-router-dom';
-import { Shield, ArrowLeft } from 'lucide-react';
+import { Shield } from 'lucide-react';
+import { getTerms } from '../Api/Termsapi';
 
 export default function TermsAndConditions() {
-  const navigate = useNavigate();
+  const [termsData, setTermsData] = useState(null);
 
-  const sections = [
+  useEffect(() => {
+    const fetchTerms = async () => {
+      try {
+        const res = await getTerms({ title: 'Terms' });
+        if (res.status && res.response?.data?.length > 0) {
+          setTermsData(res.response.data[0]);
+        }
+      } catch (err) {
+        console.error("Error fetching terms:", err);
+      }
+    };
+    fetchTerms();
+  }, []);
+
+  const fallbackSections = [
     {
       id: 1,
       title: "Bookings",
@@ -119,6 +133,20 @@ export default function TermsAndConditions() {
     }
   ];
 
+  const displayIntro = termsData?.introText || "Welcome to The Tiny Theatre. By making a booking or using our services, you agree to the following Terms & Conditions.";
+
+  const displaySections = termsData?.sections
+    ? termsData.sections.map((section, idx) => ({
+        id: idx + 1,
+        title: section.title,
+        content: section.points || []
+      }))
+    : fallbackSections;
+
+  const displayLastUpdated = termsData?.updatedAt
+    ? `Last Updated: ${new Date(termsData.updatedAt).toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}`
+    : "Last Updated: July 2026";
+
   return (
     <section className="relative py-24 bg-theatre-dark min-h-screen overflow-hidden">
       {/* Premium ambient glows */}
@@ -150,17 +178,17 @@ export default function TermsAndConditions() {
 
         {/* Last Updated */}
         <p className="text-center text-gray-400 text-xs tracking-wider uppercase mb-16">
-          Last Updated: July 2026
+          {displayLastUpdated}
         </p>
 
         {/* Introduction */}
         <div className="bg-theatre-grey-deep/30 border border-theatre-gold/25 rounded-2xl p-6 sm:p-8 mb-12 text-gray-300 font-sans font-light leading-relaxed text-center sm:text-left">
-          Welcome to The Tiny Theatre. By making a booking or using our services, you agree to the following Terms & Conditions.
+          {displayIntro}
         </div>
 
         {/* Clause List */}
         <div className="space-y-12">
-          {sections.map((section, idx) => (
+          {displaySections.map((section, idx) => (
             <motion.div
               key={section.id}
               initial={{ opacity: 0, y: 20 }}
