@@ -33,7 +33,7 @@
   --animate-slide-up: slideUp 0.8s ease-out forwards;
   --animate-curtain-left: curtainLeft 1.5s cubic-bezier(0.25, 1, 0.5, 1) forwards;
   --animate-curtain-right: curtainRight 1.5s cubic-bezier(0.25, 1, 0.5, 1) forwards;
-  --animate-blink: logoBlink 3.5s ease-in-out infinite;
+
 
   @keyframes fadeIn {
     0% {

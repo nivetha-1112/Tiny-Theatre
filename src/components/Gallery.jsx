@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { createPortal } from 'react-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Maximize2, X, Star, Quote, ChevronLeft, ChevronRight, Play } from 'lucide-react';
+import { getGallery } from '../Api/galleryapi';
+import { getImageUrl } from '../Api/api';
 
-const galleryItems = [
+const staticGalleryItems = [
   {
     id: 1,
     title: 'Romantic Proposal Setup',
@@ -121,11 +123,80 @@ const galleryItems = [
 ];
 
 export default function Gallery({ preview, onViewMore }) {
+  const [galleryItems, setGalleryItems] = useState(staticGalleryItems);
   const [activeFilter, setActiveFilter] = useState('Screen A');
   const [activeSubFilter, setActiveSubFilter] = useState('photos'); // 'photos' or 'videos'
   const [selectedImageIndex, setSelectedImageIndex] = useState(null);
+  const [categories, setCategories] = useState(['Screen A', 'Screen B', 'Celebrations', 'Others']);
+  const [isLoading, setIsLoading] = useState(true);
 
-  const categories = ['Screen A', 'Screen B', 'Celebrations', 'Others'];
+  useEffect(() => {
+    const fetchGallery = async () => {
+      try {
+        const res = await getGallery();
+        if (res && res.status && res.response && res.response.data) {
+          const apiData = res.response.data;
+          
+          const items = [];
+          const catSet = new Set();
+          
+          apiData.forEach((doc) => {
+            const catName = doc.category?.name || 'Others';
+            catSet.add(catName);
+            
+            const firstPhotoUrl = doc.photos && doc.photos.length > 0 ? getImageUrl(doc.photos[0]) : '';
+            
+            // Add photos
+            if (doc.photos) {
+              doc.photos.forEach((photo, idx) => {
+                items.push({
+                  id: `${doc._id}-photo-${idx}`,
+                  title: `${catName} Photo ${idx + 1}`,
+                  category: catName,
+                  type: 'photo',
+                  image: getImageUrl(photo),
+                });
+              });
+            }
+            
+            // Add videos
+            if (doc.videos) {
+              doc.videos.forEach((video, idx) => {
+                items.push({
+                  id: `${doc._id}-video-${idx}`,
+                  title: `${catName} Video ${idx + 1}`,
+                  category: catName,
+                  type: 'video',
+                  videoUrl: getImageUrl(video),
+                  image: firstPhotoUrl || 'https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?auto=format&fit=crop&w=800&q=80',
+                });
+              });
+            }
+          });
+          
+          if (items.length > 0) {
+            setGalleryItems(items);
+            const uniqueCategories = Array.from(catSet);
+            setCategories(uniqueCategories.length > 0 ? uniqueCategories : ['Screen A', 'Screen B', 'Celebrations', 'Others']);
+            if (uniqueCategories.length > 0) {
+              setActiveFilter(uniqueCategories[0]);
+            }
+          }
+        }
+      } catch (err) {
+        console.error("Failed to fetch gallery:", err);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+    
+    fetchGallery();
+  }, []);
+
+  // Check if selected category has both photos and videos dynamically
+  const hasVideos = galleryItems.some(item => item.category === activeFilter && item.type === 'video');
+  const hasPhotos = galleryItems.some(item => item.category === activeFilter && item.type === 'photo');
+  const showSubFilter = hasVideos && hasPhotos;
 
   // Reset subfilter to photos when switching category tab
   const handleFilterChange = (cat) => {
@@ -137,8 +208,8 @@ export default function Gallery({ preview, onViewMore }) {
     // Match main category
     if (item.category !== activeFilter) return false;
     
-    // For Screen A & B, match sub-filter (photos/videos)
-    if (activeFilter === 'Screen A' || activeFilter === 'Screen B') {
+    // If category has both photos and videos, match sub-filter (photos/videos)
+    if (showSubFilter) {
       const targetType = activeSubFilter === 'photos' ? 'photo' : 'video';
       return item.type === targetType;
     }
@@ -199,8 +270,8 @@ export default function Gallery({ preview, onViewMore }) {
           </div>
         )}
 
-        {/* Sub-filters bar for Screen A & Screen B */}
-        {!preview && (activeFilter === 'Screen A' || activeFilter === 'Screen B') && (
+        {/* Sub-filters bar */}
+        {!preview && showSubFilter && (
           <div className="flex flex-col items-center mt-10 mb-16">
             <span className="text-[9px] uppercase tracking-[0.25em] text-gray-500 font-bold mb-3 font-sans block">
               Filter Media Type

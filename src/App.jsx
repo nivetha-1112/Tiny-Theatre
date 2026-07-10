@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { BrowserRouter as Router, Routes, Route, useNavigate, useLocation } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import PerfectFor from './components/PerfectFor';
@@ -111,10 +113,10 @@ function AppContent() {
               <img 
                 src={logoImg} 
                 alt="The Tiny Theatre" 
-                className="h-28 sm:h-36 w-auto object-contain animate-pulse mx-auto" 
-                style={{ filter: 'drop-shadow(0 0 30px rgba(244, 196, 48, 0.8)) brightness(1.25) saturate(1.4) contrast(1.1)' }}
+                className="h-28 sm:h-36 w-auto object-contain mx-auto" 
+                // style={{ filter: 'drop-shadow(0 0 30px rgba(244, 196, 48, 0.8)) brightness(1.25) saturate(1.4) contrast(1.1)' }}
               />
-              <p className="text-theatre-gold mt-4 font-serif text-sm sm:text-base tracking-[0.25em] uppercase font-bold animate-pulse text-shadow-gold">
+              <p className="text-theatre-gold mt-4 font-serif text-sm sm:text-base tracking-[0.25em] uppercase font-bold">
                 Opening Curtains...
               </p>
             </motion.div>
@@ -228,6 +230,7 @@ export default function App() {
   return (
     <Router>
       <AppContent />
+      <ToastContainer />
     </Router>
   );
 }

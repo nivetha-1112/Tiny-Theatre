@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Menu, X, Phone, Ticket } from 'lucide-react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import logoImg from '../assets/logo.png';
@@ -62,7 +62,7 @@ export default function Navbar() {
       }`}
     >
       <div className="max-w-[85rem] mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-12">
+        <div className="flex items-center justify-between h-12 sm:h-16">
           <a
             href="#home"
             onClick={(e) => handleNavClick(e, '/')}
@@ -71,7 +71,7 @@ export default function Navbar() {
             <img 
               src={logoImg} 
               alt="The Tiny Theatre" 
-              className="h-20 sm:h-24 w-auto animate-blink object-contain translate-y-1.5"
+              className="h-12 sm:h-16 w-auto object-contain"
             />
           </a>
 
@@ -102,9 +102,9 @@ export default function Navbar() {
             <a
               href="tel:+917338848840"
               title="Call Us"
-              className="w-10 h-10 bg-transparent border border-theatre-gold/80 hover:border-theatre-gold text-theatre-gold hover:bg-theatre-gold/10 hover:scale-110 transition-all duration-300 rounded-full flex items-center justify-center cursor-pointer flex-shrink-0"
+              className="w-10 h-10 bg-transparent border border-blue-500/80 hover:border-blue-500 text-blue-500 hover:bg-blue-500/10 hover:scale-110 transition-all duration-300 rounded-full flex items-center justify-center cursor-pointer flex-shrink-0"
             >
-              <Phone className="w-4 h-4 xl:w-4.5 xl:h-4.5 text-theatre-gold" />
+              <Phone className="w-4 h-4 xl:w-4.5 xl:h-4.5 text-blue-500" />
             </a>
 
             {/* WhatsApp Icon Button */}
@@ -181,7 +181,7 @@ export default function Navbar() {
               {/* Call Icon */}
               <a
                 href="tel:+917338848840"
-                className="p-3 bg-white/5 hover:bg-theatre-gold text-gray-300 hover:text-theatre-grey-deep rounded-full border border-white/10 transition-all duration-300 flex items-center justify-center flex-grow"
+                className="p-3 bg-blue-500/10 hover:bg-blue-500 text-blue-500 hover:text-white rounded-full border border-blue-500/20 transition-all duration-300 flex items-center justify-center flex-grow"
               >
                 <Phone className="w-5 h-5 mr-2" />
                 <span className="text-sm font-semibold">Call Us</span>
